@@ -2,7 +2,7 @@
 
 A modern, professional website for an AI solutions agency that specializes in building custom AI automation solutions for businesses across various industries.
 
-## 🚀 Features
+## 🚀 Feature
 
 ### Core Services
 - **AI Chatbots & Virtual Assistants** - Intelligent customer service and support automation
