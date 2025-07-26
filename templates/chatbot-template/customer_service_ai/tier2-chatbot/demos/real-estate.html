@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dream Homes Realty - AI Property Assistant</title>
+    <meta name="description" content="Find your dream home with AI-powered property assistance. Browse listings, get market insights, and connect with expert agents.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/public/favicon.ico">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/public/css/chatbot-widget.css">
+    <link rel="stylesheet" href="/public/css/themes/realty-theme.css">
+
+    <style>
+        /* Demo-specific styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #2d3748;
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+        }
+
+        .demo-header {
+            background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .demo-header h1 {
+            font-family: 'Merriweather', serif;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .demo-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .demo-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .demo-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .demo-section h2 {
+            font-family: 'Merriweather', serif;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #2d3748;
+        }
+
+        .demo-section h3 {
+            font-size: 1.3rem;
+            margin: 1.5rem 0 0.5rem 0;
+            color: #4a5568;
+        }
+
+        .demo-section p {
+            margin-bottom: 1rem;
+            color: #555;
+        }
+
+        .service-list {
+            list-style: none;
+            margin: 1rem 0;
+        }
+
+        .service-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+        }
+
+        .service-list li:before {
+            content: "🏠";
+            margin-right: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .property-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .property-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.5rem;
+            border: 1px solid #e9ecef;
+        }
+
+        .property-card h4 {
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+        }
+
+        .property-card p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .property-price {
+            font-weight: 600;
+            color: #38a169;
+            font-size: 1.1rem;
+        }
+
+        .contact-info {
+            background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .contact-info h3 {
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .contact-info p {
+            margin-bottom: 0.5rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .demo-footer {
+            background: #2d3748;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .demo-footer p {
+            opacity: 0.8;
+        }
+
+        .demo-notice {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .demo-notice strong {
+            color: #856404;
+        }
+
+        .market-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .demo-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .demo-header h1 {
+                font-size: 2rem;
+            }
+
+            .demo-content {
+                padding: 2rem 1rem;
+            }
+
+            .property-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Demo Header -->
+    <header class="demo-header">
+        <h1>Dream Homes Realty</h1>
+        <p>Find Your Perfect Home with AI-Powered Property Assistance</p>
+    </header>
+
+    <!-- Demo Notice -->
+    <div class="demo-content">
+        <div class="demo-notice">
+            <strong>Demo Notice:</strong> This is a demonstration of the Tier 2 Real Estate Chatbot.
+            The AI assistant can help with property searches, market information, and connecting you with agents.
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="demo-grid">
+            <!-- Services Section -->
+            <div class="demo-section">
+                <h2>Our Real Estate Services</h2>
+                <p>We specialize in helping buyers and sellers navigate the real estate market with expert guidance and cutting-edge technology.</p>
+
+                <h3>Property Types</h3>
+                <ul class="service-list">
+                    <li>Single Family Homes</li>
+                    <li>Condominiums & Townhouses</li>
+                    <li>Luxury Properties</li>
+                    <li>Investment Properties</li>
+                    <li>New Construction</li>
+                    <li>Commercial Real Estate</li>
+                    <li>Land & Development</li>
+                    <li>Rental Properties</li>
+                </ul>
+
+                <h3>Market Statistics</h3>
+                <div class="market-stats">
+                    <div class="stat-card">
+                        <div class="stat-number">$450K</div>
+                        <div class="stat-label">Average Home Price</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">156</div>
+                        <div class="stat-label">Active Listings</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">28</div>
+                        <div class="stat-label">Days on Market</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">98%</div>
+                        <div class="stat-label">List Price Ratio</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Assistant Section -->
+            <div class="demo-section">
+                <h2>AI Property Assistant</h2>
+                <p>Get instant answers about properties, market conditions, and real estate processes with our AI-powered assistant.</p>
+
+                <h3>What Our AI Can Help With:</h3>
+                <ul class="service-list">
+                    <li>Property search assistance</li>
+                    <li>Market analysis and trends</li>
+                    <li>Financing options and pre-approval</li>
+                    <li>Home buying/selling process</li>
+                    <li>Property viewing scheduling</li>
+                    <li>Agent connection and referrals</li>
+                </ul>
+
+                <h3>Featured Properties</h3>
+                <div class="property-grid">
+                    <div class="property-card">
+                        <h4>Modern Family Home</h4>
+                        <p>4 bed, 3 bath • 2,400 sq ft</p>
+                        <p>📍 Downtown District</p>
+                        <div class="property-price">$485,000</div>
+                    </div>
+                    <div class="property-card">
+                        <h4>Luxury Condo</h4>
+                        <p>2 bed, 2 bath • 1,200 sq ft</p>
+                        <p>📍 Waterfront Area</p>
+                        <div class="property-price">$325,000</div>
+                    </div>
+                </div>
+
+                <h3>Try These Questions:</h3>
+                <ul class="service-list">
+                    <li>"What properties are available under $400K?"</li>
+                    <li>"How is the current market performing?"</li>
+                    <li>"What are the steps to buy a home?"</li>
+                    <li>"Can you help me sell my property?"</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="contact-info">
+            <h3>Contact Information</h3>
+            <p><strong>Address:</strong> 456 Real Estate Blvd, Suite 200, Downtown City, ST 12345</p>
+            <p><strong>Phone:</strong> (555) 987-6543</p>
+            <p><strong>Email:</strong> info@dreamhomesrealty.com</p>
+            <p><strong>Hours:</strong> Monday - Sunday: 9:00 AM - 7:00 PM</p>
+            <p><strong>24/7 Support:</strong> Available for urgent property inquiries</p>
+        </div>
+    </div>
+
+    <!-- Demo Footer -->
+    <footer class="demo-footer">
+        <p>&copy; 2024 Dream Homes Realty. This is a demonstration of the Tier 2 Chatbot system.</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="/public/js/utils.js"></script>
+    <script src="/public/js/chat-widget.js"></script>
+    <script src="/public/js/demo-controller.js"></script>
+
+    <script>
+        // Initialize demo
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize demo controller
+            const demoController = new DemoController();
+            demoController.init();
+
+            // Load real estate demo
+            demoController.loadDemo('real-estate');
+
+            // Add demo-specific interactions
+            console.log('Real Estate Demo loaded successfully');
+
+            // Example: Auto-open chat after 5 seconds
+            setTimeout(() => {
+                demoController.openChat();
+            }, 5000);
+        });
+    </script>
+</body>
+</html>

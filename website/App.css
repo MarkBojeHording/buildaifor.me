@@ -1,0 +1,11 @@
+.chat-message {
+  line-height: 1.6;
+  margin-bottom: 12px;
+  white-space: normal;
+  word-break: break-word;
+}
+.chat-message br {
+  margin-bottom: 8px;
+  display: block;
+  content: '';
+}

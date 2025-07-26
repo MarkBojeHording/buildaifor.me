@@ -1,0 +1,105 @@
+TIER 1 BASIC FAQ CHATBOT - SUPPORT CONTACT
+
+===============================================================================
+SUPPORT INFORMATION
+===============================================================================
+
+Primary Support Email: support@buildaifor.me
+Support Phone: (555) 987-6543
+Support Hours: Monday-Friday 9AM-5PM EST
+Response Time: 24 hours
+
+===============================================================================
+ESCALATION CONTACTS
+===============================================================================
+
+Technical Issues:
+- Email: tech@buildaifor.me
+- Phone: (555) 987-6544
+- Response Time: 4 hours
+
+Billing & Account:
+- Email: billing@buildaifor.me
+- Phone: (555) 987-6545
+- Response Time: 2 hours
+
+Emergency Support:
+- Email: emergency@buildaifor.me
+- Phone: (555) 987-6546
+- Response Time: 1 hour
+- Available: 24/7 for critical issues
+
+===============================================================================
+SELF-SERVICE RESOURCES
+===============================================================================
+
+Documentation: https://docs.buildaifor.me/tier1
+Video Tutorials: https://videos.buildaifor.me/tier1
+Community Forum: https://community.buildaifor.me
+Knowledge Base: https://help.buildaifor.me
+
+===============================================================================
+COMMON ISSUES & SOLUTIONS
+===============================================================================
+
+Issue: Widget not appearing
+Solution: Check file paths and ensure code is in <head> section
+
+Issue: Chatbot not responding
+Solution: Verify backend server is running and clientId is correct
+
+Issue: Styling problems
+Solution: Check CSS conflicts and ensure styles.css is loaded
+
+Issue: Mobile display issues
+Solution: Test responsive design and touch interactions
+
+===============================================================================
+TICKET INFORMATION
+===============================================================================
+
+When contacting support, please include:
+- Your business name and clientId
+- Description of the issue
+- Steps to reproduce
+- Browser and device information
+- Screenshots if applicable
+- Error messages from console
+
+===============================================================================
+MAINTENANCE SCHEDULE
+===============================================================================
+
+Regular Updates: Monthly
+Security Patches: As needed
+Feature Updates: Quarterly
+Backup Schedule: Daily
+
+===============================================================================
+UPGRADE PATH
+===============================================================================
+
+Tier 1 → Tier 2: Add lead capture and advanced features
+Tier 1 → Tier 3: Full workflow automation and integrations
+
+Contact sales@buildaifor.me for upgrade information.
+
+===============================================================================
+LEGAL & COMPLIANCE
+===============================================================================
+
+Privacy Policy: https://buildaifor.me/privacy
+Terms of Service: https://buildaifor.me/terms
+GDPR Compliance: Yes
+CCPA Compliance: Yes
+
+===============================================================================
+FEEDBACK & SUGGESTIONS
+===============================================================================
+
+We value your feedback! Send suggestions to:
+- Email: feedback@buildaifor.me
+- Feature requests: features@buildaifor.me
+- Bug reports: bugs@buildaifor.me
+
+===============================================================================

@@ -1,0 +1,456 @@
+import { useState } from 'react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { ExternalLink, Github, ArrowRight, MessageSquare, Clock, Users, Dumbbell, Calendar, Building, Car, Scissors, Stethoscope, Home, Scale, ShoppingCart, Monitor, Store, Heart } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+
+const Portfolio = () => {
+  const navigate = useNavigate();
+  const [activeFilter, setActiveFilter] = useState('all');
+
+  const filters = [
+    { id: 'all', label: 'All Projects' },
+    { id: 'chatbots', label: 'Chatbots' },
+    { id: 'document', label: 'Document Processing' },
+    { id: 'data', label: 'Data Analysis' },
+    { id: 'workflow', label: 'Workflow Automation' },
+    { id: 'rag', label: 'RAG Systems' }
+  ];
+
+  const allProjects = [
+    {
+      id: 1,
+      title: 'Healthcare Patient Assistant',
+      description: 'AI chatbot for patient queries, appointment scheduling, and medical information',
+      category: 'chatbots',
+      tags: ['Healthcare', 'NLP', 'Appointment Booking'],
+      image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      metrics: ['85% query resolution', '40% call reduction', '4.8/5 satisfaction'],
+      link: '/portfolio/healthcare-patient-assistant'
+    },
+    {
+      id: 2,
+      title: 'Legal Document Analyzer',
+      description: 'Automated contract analysis and risk assessment system',
+      category: 'document',
+      tags: ['Legal Tech', 'Document Analysis', 'Risk Assessment'],
+      image: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      metrics: ['95% accuracy', '70% time saved', '500+ contracts processed/day'],
+      link: '/portfolio/legal-document-analyzer'
+    },
+    {
+      id: 3,
+      title: 'E-commerce Sales Intelligence',
+      description: 'Predictive analytics for inventory and sales optimization',
+      category: 'data',
+      tags: ['E-commerce', 'Predictive Analytics', 'Inventory'],
+      image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      metrics: ['25% revenue increase', '30% inventory optimization', 'Real-time insights'],
+      link: '/portfolio/ecommerce-sales-intelligence'
+    },
+    {
+      id: 4,
+      title: 'HR Recruitment Automation',
+      description: 'AI-powered candidate screening and interview scheduling',
+      category: 'workflow',
+      tags: ['HR Tech', 'Recruitment', 'Process Automation'],
+      image: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      metrics: ['60% screening time reduced', '90% scheduling automation', '2x faster hiring'],
+      link: '/portfolio/hr-recruitment-automation'
+    },
+    {
+      id: 5,
+      title: 'Financial Knowledge Assistant',
+      description: 'RAG system for financial regulations and compliance queries',
+      category: 'rag',
+      tags: ['Finance', 'Compliance', 'Knowledge Management'],
+      image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      metrics: ['99.2% accuracy', '1000+ regulations indexed', 'Instant compliance checks'],
+      link: '/portfolio/financial-knowledge-assistant'
+    },
+    {
+      id: 6,
+      title: 'Manufacturing Quality Control',
+      description: 'Computer vision system for automated defect detection',
+      category: 'data',
+      tags: ['Manufacturing', 'Computer Vision', 'Quality Control'],
+      image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      metrics: ['99.5% defect detection', '50% quality check speed', 'Zero false positives'],
+      link: '/portfolio/manufacturing-quality-control'
+    }
+  ];
+
+  // Tiered chatbot examples
+  const tier1Chatbots = [
+    {
+      id: 't1-1',
+      title: 'Dental Office',
+      icon: Stethoscope,
+      image: 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      features: ['Hours & Contact', 'Services Overview', 'Insurance Info'],
+      demoLink: '/demo/dental-office'
+    },
+    {
+      id: 't1-2',
+      title: 'Restaurant',
+      icon: Clock,
+      image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      features: ['Menu & Hours', 'Location Info', 'Policies'],
+      demoLink: '/demo/restaurant'
+    },
+    {
+      id: 't1-3',
+      title: 'Hair Salon',
+      icon: Scissors,
+      image: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      features: ['Service Menu', 'Hours & Contact', 'Stylist Info'],
+      demoLink: '/demo/hair-salon'
+    },
+    {
+      id: 't1-4',
+      title: 'Fitness Studio',
+      icon: Dumbbell,
+      image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      features: ['Class Schedule', 'Membership Info', 'Contact Details'],
+      demoLink: '/demo/fitness-studio'
+    }
+  ];
+
+  const tier2Chatbots = [
+    {
+      id: 't2-3',
+      title: 'Real Estate Office',
+      icon: Home,
+      image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      features: ['Property Information', 'Agent Matching', 'Lead Qualification'],
+      demoLink: '/demo/real-estate'
+    },
+    {
+      id: 't2-4',
+      title: 'Law Firm',
+      icon: Scale,
+      image: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      features: ['Practice Areas', 'Consultation Requests', 'Attorney Profiles'],
+      demoLink: '/demo/law-firm'
+    },
+    {
+      id: 't2-5',
+      title: 'E-commerce Store',
+      icon: ShoppingCart,
+      image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      features: ['Product Assistance', 'Order Support', 'Return Guidance'],
+      demoLink: '/demo/ecommerce'
+    }
+  ];
+
+  const tier3Chatbots = [
+    {
+      id: 't3-1',
+      title: 'SaaS Support',
+      icon: Monitor,
+      image: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      features: ['Account Help', 'Billing Support', 'Technical Guidance'],
+      demoLink: '/demo/saas-support'
+    },
+    {
+      id: 't3-2',
+      title: 'Multi-location Franchise',
+      icon: Store,
+      image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      features: ['Location Finder', 'Service Coordination', 'Transfer Assistance'],
+      demoLink: '/demo/franchise'
+    },
+    {
+      id: 't3-3',
+      title: 'Healthcare System',
+      icon: Building,
+      image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      features: ['Department Navigation', 'Appointment Guidance', 'Resource Directory'],
+      demoLink: '/demo/healthcare-system'
+    }
+  ];
+
+  const filteredProjects = activeFilter === 'all'
+    ? allProjects.slice(0, 4) // Show first 4 for main page
+    : allProjects.filter(project => project.category === activeFilter).slice(0, 4);
+
+  const renderChatbotTiers = () => (
+    <div className="space-y-16">
+      {/* Tier 1 */}
+      <div>
+        <div className="text-center mb-8">
+          <Badge className="bg-green-100 text-green-800 border-green-300 mb-4">Tier 1</Badge>
+          <h3 className="text-2xl font-bold text-gray-900 mb-2">Basic FAQ Chatbots</h3>
+          <p className="text-gray-600">Perfect for small businesses needing 24/7 basic information</p>
+        </div>
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {tier1Chatbots.map((chatbot) => (
+            <Card key={chatbot.id} className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+              <CardHeader className="text-center">
+                <div className="mx-auto w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mb-3">
+                  <chatbot.icon className="w-6 h-6 text-green-600" />
+                </div>
+                <CardTitle className="text-lg">{chatbot.title}</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="relative h-48 w-full rounded-lg overflow-hidden">
+                  <img
+                    src={chatbot.image}
+                    alt={chatbot.title}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <h4 className="font-semibold text-sm text-gray-900">Key Features:</h4>
+                  {chatbot.features.map((feature, index) => (
+                    <div key={index} className="text-xs text-green-600 font-medium">
+                      ✓ {feature}
+                    </div>
+                  ))}
+                </div>
+                <Button
+                  className="w-full bg-green-600 hover:bg-green-700 text-white text-sm"
+                  onClick={() => {
+                    if (chatbot.title === 'Dental Office') {
+                      navigate('/demo/dental-office');
+                      window.scrollTo(0, 0);
+                    } else if (chatbot.title === 'Restaurant') {
+                      navigate('/demo/restaurant');
+                      window.scrollTo(0, 0);
+                    } else if (chatbot.title === 'Hair Salon') {
+                      navigate('/demo/hair-salon');
+                      window.scrollTo(0, 0);
+                    } else if (chatbot.title === 'Fitness Studio') {
+                      navigate('/demo/fitness-studio');
+                      window.scrollTo(0, 0);
+                    }
+                  }}
+                >
+                  Try Live Demo
+                </Button>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+
+      {/* Tier 2 */}
+      <div>
+        <div className="text-center mb-8">
+          <Badge className="bg-blue-100 text-blue-800 border-blue-300 mb-4">Tier 2</Badge>
+          <h3 className="text-2xl font-bold text-gray-900 mb-2">Enhanced Business Chatbots</h3>
+          <p className="text-gray-600">Perfect for growing businesses needing customer engagement</p>
+        </div>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {tier2Chatbots.map((chatbot) => (
+            <Card key={chatbot.id} className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+              <CardHeader className="text-center">
+                <div className="mx-auto w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-3">
+                  <chatbot.icon className="w-6 h-6 text-blue-600" />
+                </div>
+                <CardTitle className="text-lg">{chatbot.title}</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="relative h-48 w-full rounded-lg overflow-hidden">
+                  <img
+                    src={chatbot.image}
+                    alt={chatbot.title}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <h4 className="font-semibold text-sm text-gray-900">Key Features:</h4>
+                  {chatbot.features.map((feature, index) => (
+                    <div key={index} className="text-xs text-blue-600 font-medium">
+                      ✓ {feature}
+                    </div>
+                  ))}
+                </div>
+                <Button
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white text-sm"
+                  onClick={() => {
+                    if (chatbot.title === 'Real Estate Office') {
+                      navigate('/demo/real-estate');
+                    } else if (chatbot.title === 'E-commerce Store') {
+                      navigate('/demo/ecommerce');
+                    } else if (chatbot.title === 'Law Firm') {
+                      navigate('/demo/law-firm');
+                    }
+                  }}
+                >
+                  Try Live Demo
+                </Button>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+
+      {/* Tier 3 */}
+      <div>
+        <div className="text-center mb-8">
+          <Badge className="bg-purple-100 text-purple-800 border-purple-300 mb-4">Tier 3</Badge>
+          <h3 className="text-2xl font-bold text-gray-900 mb-2">Advanced Automation Chatbots</h3>
+          <p className="text-gray-600">Perfect for established businesses needing full automation</p>
+        </div>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {tier3Chatbots.map((chatbot) => (
+            <Card key={chatbot.id} className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+              <CardHeader className="text-center">
+                <div className="mx-auto w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mb-3">
+                  <chatbot.icon className="w-6 h-6 text-purple-600" />
+                </div>
+                <CardTitle className="text-lg">{chatbot.title}</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="relative h-48 w-full rounded-lg overflow-hidden">
+                  <img
+                    src={chatbot.image}
+                    alt={chatbot.title}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <h4 className="font-semibold text-sm text-gray-900">Key Features:</h4>
+                  {chatbot.features.map((feature, index) => (
+                    <div key={index} className="text-xs text-purple-600 font-medium">
+                      ✓ {feature}
+                    </div>
+                  ))}
+                </div>
+                <Button className="w-full bg-purple-600 hover:bg-purple-700 text-white text-sm">
+                  Try Live Demo
+                </Button>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+
+  return (
+    <section id="portfolio" className="py-20 bg-gray-50">
+      <div className="container mx-auto px-4 lg:px-8">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+            AI Solutions
+          </h2>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            Explore our comprehensive collection of AI automation projects that have transformed businesses across various industries and use cases.
+          </p>
+        </div>
+        {/* Filter buttons */}
+        <div className="flex flex-wrap justify-center gap-4 mb-12">
+          {filters.map((filter) => (
+            <Button
+              key={filter.id}
+              variant={activeFilter === filter.id ? "default" : "outline"}
+              onClick={() => setActiveFilter(filter.id)}
+              className={`${
+                activeFilter === filter.id
+                  ? 'bg-blue-600 text-white'
+                  : 'border-blue-600 text-blue-600 hover:bg-blue-50'
+              }`}
+            >
+              {filter.label}
+            </Button>
+          ))}
+        </div>
+
+        {/* Content based on filter */}
+        {activeFilter === 'chatbots' ? (
+          renderChatbotTiers()
+        ) : (
+          <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+            {filteredProjects.map((project) => (
+              <Card
+                key={project.id}
+                className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 overflow-hidden"
+              >
+                <div className="relative overflow-hidden">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <Button
+                      size="sm"
+                      variant="secondary"
+                      className="bg-white/90 hover:bg-white"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (project.link) {
+                          navigate(project.link);
+                          window.scrollTo(0, 0);
+                        }
+                      }}
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                    </Button>
+                    <Button size="sm" variant="secondary" className="bg-white/90 hover:bg-white">
+                      <Github className="w-4 h-4" />
+                    </Button>
+                  </div>
+                </div>
+
+                <CardHeader>
+                  <CardTitle
+                    className="transition-colors group-hover:text-blue-600 cursor-pointer"
+                    onClick={() => {
+                      navigate(project.link);
+                      window.scrollTo(0, 0);
+                    }}
+                  >
+                    {project.title}
+                  </CardTitle>
+                  <CardDescription className="text-sm">
+                    {project.description}
+                  </CardDescription>
+                </CardHeader>
+
+                <CardContent>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {project.tags.map((tag, index) => (
+                      <Badge key={index} variant="secondary" className="text-xs">
+                        {tag}
+                      </Badge>
+                    ))}
+                  </div>
+
+                  <div className="space-y-2">
+                    <h4 className="font-semibold text-sm text-gray-900">Key Results:</h4>
+                    {project.metrics.map((metric, index) => (
+                      <div key={index} className="text-xs text-blue-600 font-medium">
+                        ✓ {metric}
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        )}
+
+        {/* Removed View Complete Portfolio button */}
+        {/* <div className="text-center mt-12">
+          <Button
+            className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 text-lg group"
+            onClick={() => {
+              navigate('/portfolio');
+              window.scrollTo(0, 0);
+            }}
+          >
+            View Complete Portfolio
+            <ArrowRight className="ml-2 h-5 w-4 group-hover:translate-x-1 transition-transform" />
+          </Button>
+        </div> */}
+      </div>
+    </section>
+  );
+};
+
+export default Portfolio;

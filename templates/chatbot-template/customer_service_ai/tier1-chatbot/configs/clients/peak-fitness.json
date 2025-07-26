@@ -1,0 +1,32 @@
+{
+  "business_name": "FitZone Studio",
+  "responses": {
+    "hours|open|time": "🕒 We're open Monday-Sunday 6AM-10PM (EST)\n\nWe're here 7 days a week to fit your busy schedule!",
+
+    "class schedule|class times|classes|schedule": "��️ Class Schedule:\n\nMonday-Friday:\n• 6AM HIIT • 7AM Yoga • 6PM Spin\n\nWeekends:\n• Saturday: 8AM Bootcamp, 10AM Pilates\n• Sunday: 9AM Zumba, 11AM Stretch\n\nWould you like to book a specific class?",
+
+    "price|cost|membership|pricing|fees|rates": "💰 Membership Options:\n\n• Basic: $39/month (Gym access, group classes)\n• Premium: $79/month (Everything + 2 PT sessions)\n• Elite: $129/month (Unlimited everything)\n• Personal Training: $75/session\n\nFirst week is FREE! Ready to start?",
+
+    "services|training|what do you offer|programs": "🏋️ Our Services:\n\n• Personal Training (1-on-1 coaching)\n• Group Fitness Classes (HIIT, Yoga, Spin)\n• Nutrition Consultations\n• Strength & Conditioning\n\nWhat interests you most?",
+
+    "book|appointment|session|reserve": "📅 I'd love to help you book! We offer:\n\n• Personal Training: $75/session\n• Yoga Classes: Included with membership\n• Nutrition Consultation: $50/session\n\nWhat would you like to book? Or call us at (555) FIT-ZONE",
+
+    "nutrition|diet|meal|eating": "🥗 Our certified nutritionists help with:\n\n• Personalized meal plans\n• Weight management strategies\n• Sports nutrition guidance\n• Supplement recommendations\n\nNutrition consultations are $50. Want to schedule one?",
+
+    "personal training|trainer|pt": "🏋️ Personal Training at FitZone:\n\n• Certified trainers with 5+ years experience\n• Customized workout plans\n• Form correction and injury prevention\n• $75 per session, packages available\n\nReady to book your first session?",
+
+    "yoga|stretching|flexibility": "🧘 Yoga at FitZone:\n\n• Beginner to Advanced levels\n• Morning & Evening classes\n• Hot Yoga, Vinyasa, Restorative\n• Included with all memberships\n\nCheck our class schedule or book a spot!",
+
+    "hi|hello|hey|good morning|good afternoon": "👋 Welcome to FitZone Studio! I'm here to help you achieve your fitness goals. How can I assist you today?",
+
+    "contact|phone|address|location": "📍 Contact FitZone Studio:\n\nPhone: (555) FIT-ZONE\nAddress: 123 Fitness Ave, Your City\nEmail: info@fitzonestudio.com\nText us for quick questions!"
+  },
+  "contact": {
+    "phone": "(555) FIT-ZONE",
+    "email": "info@fitzonestudio.com",
+    "address": "123 Fitness Ave, Your City",
+    "website": "www.fitzonestudio.com"
+  },
+  "industry": "fitness",
+  "fallback_response": "I don't have that info, but our trainers do!\n\n\ud83d\udcde Contact us: {phone}\n\ud83c\udfcb\ufe0f Stop by during our hours\n\ud83d\udcdd Visit: {website}\n\nI can help with membership info, class schedules, or general questions though!"
+}

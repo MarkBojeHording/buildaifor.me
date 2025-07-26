@@ -1,0 +1,23 @@
+{
+  "neighborhoods": {
+    "downtown": {
+      "price_range": "$450k-650k",
+      "avg_days_market": 18,
+      "features": ["walkable", "restaurants", "transit"],
+      "agent": "Sarah Johnson"
+    },
+    "suburbs": {
+      "price_range": "$350k-550k",
+      "avg_days_market": 27,
+      "features": ["schools", "family_friendly", "larger_lots"],
+      "agent": "Mike Chen"
+    },
+    "waterfront": {
+      "price_range": "$700k+",
+      "avg_days_market": 52,
+      "features": ["water_access", "views", "luxury"],
+      "agent": "Lisa Rodriguez"
+    }
+  },
+  "sample_properties": []
+}

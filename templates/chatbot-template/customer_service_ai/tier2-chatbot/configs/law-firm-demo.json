@@ -1,0 +1,55 @@
+{
+  "client_id": "law-firm-demo",
+  "business_name": "Smith & Associates Law Firm",
+  "industry": "legal",
+  "contact": {
+    "phone": "(555) LAW-FIRM",
+    "email": "info@smithlaw.com",
+    "website": "www.smithlaw.com",
+    "address": "123 Legal Plaza, Downtown"
+  },
+  "ai_enabled": true,
+  "openai_config": {
+    "model": "gpt-3.5-turbo",
+    "temperature": 0.7,
+    "max_tokens": 150
+  },
+  "lead_capture": {
+    "enabled": true,
+    "required_fields": ["name", "email", "phone", "case_type"],
+    "optional_fields": ["case_description", "urgency", "budget_range"],
+    "case_types": [
+      "Personal Injury",
+      "Family Law",
+      "Criminal Defense",
+      "Real Estate",
+      "Business Law",
+      "Estate Planning",
+      "Employment Law"
+    ]
+  },
+  "fallback_response": "I don't have specific information about that legal matter, but our attorneys can help!\n\n📞 Call us: {phone}\n📧 Email: {email}\n🌐 Visit: {website}\n\nFor legal advice, please schedule a consultation with our experienced attorneys.\n\nI can help with general information about our services, consultation fees, or office hours though!",
+  "responses": {
+    "hours|open|time|schedule": "🕒 Our office hours are:\n\n• Monday-Friday: 8:00 AM - 6:00 PM\n• Saturday: 9:00 AM - 2:00 PM\n• Sunday: Closed\n\nWe offer emergency consultations outside business hours for urgent legal matters.",
+    "consultation|meet|appointment": "📋 Free Initial Consultation:\n\n• 30-minute free consultation to discuss your case\n• No obligation to hire our firm\n• Available in-person or via video call\n\nTo schedule: Call {phone} or email {email}",
+    "fees|cost|price|payment": "💰 Our Fee Structure:\n\n• Free initial consultation\n• Contingency fees for personal injury cases\n• Hourly rates: $250-400/hour\n• Flat fees for certain services\n• Payment plans available\n\nContact us for a detailed quote based on your specific case.",
+    "services|practice|areas": "⚖️ Our Practice Areas:\n\n• Personal Injury Law\n• Family Law & Divorce\n• Criminal Defense\n• Real Estate Law\n• Business Law\n• Estate Planning\n• Employment Law\n\nWe have over 20 years of combined experience in these areas.",
+    "personal injury|accident|car crash": "🚗 Personal Injury Cases:\n\n• Car accidents and motorcycle crashes\n• Slip and fall accidents\n• Medical malpractice\n• Product liability\n• Wrongful death\n\nWe work on contingency - no fees unless we win your case!",
+    "family law|divorce|custody": "👨‍👩‍👧‍👦 Family Law Services:\n\n• Divorce and separation\n• Child custody and support\n• Property division\n• Prenuptial agreements\n• Adoption\n\nWe handle cases with compassion and expertise.",
+    "criminal|arrest|charges": "🛡️ Criminal Defense:\n\n• DUI/DWI charges\n• Drug offenses\n• Assault and battery\n• Theft and fraud\n• White-collar crimes\n\nWe provide aggressive defense and protect your rights."
+  },
+  "quick_replies": [
+    "What are your consultation fees?",
+    "Do you handle personal injury cases?",
+    "What are your office hours?",
+    "Can I schedule a consultation?",
+    "What areas of law do you practice?"
+  ],
+  "theme": {
+    "primary_color": "#2c3e50",
+    "secondary_color": "#34495e",
+    "accent_color": "#e74c3c",
+    "text_color": "#2c3e50",
+    "background_color": "#ecf0f1"
+  }
+}

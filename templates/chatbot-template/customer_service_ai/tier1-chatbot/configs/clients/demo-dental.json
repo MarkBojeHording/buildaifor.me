@@ -1,0 +1,27 @@
+{
+  "client_id": "demo-dental",
+  "company_name": "ABC Dental Office",
+  "contact": {
+    "phone": "(555) 123-4567",
+    "email": "info@abcdental.com",
+    "website": "www.abcdental.com"
+  },
+  "industry": "dental",
+  "fallback_response": "I don't have that information, but our staff can help!\n\n\ud83d\udcde Call us: {phone}\n\ud83d\udcdd Visit: {website}\n\nFor medical questions, please speak with our professionals directly.\n\nI can help with appointments, hours, services, or insurance questions though!",
+  "services": "cleanings, exams, fillings, emergency care",
+  "hours": "Mon-Fri 8AM-5PM, Sat 9AM-2PM",
+  "tone": "friendly and professional",
+  "custom_rules": "For dental emergencies, tell them to call immediately. Always be reassuring about dental anxiety.",
+  "responses": {
+    "juicebox|cake|snack|food|drink|glass of water|eat|after appointment|after visit": "🦷 Post-Appointment Snacks & Drinks:\n\n• It's best to avoid sugary snacks like juice boxes and cake right after your dental visit.\n• Choose water or milk instead of sugary drinks.\n• If you're hungry, soft foods like yogurt, applesauce, or a banana are gentle on your teeth.\n\nRemember: Drinking water is always a great choice for your smile! 😊",
+    "hours|open|time|days": "🕒 Our hours are Mon-Fri 8AM-5PM, Sat 9AM-2PM.",
+    "services|offer|best": "🌟 Our best services include cleanings, exams, fillings, and emergency care!",
+    "appointment|book|booking|schedule": "📅 You can book an appointment during our open hours: Mon-Fri 8AM-5PM, Sat 9AM-2PM. Call us at (555) 123-4567 or use our website!",
+    "address|location|where": "📍 Our Address:\n\n123 Main Street\nCity, State 12345\n\nCall us at (555) 123-4567 if you need directions!",
+    "insurance": "📝 We accept most major insurance plans. Please call us to confirm your coverage!"
+  },
+  "widget_settings": {
+    "primary_color": "#4A90E2",
+    "title": "Chat with ABC Dental"
+  }
+}

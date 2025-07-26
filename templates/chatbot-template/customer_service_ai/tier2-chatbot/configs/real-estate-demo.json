@@ -1,0 +1,12 @@
+{
+  "client_id": "real-estate-demo",
+  "industry": "real_estate",
+  "business_type": "real_estate",
+  "business_name": "Dream Homes Realty",
+  "market_data": {
+    "average_home_price": "$485,000",
+    "market_trend": "steady_growth",
+    "inventory_level": "balanced",
+    "days_on_market": 28
+  }
+}

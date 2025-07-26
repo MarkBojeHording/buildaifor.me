@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechMart - AI Shopping Assistant</title>
+    <meta name="description" content="Shop the latest tech products with AI-powered assistance. Get product recommendations, support, and seamless shopping experience.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/public/favicon.ico">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/public/css/chatbot-widget.css">
+    <link rel="stylesheet" href="/public/css/themes/ecommerce-theme.css">
+
+    <style>
+        /* Demo-specific styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: #2d3748;
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+        }
+
+        .demo-header {
+            background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .demo-header h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .demo-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .demo-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .demo-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .demo-section h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #2d3748;
+        }
+
+        .demo-section h3 {
+            font-size: 1.3rem;
+            margin: 1.5rem 0 0.5rem 0;
+            color: #4a5568;
+        }
+
+        .demo-section p {
+            margin-bottom: 1rem;
+            color: #555;
+        }
+
+        .service-list {
+            list-style: none;
+            margin: 1rem 0;
+        }
+
+        .service-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+        }
+
+        .service-list li:before {
+            content: "🛍️";
+            margin-right: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .product-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.5rem;
+            border: 1px solid #e9ecef;
+            text-align: center;
+        }
+
+        .product-card h4 {
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-card p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-price {
+            font-weight: 600;
+            color: #e53e3e;
+            font-size: 1.1rem;
+        }
+
+        .product-rating {
+            color: #f6ad55;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-info {
+            background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .contact-info h3 {
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .contact-info p {
+            margin-bottom: 0.5rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .demo-footer {
+            background: #2d3748;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .demo-footer p {
+            opacity: 0.8;
+        }
+
+        .demo-notice {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .demo-notice strong {
+            color: #856404;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .category-card {
+            background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .category-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .category-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .category-name {
+            font-weight: 600;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .demo-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .demo-header h1 {
+                font-size: 2rem;
+            }
+
+            .demo-content {
+                padding: 2rem 1rem;
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+
+            .category-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Demo Header -->
+    <header class="demo-header">
+        <h1>TechMart</h1>
+        <p>Your Ultimate Tech Store with AI-Powered Shopping Assistant</p>
+    </header>
+
+    <!-- Demo Notice -->
+    <div class="demo-content">
+        <div class="demo-notice">
+            <strong>Demo Notice:</strong> This is a demonstration of the Tier 2 E-commerce Chatbot.
+            The AI assistant can help with product searches, recommendations, and customer support.
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="demo-grid">
+            <!-- Services Section -->
+            <div class="demo-section">
+                <h2>Our Product Categories</h2>
+                <p>Discover the latest technology products across all categories with competitive prices and expert support.</p>
+
+                <h3>Shop by Category</h3>
+                <div class="category-grid">
+                    <div class="category-card">
+                        <div class="category-icon">💻</div>
+                        <div class="category-name">Laptops</div>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-icon">📱</div>
+                        <div class="category-name">Phones</div>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-icon">🎧</div>
+                        <div class="category-name">Audio</div>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-icon">🎮</div>
+                        <div class="category-name">Gaming</div>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-icon">🏠</div>
+                        <div class="category-name">Smart Home</div>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-icon">⌚</div>
+                        <div class="category-name">Wearables</div>
+                    </div>
+                </div>
+
+                <h3>Store Statistics</h3>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">10K+</div>
+                        <div class="stat-label">Products</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">50K+</div>
+                        <div class="stat-label">Happy Customers</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">4.8★</div>
+                        <div class="stat-label">Average Rating</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">Support</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Assistant Section -->
+            <div class="demo-section">
+                <h2>AI Shopping Assistant</h2>
+                <p>Get personalized product recommendations, instant support, and seamless shopping experience with our AI assistant.</p>
+
+                <h3>What Our AI Can Help With:</h3>
+                <ul class="service-list">
+                    <li>Product recommendations</li>
+                    <li>Price comparisons and deals</li>
+                    <li>Order tracking and status</li>
+                    <li>Return and refund assistance</li>
+                    <li>Technical support and troubleshooting</li>
+                    <li>Payment and shipping options</li>
+                </ul>
+
+                <h3>Featured Products</h3>
+                <div class="product-grid">
+                    <div class="product-card">
+                        <h4>MacBook Pro 14"</h4>
+                        <div class="product-rating">★★★★★ (4.9)</div>
+                        <p>M2 Pro • 16GB RAM • 512GB SSD</p>
+                        <div class="product-price">$1,999</div>
+                    </div>
+                    <div class="product-card">
+                        <h4>iPhone 15 Pro</h4>
+                        <div class="product-rating">★★★★★ (4.8)</div>
+                        <p>256GB • Titanium • 5G</p>
+                        <div class="product-price">$999</div>
+                    </div>
+                    <div class="product-card">
+                        <h4>Sony WH-1000XM5</h4>
+                        <div class="product-rating">★★★★★ (4.7)</div>
+                        <p>Wireless Noise Canceling</p>
+                        <div class="product-price">$349</div>
+                    </div>
+                    <div class="product-card">
+                        <h4>PlayStation 5</h4>
+                        <div class="product-rating">★★★★★ (4.9)</div>
+                        <p>Digital Edition • 825GB</p>
+                        <div class="product-price">$499</div>
+                    </div>
+                </div>
+
+                <h3>Try These Questions:</h3>
+                <ul class="service-list">
+                    <li>"What's the best laptop for gaming?"</li>
+                    <li>"Do you have any deals on phones?"</li>
+                    <li>"How do I track my order?"</li>
+                    <li>"What's your return policy?"</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="contact-info">
+            <h3>Contact Information</h3>
+            <p><strong>Address:</strong> 789 Tech Street, Suite 100, Downtown City, ST 12345</p>
+            <p><strong>Phone:</strong> (555) 456-7890</p>
+            <p><strong>Email:</strong> support@techmart.com</p>
+            <p><strong>Hours:</strong> Monday - Sunday: 8:00 AM - 10:00 PM</p>
+            <p><strong>24/7 Support:</strong> Available for urgent technical issues</p>
+        </div>
+    </div>
+
+    <!-- Demo Footer -->
+    <footer class="demo-footer">
+        <p>&copy; 2024 TechMart. This is a demonstration of the Tier 2 Chatbot system.</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="/public/js/utils.js"></script>
+    <script src="/public/js/chat-widget.js"></script>
+    <script src="/public/js/demo-controller.js"></script>
+
+    <script>
+        // Initialize demo
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize demo controller
+            const demoController = new DemoController();
+            demoController.init();
+
+            // Load ecommerce demo
+            demoController.loadDemo('ecommerce');
+
+            // Add demo-specific interactions
+            console.log('E-commerce Demo loaded successfully');
+
+            // Example: Auto-open chat after 5 seconds
+            setTimeout(() => {
+                demoController.openChat();
+            }, 5000);
+        });
+    </script>
+</body>
+</html>

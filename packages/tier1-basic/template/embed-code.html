@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Business Name - Chatbot Widget</title>
+
+    <!-- Tier 1 Basic FAQ Chatbot Widget -->
+    <link rel="stylesheet" href="styles.css">
+    <script src="chatbot-widget.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            new ChatbotWidget({
+                clientId: 'your-business-name',
+                title: 'Your Business Name',
+                theme: 'default',
+                position: 'bottom-right',
+                apiUrl: 'http://localhost:8001',
+                responses: {
+                    'hours|open|time|when': '🕒 We\'re open Monday-Friday 9AM-5PM. Closed on weekends and holidays.',
+                    'location|where|address': '📍 We\'re located at 123 Main Street, City, State 12345.',
+                    'contact|phone|call': '📞 You can reach us at (555) 123-4567 or email us at info@yourbusiness.com',
+                    'services|offer|what do you do': '💼 We offer a range of services including [list your main services]. What specifically are you looking for?',
+                    'pricing|cost|price|how much': '💰 Our pricing varies depending on your needs. Could you tell me more about what you\'re looking for?',
+                    'appointment|book|schedule': '📅 To schedule an appointment, please call us at (555) 123-4567 or visit our website.',
+                    'hello|hi|hey': '👋 Hello! How can I help you today?',
+                    'thanks|thank you': 'You\'re welcome! Is there anything else I can help you with?'
+                },
+                quickReplies: [
+                    { text: 'What are your hours?', icon: '🕒' },
+                    { text: 'Where are you located?', icon: '📍' },
+                    { text: 'How can I contact you?', icon: '📞' },
+                    { text: 'What services do you offer?', icon: '💼' }
+                ]
+            });
+        });
+    </script>
+</head>
+<body>
+    <div style="padding: 20px; font-family: Arial, sans-serif;">
+        <h1>Your Business Name</h1>
+        <p>This is your website content. The chatbot widget will appear in the bottom-right corner.</p>
+        <p>Click the chat button to test the Tier 1 Basic FAQ chatbot!</p>
+
+        <h2>Test Questions</h2>
+        <p>Try asking the chatbot:</p>
+        <ul>
+            <li>"What are your hours?"</li>
+            <li>"Where are you located?"</li>
+            <li>"How can I contact you?"</li>
+            <li>"What services do you offer?"</li>
+            <li>"What's your pricing?"</li>
+        </ul>
+
+        <h2>Features</h2>
+        <ul>
+            <li>✅ Basic FAQ responses</li>
+            <li>✅ Quick reply buttons</li>
+            <li>✅ Mobile responsive</li>
+            <li>✅ 5-minute setup</li>
+            <li>✅ Non-technical onboarding</li>
+        </ul>
+    </div>
+</body>
+</html>

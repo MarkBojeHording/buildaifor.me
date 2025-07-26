@@ -1,0 +1,57 @@
+{
+  "client_id": "ecommerce-demo",
+  "business_name": "TechGear Online Store",
+  "industry": "ecommerce",
+  "contact": {
+    "phone": "(555) TECH-GEAR",
+    "email": "support@techgear.com",
+    "website": "www.techgear.com",
+    "address": "789 Tech Street, Innovation District"
+  },
+  "ai_enabled": false,
+  "lead_capture": {
+    "enabled": true,
+    "required_fields": ["name", "email", "product_interest"],
+    "optional_fields": ["budget_range", "use_case", "experience_level", "preferred_brand"],
+    "product_categories": [
+      "Laptops & Computers",
+      "Smartphones & Tablets",
+      "Audio & Headphones",
+      "Gaming & Accessories",
+      "Smart Home Devices",
+      "Wearables & Fitness"
+    ],
+    "budget_ranges": [
+      "$50 - $100",
+      "$100 - $250",
+      "$250 - $500",
+      "$500 - $1000",
+      "$1000+"
+    ]
+  },
+  "fallback_response": "I don't have specific information about that product, but our support team can help!\n\n📞 Call us: {phone}\n📧 Email: {email}\n🌐 Visit: {website}\n\nOur customer service team is available to answer all your questions.\n\nI can help with product recommendations, order status, or general support though!",
+  "responses": {
+    "product_search": "Here are some products that match your search: {{products}}.",
+    "category_browse": "Browsing category: {{category}}. Here are some top items: {{products}}.",
+    "discount_inquiry": "Here are the current deals and discounts: {{discounts}}.",
+    "greeting": "🛒 Welcome to ShopSmart AI! I'm here to help you with product recommendations, order tracking, sales analytics, and more. How can I assist you today?",
+    "product_compare": "Here's a comparison: {{comparison}}.",
+    "shipping_inquiry": "Shipping is free on orders over $50. Standard shipping is $5.99.",
+    "order_status": "Please provide your order number so I can check the status for you.",
+    "fallback": "I'm here to help! How can I assist you today?"
+  },
+  "quick_replies": [
+    "Show me laptops",
+    "What's your return policy?",
+    "Track my order",
+    "Contact customer service",
+    "Current promotions"
+  ],
+  "theme": {
+    "primary_color": "#3498db",
+    "secondary_color": "#2980b9",
+    "accent_color": "#e67e22",
+    "text_color": "#2c3e50",
+    "background_color": "#ffffff"
+  }
+}
