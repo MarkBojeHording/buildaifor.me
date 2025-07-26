@@ -22,4 +22,14 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    rollupOptions: {
+      external: ['@rollup/rollup-linux-x64-gnu'],
+    },
+    target: 'es2015',
+    minify: 'esbuild',
+  },
+  define: {
+    'process.env.ROLLUP_SKIP_NATIVE': JSON.stringify(process.env.ROLLUP_SKIP_NATIVE || 'true'),
+  },
 }));
