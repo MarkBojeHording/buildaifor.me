@@ -1,4 +1,11 @@
 {
   "buildCommand": "cd website && npm run build",
-  "outputDirectory": "website/dist"
+  "outputDirectory": "website/dist",
+  "functions": {},
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
 }
