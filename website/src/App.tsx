@@ -18,6 +18,7 @@ import BusinessIntelligence from "./pages/services/BusinessIntelligence";
 import MachineLearning from "./pages/services/MachineLearning";
 import HealthcarePatientAssistant from "./pages/portfolio/HealthcarePatientAssistant";
 import HRRecruitmentAutomation from "./pages/portfolio/HRRecruitmentAutomation";
+import AIEmailWorkflow from "./pages/portfolio/AIEmailWorkflow";
 import ManufacturingQualityControl from "./pages/portfolio/ManufacturingQualityControl";
 import LegalDocumentAnalyzer from "./pages/portfolio/LegalDocumentAnalyzer";
 import EcommerceSalesIntelligence from "./pages/portfolio/EcommerceSalesIntelligence";
@@ -58,6 +59,7 @@ const App = () => (
           {/* Portfolio case study pages */}
           <Route path="/portfolio/healthcare-patient-assistant" element={<HealthcarePatientAssistant />} />
           <Route path="/portfolio/hr-recruitment-automation" element={<HRRecruitmentAutomation />} />
+          <Route path="/portfolio/ai-email-workflow" element={<AIEmailWorkflow />} />
           <Route path="/portfolio/manufacturing-quality-control" element={<ManufacturingQualityControl />} />
           <Route path="/portfolio/legal-document-analyzer" element={<LegalDocumentAnalyzer />} />
           <Route path="/portfolio/ecommerce-sales-intelligence" element={<EcommerceSalesIntelligence />} />

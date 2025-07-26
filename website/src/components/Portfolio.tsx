@@ -51,13 +51,13 @@ const Portfolio = () => {
     },
     {
       id: 4,
-      title: 'HR Recruitment Automation',
-      description: 'AI-powered candidate screening and interview scheduling',
+      title: 'AI Email Processing Workflow',
+      description: 'Intelligent email classification, auto-responses, and data extraction system',
       category: 'workflow',
-      tags: ['HR Tech', 'Recruitment', 'Process Automation'],
-      image: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-      metrics: ['60% screening time reduced', '90% scheduling automation', '2x faster hiring'],
-      link: '/portfolio/hr-recruitment-automation'
+      tags: ['Email Automation', 'AI Classification', 'Data Extraction'],
+      image: 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      metrics: ['85% email classification accuracy', '70% response time reduction', 'Automated data extraction'],
+      link: '/portfolio/ai-email-workflow'
     },
     {
       id: 5,
