@@ -41,6 +41,7 @@
     "@radix-ui/react-toggle-group": "^1.1.0",
     "@radix-ui/react-tooltip": "^1.1.4",
     "@rollup/rollup-darwin-arm64": "^4.45.1",
+    "@rollup/rollup-linux-x64-gnu": "^4.45.1",
     "@tanstack/react-query": "^5.56.2",
     "@vitejs/plugin-react": "^4.7.0",
     "class-variance-authority": "^0.7.1",
@@ -88,6 +89,7 @@
     "typescript-eslint": "^8.0.1"
   },
   "optionalDependencies": {
+    "@rollup/rollup-darwin-arm64": "^4.45.1",
     "@rollup/rollup-linux-x64-gnu": "^4.0.0"
   }
 }
