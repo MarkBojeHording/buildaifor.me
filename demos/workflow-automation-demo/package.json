@@ -1,0 +1,43 @@
+{
+  "name": "ai-email-workflow",
+  "version": "1.0.0",
+  "description": "AI-powered email processing workflow automation tool",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "nodemon backend/server.js",
+    "test": "jest",
+    "build": "echo 'Build complete'"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "openai": "^4.20.1",
+    "imap": "^0.8.19",
+    "nodemailer": "^6.9.7",
+    "natural": "^6.5.0",
+    "compromise": "^14.10.0",
+    "uuid": "^9.0.1",
+    "sqlite3": "^5.1.6",
+    "express-rate-limit": "^7.1.5",
+    "helmet": "^7.1.0",
+    "multer": "^1.4.5-lts.2",
+    "moment": "^2.29.4",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1",
+    "jest": "^29.5.0"
+  },
+  "keywords": [
+    "ai",
+    "email",
+    "workflow",
+    "automation",
+    "classification",
+    "nlp"
+  ],
+  "author": "BuildAIFor.Me",
+  "license": "MIT"
+}

@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Email Workflow - BuildAIFor.Me</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-robot"></i>
+                    <h1>AI Email Workflow</h1>
+                </div>
+                <div class="header-actions">
+                    <button id="connectBtn" class="btn btn-primary">
+                        <i class="fas fa-plug"></i> Connect Email
+                    </button>
+                    <button id="autoProcessingBtn" class="btn btn-secondary">
+                        <i class="fas fa-play"></i> Start Auto Processing
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <nav class="nav-menu">
+                    <a href="#dashboard" class="nav-item active" data-section="dashboard">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="#processing" class="nav-item" data-section="processing">
+                        <i class="fas fa-cogs"></i>
+                        <span>Email Processing</span>
+                    </a>
+                    <a href="#analytics" class="nav-item" data-section="analytics">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Analytics</span>
+                    </a>
+                    <a href="#responses" class="nav-item" data-section="responses">
+                        <i class="fas fa-reply"></i>
+                        <span>Auto Responses</span>
+                    </a>
+                    <a href="#workflows" class="nav-item" data-section="workflows">
+                        <i class="fas fa-project-diagram"></i>
+                        <span>Workflows</span>
+                    </a>
+                    <a href="#settings" class="nav-item" data-section="settings">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                </nav>
+            </aside>
+
+            <!-- Content Area -->
+            <div class="content-area">
+                <!-- Dashboard Section -->
+                <section id="dashboard" class="content-section active">
+                    <div class="section-header">
+                        <h2>Dashboard Overview</h2>
+                        <p>Real-time insights into your AI email processing performance</p>
+                    </div>
+
+                    <!-- Stats Cards -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="totalEmails">0</h3>
+                                <p>Total Emails</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="processedEmails">0</h3>
+                                <p>Processed</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="timeSaved">0h</h3>
+                                <p>Time Saved</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-percentage"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="accuracyRate">0%</h3>
+                                <p>Accuracy Rate</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Charts Row -->
+                    <div class="charts-row">
+                        <div class="chart-container">
+                            <h3>Email Classification</h3>
+                            <canvas id="classificationChart"></canvas>
+                        </div>
+                        <div class="chart-container">
+                            <h3>Processing Performance</h3>
+                            <canvas id="performanceChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activity -->
+                    <div class="recent-activity">
+                        <h3>Recent Activity</h3>
+                        <div id="activityList" class="activity-list">
+                            <!-- Activity items will be populated here -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Email Processing Section -->
+                <section id="processing" class="content-section">
+                    <div class="section-header">
+                        <h2>Email Processing</h2>
+                        <p>Process emails with AI-powered classification and analysis</p>
+                    </div>
+
+                    <!-- Processing Controls -->
+                    <div class="processing-controls">
+                        <div class="control-group">
+                            <button id="demoBtn" class="btn btn-primary">
+                                <i class="fas fa-play"></i> Run Demo
+                            </button>
+                            <button id="uploadBtn" class="btn btn-secondary">
+                                <i class="fas fa-upload"></i> Upload Email
+                            </button>
+                            <input type="file" id="emailFile" accept=".eml,.txt" style="display: none;">
+                        </div>
+                    </div>
+
+                    <!-- Email Input Form -->
+                    <div class="email-input-form">
+                        <h3>Process Single Email</h3>
+                        <form id="emailForm">
+                            <div class="form-group">
+                                <label for="emailSubject">Subject</label>
+                                <input type="text" id="emailSubject" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="emailSender">Sender</label>
+                                <input type="text" id="emailSender" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="emailContent">Content</label>
+                                <textarea id="emailContent" rows="6" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-magic"></i> Process with AI
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Processing Results -->
+                    <div id="processingResults" class="processing-results" style="display: none;">
+                        <h3>Processing Results</h3>
+                        <div id="resultsContent"></div>
+                    </div>
+                </section>
+
+                <!-- Analytics Section -->
+                <section id="analytics" class="content-section">
+                    <div class="section-header">
+                        <h2>Analytics & Insights</h2>
+                        <p>Detailed analytics and performance metrics</p>
+                    </div>
+
+                    <!-- Analytics Tabs -->
+                    <div class="analytics-tabs">
+                        <button class="tab-btn active" data-tab="classification">Classification</button>
+                        <button class="tab-btn" data-tab="sentiment">Sentiment</button>
+                        <button class="tab-btn" data-tab="priority">Priority</button>
+                        <button class="tab-btn" data-tab="responses">Responses</button>
+                        <button class="tab-btn" data-tab="performance">Performance</button>
+                    </div>
+
+                    <!-- Analytics Content -->
+                    <div class="analytics-content">
+                        <div id="classification-tab" class="tab-content active">
+                            <div class="chart-container">
+                                <canvas id="classificationAnalyticsChart"></canvas>
+                            </div>
+                        </div>
+                        <div id="sentiment-tab" class="tab-content">
+                            <div class="chart-container">
+                                <canvas id="sentimentChart"></canvas>
+                            </div>
+                        </div>
+                        <div id="priority-tab" class="tab-content">
+                            <div class="chart-container">
+                                <canvas id="priorityChart"></canvas>
+                            </div>
+                        </div>
+                        <div id="responses-tab" class="tab-content">
+                            <div class="chart-container">
+                                <canvas id="responsesChart"></canvas>
+                            </div>
+                        </div>
+                        <div id="performance-tab" class="tab-content">
+                            <div class="chart-container">
+                                <canvas id="performanceAnalyticsChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Auto Responses Section -->
+                <section id="responses" class="content-section">
+                    <div class="section-header">
+                        <h2>Auto Response Management</h2>
+                        <p>Configure and manage AI-generated email responses</p>
+                    </div>
+
+                    <!-- Response Templates -->
+                    <div class="response-templates">
+                        <h3>Response Templates</h3>
+                        <div class="template-grid">
+                            <div class="template-card">
+                                <h4>Customer Support</h4>
+                                <p>Automated responses for support inquiries</p>
+                                <button class="btn btn-sm btn-primary">Configure</button>
+                            </div>
+                            <div class="template-card">
+                                <h4>Sales Inquiry</h4>
+                                <p>Responses for product and pricing questions</p>
+                                <button class="btn btn-sm btn-primary">Configure</button>
+                            </div>
+                            <div class="template-card">
+                                <h4>Meeting Request</h4>
+                                <p>Scheduling and meeting coordination</p>
+                                <button class="btn btn-sm btn-primary">Configure</button>
+                            </div>
+                            <div class="template-card">
+                                <h4>Urgent Matters</h4>
+                                <p>High-priority issue responses</p>
+                                <button class="btn btn-sm btn-primary">Configure</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Response History -->
+                    <div class="response-history">
+                        <h3>Recent Responses</h3>
+                        <div id="responseHistory" class="response-list">
+                            <!-- Response history will be populated here -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Workflows Section -->
+                <section id="workflows" class="content-section">
+                    <div class="section-header">
+                        <h2>Workflow Automation</h2>
+                        <p>Create and manage automated email workflows</p>
+                    </div>
+
+                    <!-- Workflow Builder -->
+                    <div class="workflow-builder">
+                        <h3>Create New Workflow</h3>
+                        <div class="workflow-form">
+                            <div class="form-group">
+                                <label for="workflowName">Workflow Name</label>
+                                <input type="text" id="workflowName" placeholder="e.g., High Priority Support">
+                            </div>
+                            <div class="form-group">
+                                <label for="workflowTrigger">Trigger Conditions</label>
+                                <select id="workflowTrigger">
+                                    <option value="urgent">Urgent Emails</option>
+                                    <option value="customer_support">Customer Support</option>
+                                    <option value="sales_inquiry">Sales Inquiry</option>
+                                    <option value="high_priority">High Priority</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="workflowActions">Actions</label>
+                                <div class="action-checkboxes">
+                                    <label><input type="checkbox" value="classify"> Auto-classify</label>
+                                    <label><input type="checkbox" value="respond"> Auto-respond</label>
+                                    <label><input type="checkbox" value="escalate"> Escalate to human</label>
+                                    <label><input type="checkbox" value="notify"> Send notification</label>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary">Create Workflow</button>
+                        </div>
+                    </div>
+
+                    <!-- Active Workflows -->
+                    <div class="active-workflows">
+                        <h3>Active Workflows</h3>
+                        <div id="workflowsList" class="workflows-list">
+                            <!-- Workflows will be populated here -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Settings Section -->
+                <section id="settings" class="content-section">
+                    <div class="section-header">
+                        <h2>Settings & Configuration</h2>
+                        <p>Configure AI models, email settings, and system preferences</p>
+                    </div>
+
+                    <!-- Settings Tabs -->
+                    <div class="settings-tabs">
+                        <button class="tab-btn active" data-tab="ai">AI Configuration</button>
+                        <button class="tab-btn" data-tab="email">Email Settings</button>
+                        <button class="tab-btn" data-tab="notifications">Notifications</button>
+                        <button class="tab-btn" data-tab="security">Security</button>
+                    </div>
+
+                    <!-- Settings Content -->
+                    <div class="settings-content">
+                        <div id="ai-tab" class="tab-content active">
+                            <h3>AI Model Settings</h3>
+                            <div class="form-group">
+                                <label for="openaiKey">OpenAI API Key</label>
+                                <input type="password" id="openaiKey" placeholder="sk-...">
+                            </div>
+                            <div class="form-group">
+                                <label for="confidenceThreshold">Confidence Threshold</label>
+                                <input type="range" id="confidenceThreshold" min="0" max="1" step="0.1" value="0.7">
+                                <span id="confidenceValue">0.7</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="enableAutoResponse">Enable Auto Responses</label>
+                                <input type="checkbox" id="enableAutoResponse" checked>
+                            </div>
+                        </div>
+                        <div id="email-tab" class="tab-content">
+                            <h3>Email Configuration</h3>
+                            <div class="form-group">
+                                <label for="emailProvider">Email Provider</label>
+                                <select id="emailProvider">
+                                    <option value="gmail">Gmail</option>
+                                    <option value="outlook">Outlook</option>
+                                    <option value="yahoo">Yahoo</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="emailUser">Email Address</label>
+                                <input type="email" id="emailUser" placeholder="your@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="emailPassword">Password/App Password</label>
+                                <input type="password" id="emailPassword">
+                            </div>
+                        </div>
+                        <div id="notifications-tab" class="tab-content">
+                            <h3>Notification Settings</h3>
+                            <div class="form-group">
+                                <label for="emailNotifications">Email Notifications</label>
+                                <input type="checkbox" id="emailNotifications" checked>
+                            </div>
+                            <div class="form-group">
+                                <label for="notificationFrequency">Notification Frequency</label>
+                                <select id="notificationFrequency">
+                                    <option value="immediate">Immediate</option>
+                                    <option value="hourly">Hourly</option>
+                                    <option value="daily">Daily</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="security-tab" class="tab-content">
+                            <h3>Security Settings</h3>
+                            <div class="form-group">
+                                <label for="enableEncryption">Enable Encryption</label>
+                                <input type="checkbox" id="enableEncryption" checked>
+                            </div>
+                            <div class="form-group">
+                                <label for="dataRetention">Data Retention (days)</label>
+                                <input type="number" id="dataRetention" value="30" min="1" max="365">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+        <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Processing...</p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/app.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/demo.js"></script>
+</body>
+</html>
