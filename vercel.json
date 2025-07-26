@@ -1,7 +1,7 @@
 {
-  "buildCommand": "cd website && export ROLLUP_SKIP_NATIVE=true && export ESBUILD_BINARY_PATH= && export NODE_ENV=production && export PATH=$PATH:./node_modules/.bin && rm -rf node_modules package-lock.json && npm install --no-optional && npm run build",
+  "buildCommand": "cd website && npm install && npm run build",
   "outputDirectory": "website/dist",
-  "installCommand": "cd website && npm install --no-optional",
+  "installCommand": "cd website && npm install",
   "framework": "vite",
   "env": {
     "NODE_ENV": "production",
