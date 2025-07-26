@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card.tsx';
+import { Button } from '@/components/ui/button.tsx';
+import { Badge } from '@/components/ui/badge.tsx';
 import { ExternalLink, Github, ArrowRight, MessageSquare, Clock, Users, Dumbbell, Calendar, Building, Car, Scissors, Stethoscope, Home, Scale, ShoppingCart, Monitor, Store, Heart } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 

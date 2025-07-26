@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card.tsx';
+import { Button } from '@/components/ui/button.tsx';
+import { Badge } from '@/components/ui/badge.tsx';
 import { ExternalLink, Github, ArrowLeft } from 'lucide-react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import Header from '../components/Header.tsx';
+import Footer from '../components/Footer.tsx';
 
 const Portfolio = () => {
   const [activeFilter, setActiveFilter] = useState('all');
@@ -90,19 +90,19 @@ const Portfolio = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
       <Header />
-      
+
       <section className="pt-24 pb-20">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="mb-8">
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               onClick={() => window.history.back()}
               className="mb-6 group"
             >
               <ArrowLeft className="mr-2 h-4 w-4 group-hover:-translate-x-1 transition-transform" />
               Back to Home
             </Button>
-            
+
             <h1 className="text-4xl font-bold text-gray-900 mb-4">
               Complete AI Solutions Portfolio
             </h1>
@@ -142,9 +142,9 @@ const Portfolio = () => {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <Button 
-                      size="sm" 
-                      variant="secondary" 
+                    <Button
+                      size="sm"
+                      variant="secondary"
                       className="bg-white/90 hover:bg-white"
                       onClick={(e) => {
                         e.stopPropagation();
@@ -161,7 +161,7 @@ const Portfolio = () => {
                 </div>
 
                 <CardHeader>
-                  <CardTitle 
+                  <CardTitle
                     className="group-hover:text-blue-600 transition-colors cursor-pointer"
                     onClick={() => {
                       navigate(project.link);
@@ -203,7 +203,7 @@ const Portfolio = () => {
                 Ready to Start Your AI Project?
               </h3>
               <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-                See how we can transform your business with custom AI solutions. 
+                See how we can transform your business with custom AI solutions.
                 Get started with our template solutions in just 24-48 hours.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">

@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ArrowLeft, MessageSquare, ShoppingCart, Package, DollarSign, BarChart3 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import { Button } from '@/components/ui/button.tsx';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card.tsx';
+import { Badge } from '@/components/ui/badge.tsx';
+import Header from '../components/Header.tsx';
+import Footer from '../components/Footer.tsx';
 
 interface Message {
   id: string;

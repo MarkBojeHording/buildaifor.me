@@ -1,13 +1,13 @@
 
-import Hero from '../components/Hero';
+import Hero from '../components/Hero.tsx';
 // import Services from '../components/Services';
 // import Industries from '../components/Industries';
-import Process from '../components/Process';
-import Pricing from '../components/Pricing';
-import Contact from '../components/Contact';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import Portfolio from '../components/Portfolio';
+import Process from '../components/Process.tsx';
+import Pricing from '../components/Pricing.tsx';
+import Contact from '../components/Contact.tsx';
+import Header from '../components/Header.tsx';
+import Footer from '../components/Footer.tsx';
+import Portfolio from '../components/Portfolio.tsx';
 
 const Index = () => {
   return (

@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card.tsx';
+import { Button } from '@/components/ui/button.tsx';
+import { Badge } from '@/components/ui/badge.tsx';
+import { Input } from '@/components/ui/input.tsx';
 import {
   Search,
   Calendar,
@@ -17,8 +17,8 @@ import {
   Globe,
   Target
 } from 'lucide-react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import Header from '../components/Header.tsx';
+import Footer from '../components/Footer.tsx';
 
 const Blog = () => {
   const [searchTerm, setSearchTerm] = useState('');

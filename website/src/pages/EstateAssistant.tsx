@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Building2, MessageSquare, Upload, BarChart3, Settings } from 'lucide-react';
-import { ChatInterface } from '../components/estate/ChatInterface';
-import { DocumentUpload } from '../components/estate/DocumentUpload';
-import { ClientDashboard } from '../components/estate/ClientDashboard';
-import { EscalationModal } from '../components/estate/EscalationModal';
-import { Client } from '../types/estate';
-import { MOCK_MARKET_INSIGHTS, MOCK_SAVED_PROPERTIES } from '../utils/estate/constants';
+import { ChatInterface } from '../components/estate/ChatInterface.tsx';
+import { DocumentUpload } from '../components/estate/DocumentUpload.tsx';
+import { ClientDashboard } from '../components/estate/ClientDashboard.tsx';
+import { EscalationModal } from '../components/estate/EscalationModal.tsx';
+import { Client } from '../types/estate.ts';
+import { MOCK_MARKET_INSIGHTS, MOCK_SAVED_PROPERTIES } from '../utils/estate/constants.ts';
 
 type ActiveTab = 'chat' | 'upload' | 'dashboard' | 'analytics';
 

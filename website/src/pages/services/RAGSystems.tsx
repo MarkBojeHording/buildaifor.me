@@ -1,9 +1,9 @@
 import { Brain, Search, BookOpen, Zap, ArrowLeft, CheckCircle, Star, FileText } from 'lucide-react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import Header from '../../components/Header';
-import Footer from '../../components/Footer';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card.tsx';
+import { Button } from '@/components/ui/button.tsx';
+import { Badge } from '@/components/ui/badge.tsx';
+import Header from '../../components/Header.tsx';
+import Footer from '../../components/Footer.tsx';
 
 const RAGSystems = () => {
   const features = [

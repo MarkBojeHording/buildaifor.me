@@ -1,10 +1,10 @@
 import { Heart, MessageSquare, Calendar, Clock, Users, TrendingUp, ArrowLeft, CheckCircle, Star, Phone } from 'lucide-react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
-import Header from '../../components/Header';
-import Footer from '../../components/Footer';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card.tsx';
+import { Button } from '@/components/ui/button.tsx';
+import { Badge } from '@/components/ui/badge.tsx';
+import { Progress } from '@/components/ui/progress.tsx';
+import Header from '../../components/Header.tsx';
+import Footer from '../../components/Footer.tsx';
 
 const HealthcarePatientAssistant = () => {
   const queryExamples = [

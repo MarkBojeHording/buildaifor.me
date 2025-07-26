@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { User, Home, Heart, TrendingUp, MapPin, DollarSign, Settings, Phone, Mail, Award, Star } from 'lucide-react';
-import { Client, MarketInsight, PropertyReference, AgentInfo } from '../../types';
+import { Client, MarketInsight, PropertyReference, AgentInfo } from '../../types/index.ts';
 
 interface ClientDashboardProps {
   client: Client;

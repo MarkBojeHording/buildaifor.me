@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Send, Bot, User, Home, TrendingUp, MapPin, AlertTriangle, CheckCircle } from 'lucide-react';
-import { Message, ChatResponse, PropertyReference, PropertySource } from '../../types';
-import { apiClient } from '../../api/client';
+import { Message, ChatResponse, PropertyReference, PropertySource } from '../../types/index.ts';
+import { apiClient } from '../../api/client.ts';
 
 interface ChatInterfaceProps {
   onEscalate: () => void;
