@@ -25,9 +25,6 @@ export default defineConfig(({ mode }) => ({
   build: {
     target: 'es2015',
     minify: 'esbuild',
-    rollupOptions: {
-      external: ['@rollup/rollup-linux-x64-gnu', '@rollup/rollup-darwin-arm64', '@rollup/rollup-darwin-x64'],
-    },
   },
   esbuild: {
     target: 'es2015',
