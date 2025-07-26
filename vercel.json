@@ -8,6 +8,7 @@
     "ROLLUP_SKIP_NATIVE": "true",
     "ESBUILD_BINARY_PATH": ""
   },
+  "functions": {},
   "rewrites": [
     {
       "source": "/(.*)",
