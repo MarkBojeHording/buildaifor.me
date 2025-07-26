@@ -3,13 +3,6 @@
   "version": "1.0.0",
   "description": "BuildAIFor.Me - Comprehensive AI Business Solutions",
   "private": true,
-  "workspaces": [
-    "website",
-    "demos/*",
-    "templates/*",
-    "shared/*",
-    "client-projects/*"
-  ],
   "scripts": {
     "dev": "concurrently \"npm run dev:website\" \"npm run dev:demos\"",
     "dev:website": "cd website && npm run dev",

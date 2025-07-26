@@ -1,5 +1,5 @@
 import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react-swc";
+import react from "@vitejs/plugin-react";
 import path from "path";
 
 // https://vitejs.dev/config/
@@ -23,11 +23,11 @@ export default defineConfig(({ mode }) => ({
     },
   },
   build: {
-    rollupOptions: {
-      external: ['@rollup/rollup-linux-x64-gnu'],
-    },
     target: 'es2015',
     minify: 'esbuild',
+    rollupOptions: {
+      external: ['@rollup/rollup-linux-x64-gnu', '@rollup/rollup-darwin-arm64', '@rollup/rollup-darwin-x64'],
+    },
   },
   esbuild: {
     target: 'es2015',
