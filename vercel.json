@@ -1,8 +1,12 @@
 {
-  "buildCommand": "cd website && npm install && npm run build",
+  "buildCommand": "cd website && rm -rf node_modules package-lock.json && npm install && npm run build",
   "outputDirectory": "website/dist",
   "installCommand": "cd website && npm install",
   "framework": "vite",
+  "env": {
+    "NODE_ENV": "production",
+    "ROLLUP_SKIP_NATIVE": "true"
+  },
   "rewrites": [
     {
       "source": "/(.*)",
