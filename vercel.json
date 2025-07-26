@@ -1,7 +1,4 @@
 {
-  "buildCommand": "cd website && npm install --no-optional && npm run build --verbose",
-  "outputDirectory": "website/dist",
-  "env": {
-    "NODE_ENV": "production"
-  }
+  "buildCommand": "cd website && npm run build",
+  "outputDirectory": "website/dist"
 }
