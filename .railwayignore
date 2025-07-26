@@ -1,0 +1,19 @@
+# Ignore root package.json to force Railway to use railway.json configuration
+package.json
+package-lock.json
+
+# Ignore non-website directories
+api/
+demos/
+templates/
+packages/
+shared/
+docs/
+client-projects/
+venv/
+.venv/
+
+# Ignore development files
+*.log
+.DS_Store
+node_modules/

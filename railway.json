@@ -10,5 +10,11 @@
     "healthcheckTimeout": 100,
     "restartPolicyType": "ON_FAILURE",
     "restartPolicyMaxRetries": 10
+  },
+  "environments": {
+    "production": {
+      "buildCommand": "cd website && npm install --force && npm run build",
+      "startCommand": "cd website && npx serve -s dist -l $PORT"
+    }
   }
 }
