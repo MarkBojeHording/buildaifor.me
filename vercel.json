@@ -1,6 +1,8 @@
 {
-  "buildCommand": "cd website && npm run build",
+  "buildCommand": "cd website && npm install --no-optional && npm run build",
   "outputDirectory": "website/dist",
+  "installCommand": "cd website && npm install --no-optional",
+  "framework": "vite",
   "routes": [
     {
       "src": "/(.*)",

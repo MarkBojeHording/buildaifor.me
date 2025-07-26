@@ -1,99 +1,15 @@
 {
-  "name": "buildaiforme-business",
+  "name": "buildaifor-me-business",
   "version": "1.0.0",
-  "description": "BuildAIFor.Me - Comprehensive AI Business Solutions",
   "private": true,
-  "scripts": {
-    "dev": "concurrently \"npm run dev:website\" \"npm run dev:demos\"",
-    "dev:website": "cd website && npm run dev",
-    "dev:demos": "concurrently \"npm run dev:chatbot\" \"npm run dev:document\" \"npm run dev:data\" \"npm run dev:workflow\" \"npm run dev:rag\" \"npm run dev:bi\"",
-    "dev:chatbot": "cd demos/chatbot-demo && npm run dev",
-    "dev:document": "cd demos/document-processing-demo && npm run dev",
-    "dev:data": "cd demos/data-automation-demo && npm run dev",
-    "dev:workflow": "cd demos/workflow-optimization-demo && npm run dev",
-    "dev:rag": "cd demos/rag-system-demo && npm run dev",
-    "dev:bi": "cd demos/business-intelligence-demo && npm run dev",
-    "build": "npm run build:website && npm run build:templates",
-    "build:website": "cd website && npm run build",
-    "build:templates": "npm run build:chatbot-template && npm run build:document-template && npm run build:data-template && npm run build:workflow-template && npm run build:rag-template && npm run build:bi-template",
-    "build:chatbot-template": "cd templates/chatbot-template && npm run build",
-    "build:document-template": "cd templates/document-processing-template && npm run build",
-    "build:data-template": "cd templates/data-automation-template && npm run build",
-    "build:workflow-template": "cd templates/workflow-optimization-template && npm run build",
-    "build:rag-template": "cd templates/rag-system-template && npm run build",
-    "build:bi-template": "cd templates/business-intelligence-template && npm run build",
-    "test": "npm run test:shared && npm run test:templates",
-    "test:shared": "cd shared && npm test",
-    "test:templates": "npm run test:chatbot-template && npm run test:document-template && npm run test:data-template && npm run test:workflow-template && npm run test:rag-template && npm run test:bi-template",
-    "test:chatbot-template": "cd templates/chatbot-template && npm test",
-    "test:document-template": "cd templates/document-processing-template && npm test",
-    "test:data-template": "cd templates/data-automation-template && npm test",
-    "test:workflow-template": "cd templates/workflow-optimization-template && npm test",
-    "test:rag-template": "cd templates/rag-system-template && npm test",
-    "test:bi-template": "cd templates/business-intelligence-template && npm test",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "format": "prettier --write .",
-    "install:all": "npm install && npm run install:shared && npm run install:templates && npm run install:demos",
-    "install:shared": "cd shared && npm install",
-    "install:templates": "npm run install:chatbot-template && npm run install:document-template && npm run install:data-template && npm run install:workflow-template && npm run install:rag-template && npm run install:bi-template",
-    "install:chatbot-template": "cd templates/chatbot-template && npm install",
-    "install:document-template": "cd templates/document-processing-template && npm install",
-    "install:data-template": "cd templates/data-automation-template && npm install",
-    "install:workflow-template": "cd templates/workflow-optimization-template && npm install",
-    "install:rag-template": "cd templates/rag-system-template && npm install",
-    "install:bi-template": "cd templates/business-intelligence-template && npm install",
-    "install:demos": "npm run install:chatbot-demo && npm run install:document-demo && npm run install:data-demo && npm run install:workflow-demo && npm run install:rag-demo && npm run install:bi-demo",
-    "install:chatbot-demo": "cd demos/chatbot-demo && npm install",
-    "install:document-demo": "cd demos/document-processing-demo && npm install",
-    "install:data-demo": "cd demos/data-automation-demo && npm install",
-    "install:workflow-demo": "cd demos/workflow-optimization-demo && npm install",
-    "install:rag-demo": "cd demos/rag-system-demo && npm install",
-    "install:bi-demo": "cd demos/business-intelligence-demo && npm install"
-  },
-  "keywords": [
-    "ai",
-    "artificial-intelligence",
-    "chatbot",
-    "document-processing",
-    "data-automation",
-    "workflow-optimization",
-    "rag",
-    "business-intelligence",
-    "templates",
-    "demos",
-    "business-solutions"
+  "workspaces": [
+    "website"
   ],
-  "author": "BuildAIFor.Me Team",
-  "license": "PROPRIETARY",
-  "devDependencies": {
-    "@types/node": "^20.0.0",
-    "@typescript-eslint/eslint-plugin": "^6.0.0",
-    "@typescript-eslint/parser": "^6.0.0",
-    "concurrently": "^8.0.0",
-    "eslint": "^8.0.0",
-    "eslint-config-prettier": "^9.0.0",
-    "eslint-plugin-prettier": "^5.0.0",
-    "prettier": "^3.0.0",
-    "typescript": "^5.0.0"
-  },
-  "dependencies": {
-    "cors": "^2.8.5",
-    "dotenv": "^16.0.0",
-    "express": "^4.18.0",
-    "helmet": "^7.0.0",
-    "morgan": "^1.10.0"
+  "scripts": {
+    "build": "cd website && npm install && npm run build",
+    "start": "cd website && npx serve -s dist -l $PORT"
   },
   "engines": {
-    "node": ">=18.0.0",
-    "npm": ">=9.0.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/buildaiforme/business.git"
-  },
-  "bugs": {
-    "url": "https://github.com/buildaiforme/business/issues"
-  },
-  "homepage": "https://buildaiforme.com"
+    "node": ">=18.0.0"
+  }
 }
