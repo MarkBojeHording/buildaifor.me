@@ -29,7 +29,16 @@ export default defineConfig(({ mode }) => ({
     target: 'es2015',
     minify: 'esbuild',
   },
+  esbuild: {
+    target: 'es2015',
+  },
+  optimizeDeps: {
+    esbuildOptions: {
+      target: 'es2015',
+    },
+  },
   define: {
-    'process.env.ROLLUP_SKIP_NATIVE': JSON.stringify(process.env.ROLLUP_SKIP_NATIVE || 'true'),
+    'process.env.ROLLUP_SKIP_NATIVE': JSON.stringify('true'),
+    'process.env.ESBUILD_BINARY_PATH': JSON.stringify(''),
   },
 }));
