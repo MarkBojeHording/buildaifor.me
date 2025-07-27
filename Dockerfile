@@ -11,6 +11,15 @@ RUN npm install
 # Copy all source files
 COPY . .
 
+# Create utils.ts file if it doesn't exist
+RUN mkdir -p src/lib
+RUN echo 'import { clsx, type ClassValue } from "clsx"' > src/lib/utils.ts
+RUN echo 'import { twMerge } from "tailwind-merge"' >> src/lib/utils.ts
+RUN echo '' >> src/lib/utils.ts
+RUN echo 'export function cn(...inputs: ClassValue[]) {' >> src/lib/utils.ts
+RUN echo '  return twMerge(clsx(inputs))' >> src/lib/utils.ts
+RUN echo '}' >> src/lib/utils.ts
+
 # Debug: Check what files exist
 RUN ls -la
 RUN find . -name "src" -type d
