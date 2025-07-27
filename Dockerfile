@@ -11,9 +11,10 @@ RUN npm install
 # Copy all source files
 COPY . .
 
-# Debug: Check if utils.ts exists
-RUN ls -la src/lib/
-RUN cat src/lib/utils.ts
+# Debug: Check what files exist
+RUN ls -la
+RUN find . -name "src" -type d
+RUN find . -name "utils.ts" -type f
 
 # Build the application
 RUN npm run build
