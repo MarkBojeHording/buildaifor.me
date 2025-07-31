@@ -18,8 +18,7 @@ import BusinessIntelligence from "./pages/services/BusinessIntelligence.tsx";
 import MachineLearning from "./pages/services/MachineLearning.tsx";
 import HealthcarePatientAssistant from "./pages/portfolio/HealthcarePatientAssistant.tsx";
 import HRRecruitmentAutomation from "./pages/portfolio/HRRecruitmentAutomation.tsx";
-import AIEmailWorkflow from "./pages/portfolio/AIEmailWorkflow.tsx";
-import ManufacturingQualityControl from "./pages/portfolio/ManufacturingQualityControl.tsx";
+import EmailAnalyzerDemo from "./pages/EmailAnalyzerDemo.tsx";
 import LegalDocumentAnalyzer from "./pages/portfolio/LegalDocumentAnalyzer.tsx";
 import EcommerceSalesIntelligence from "./pages/portfolio/EcommerceSalesIntelligence.tsx";
 import FinancialKnowledgeAssistant from "./pages/portfolio/FinancialKnowledgeAssistant.tsx";
@@ -32,6 +31,7 @@ import NotFound from "./pages/NotFound.tsx";
 import RealEstateDemo from "./pages/RealEstateDemo.tsx";
 import EcommerceDemo from './pages/EcommerceDemo.tsx';
 import LawFirmDemo from './pages/LawFirmDemo.tsx';
+import DocumentAnalyzerDemo from './pages/DocumentAnalyzerDemo.tsx';
 
 const queryClient = new QueryClient();
 
@@ -59,8 +59,8 @@ const App = () => (
           {/* Portfolio case study pages */}
           <Route path="/portfolio/healthcare-patient-assistant" element={<HealthcarePatientAssistant />} />
           <Route path="/portfolio/hr-recruitment-automation" element={<HRRecruitmentAutomation />} />
-          <Route path="/portfolio/ai-email-workflow" element={<AIEmailWorkflow />} />
-          <Route path="/portfolio/manufacturing-quality-control" element={<ManufacturingQualityControl />} />
+          <Route path="/portfolio/ai-email-workflow" element={<EmailAnalyzerDemo />} />
+
           <Route path="/portfolio/legal-document-analyzer" element={<LegalDocumentAnalyzer />} />
           <Route path="/portfolio/ecommerce-sales-intelligence" element={<EcommerceSalesIntelligence />} />
           <Route path="/portfolio/financial-knowledge-assistant" element={<FinancialKnowledgeAssistant />} />
@@ -74,6 +74,8 @@ const App = () => (
           <Route path="/demo/real-estate" element={<RealEstateDemo />} />
           <Route path="/demo/ecommerce" element={<EcommerceDemo />} />
           <Route path="/demo/law-firm" element={<LawFirmDemo />} />
+          <Route path="/demo/document-analyzer" element={<DocumentAnalyzerDemo />} />
+
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
