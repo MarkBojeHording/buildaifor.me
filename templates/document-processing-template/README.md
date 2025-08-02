@@ -1,388 +1,238 @@
-# Document Processing Template
+# Interactive Legal Document Analyzer
 
-## Overview
-This is a ready-to-deploy document processing template that can extract, analyze, and process information from various document types. The template includes OCR capabilities, data extraction, and automated document workflows.
+A sophisticated AI-powered document analysis system that allows users to interact with legal documents through natural language queries with precise citations.
 
 ## Features
 
-### Core Functionality
-- **Multi-format Support**: PDF, DOCX, JPG, PNG, TIFF files
-- **OCR Processing**: Optical Character Recognition for scanned documents
-- **Data Extraction**: Intelligent extraction of structured data
-- **Document Classification**: Automatic categorization of document types
-- **Form Processing**: Extract data from forms and applications
+- **Split-Screen Interface**: Document viewer on the left, AI chat on the right
+- **5 Sample Legal Documents**: Commercial Lease, Employment Contract, Purchase Agreement, Service Agreement, Partnership Agreement
+- **AI-Powered Analysis**: Natural language queries with precise citations
+- **Interactive Citations**: Clickable citations that highlight referenced text
+- **Real-time Chat**: Conversational interface with message history
+- **Responsive Design**: Works on desktop and mobile devices
 
-### Template Capabilities
-- **Invoice Processing**: Extract vendor, amount, date, line items
-- **Receipt Analysis**: Categorize expenses and extract totals
-- **Contract Review**: Identify key terms and obligations
-- **Resume Parsing**: Extract candidate information and skills
-- **Report Analysis**: Summarize and extract key insights
+## Tech Stack
 
-### Deployment Ready
-- **Docker Support**: Containerized deployment
-- **Cloud Ready**: Deploy to AWS, Azure, or Google Cloud
-- **API Integration**: RESTful API for external integrations
-- **Batch Processing**: Handle multiple documents simultaneously
-- **Webhook Support**: Real-time notifications and integrations
-
-## Technology Stack
+### Frontend
+- **React 18** with TypeScript
+- **Vite** for fast development and building
+- **Tailwind CSS** for styling
+- **Radix UI** for accessible components
+- **Lucide React** for icons
 
 ### Backend
-- **Python**: FastAPI framework
-- **Tesseract OCR**: Optical character recognition
-- **OpenAI GPT-4**: Document understanding
-- **PostgreSQL**: Document storage and metadata
-- **Redis**: Task queue and caching
-
-### AI Services
-- **OpenAI API**: Document analysis and understanding
-- **Azure Computer Vision**: Advanced OCR capabilities
-- **Custom ML Models**: Document classification
-- **NLP Processing**: Text extraction and analysis
-
-### Frontend (Optional)
-- **React.js**: Modern UI framework
-- **Dropzone.js**: File upload handling
-- **Chart.js**: Data visualization
-- **Material-UI**: Component library
+- **Node.js** with Express
+- **OpenAI API** for AI-powered analysis
+- **CORS** for cross-origin requests
 
 ## Quick Start
 
 ### Prerequisites
-- Python 3.9+ installed
-- Tesseract OCR installed
-- Docker and Docker Compose (optional)
+- Node.js 18+
 - OpenAI API key
-- PostgreSQL database
 
-### Installation
+### 1. Clone and Setup
 
-#### Option 1: Local Development
 ```bash
-# Clone the template
-git clone <repository-url>
+# Navigate to the template directory
 cd templates/document-processing-template
 
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Set up environment variables
-cp .env.example .env
-# Edit .env with your API keys and configuration
-
-# Initialize database
-python manage.py migrate
-
-# Start development server
-python app.py
+# Setup Frontend
+cd frontend
+npm install
 ```
 
-#### Option 2: Docker Deployment
+### 2. Setup Backend
+
 ```bash
-# Clone the template
-git clone <repository-url>
-cd templates/document-processing-template
+# Navigate to backend directory
+cd ../backend
+npm install
 
-# Set up environment variables
-cp .env.example .env
-# Edit .env with your configuration
-
-# Build and start containers
-docker-compose up -d
-
-# Access the application
-open http://localhost:8000
+# Create .env file
+echo "PORT=3002
+FRONTEND_URL=http://localhost:5174
+OPENAI_API_KEY=your_openai_api_key_here" > .env
 ```
 
-### Environment Variables
-```env
-# AI Services
-OPENAI_API_KEY=your_openai_api_key
-AZURE_VISION_KEY=your_azure_vision_key
+### 3. Start the Application
 
-# Database
-DATABASE_URL=postgresql://user:pass@localhost/document_processing
-REDIS_URL=redis://localhost:6379
+```bash
+# Terminal 1: Start Backend (from backend directory)
+npm start
 
-# Application
-UPLOAD_PATH=./uploads
-MAX_FILE_SIZE=10485760
-SUPPORTED_FORMATS=pdf,docx,jpg,png,tiff
+# Terminal 2: Start Frontend (from frontend directory)
+npm run dev
+```
 
-# Optional: Additional AI Services
-GOOGLE_VISION_API_KEY=your_google_vision_key
-AWS_TEXTTRACT_ACCESS_KEY=your_aws_access_key
-AWS_TEXTTRACT_SECRET_KEY=your_aws_secret_key
+### 4. Access the Application
+
+- Frontend: http://localhost:5174
+- Backend API: http://localhost:3002
+- Health Check: http://localhost:3002/api/health
+
+## Usage
+
+### Document Navigation
+- Use the document tabs at the top to switch between different legal documents
+- Each document has multiple sections that can be viewed in the document viewer
+
+### AI Chat Interface
+- Ask questions about the current document in natural language
+- Receive AI-powered responses with precise citations
+- Click on citations to highlight the referenced text in the document
+- Use sample questions for quick testing
+
+### Sample Questions by Document
+
+#### Commercial Lease Agreement
+- "What's the monthly rent?"
+- "What happens if I break the lease early?"
+- "Who's responsible for maintenance?"
+
+#### Employment Contract
+- "What's the salary and benefits?"
+- "What are the non-compete restrictions?"
+- "How much vacation time do I get?"
+
+#### Purchase Agreement
+- "What's the total purchase price?"
+- "What assets are included in the sale?"
+- "When is the closing date?"
+
+#### Service Agreement
+- "What services are provided?"
+- "What's the monthly fee?"
+- "What's the uptime guarantee?"
+
+#### Partnership Agreement
+- "How are profits shared?"
+- "What are the capital contributions?"
+- "How are decisions made?"
+
+## API Endpoints
+
+### POST /api/chat
+Send a message to the AI document analyzer.
+
+**Request Body:**
+```json
+{
+  "message": "What's the monthly rent?",
+  "documentId": "lease-agreement",
+  "conversationHistory": [
+    {
+      "role": "user",
+      "content": "Hello"
+    },
+    {
+      "role": "assistant",
+      "content": "Hello! I'm here to help you analyze legal documents."
+    }
+  ]
+}
+```
+
+**Response:**
+```json
+{
+  "response": "According to Section 2.1 on page 2, the monthly rent is Eight Thousand Five Hundred Dollars ($8,500.00) per month...",
+  "citations": [
+    {
+      "documentId": "lease-agreement",
+      "section": "2.1",
+      "page": 2,
+      "paragraph": 1,
+      "text": "Tenant shall pay to Landlord as monthly rent for the Premises the sum of Eight Thousand Five Hundred Dollars ($8,500.00) per month"
+    }
+  ],
+  "confidence": 0.95
+}
+```
+
+### GET /api/health
+Health check endpoint.
+
+**Response:**
+```json
+{
+  "status": "ok",
+  "timestamp": "2024-01-15T10:30:00.000Z"
+}
+```
+
+## Project Structure
+
+```
+document-processing-template/
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── DocumentViewer.tsx
+│   │   │   ├── DocumentTabs.tsx
+│   │   │   └── ChatInterface.tsx
+│   │   ├── data/
+│   │   │   └── sampleDocuments.ts
+│   │   ├── services/
+│   │   │   └── aiChatService.ts
+│   │   ├── App.tsx
+│   │   └── main.tsx
+│   ├── package.json
+│   └── vite.config.ts
+├── backend/
+│   ├── server.js
+│   ├── package.json
+│   └── .env
+└── README.md
 ```
 
 ## Customization
 
-### Document Types Configuration
-```python
-# config/document_types.py
-DOCUMENT_TYPES = {
-    "invoice": {
-        "extraction_fields": ["vendor", "amount", "date", "invoice_number"],
-        "validation_rules": ["required_amount", "valid_date"],
-        "output_format": "json"
-    },
-    "receipt": {
-        "extraction_fields": ["merchant", "total", "date", "items"],
-        "categorization": ["food", "transport", "entertainment"],
-        "output_format": "csv"
-    },
-    "contract": {
-        "extraction_fields": ["parties", "dates", "obligations", "terms"],
-        "risk_assessment": True,
-        "output_format": "pdf"
-    }
-}
-```
+### Adding New Documents
+1. Add document data to `frontend/src/data/sampleDocuments.ts`
+2. Add corresponding sections to the backend `server.js`
+3. Update the document tabs component if needed
 
-### OCR Configuration
-```python
-# config/ocr_config.py
-OCR_CONFIG = {
-    "tesseract_config": "--psm 6 --oem 3",
-    "language": "eng",
-    "confidence_threshold": 0.8,
-    "preprocessing": {
-        "deskew": True,
-        "denoise": True,
-        "contrast_enhancement": True
-    }
-}
-```
+### Modifying AI Responses
+1. Update the prompt in `backend/server.js`
+2. Adjust the OpenAI model parameters
+3. Add more document context as needed
 
-### Data Extraction Rules
-```python
-# config/extraction_rules.py
-EXTRACTION_RULES = {
-    "invoice": {
-        "vendor_pattern": r"Vendor:\s*(.+)",
-        "amount_pattern": r"Total:\s*\$?([\d,]+\.?\d*)",
-        "date_pattern": r"Date:\s*(\d{1,2}/\d{1,2}/\d{4})"
-    },
-    "receipt": {
-        "merchant_pattern": r"^(.+?)\s*\n",
-        "total_pattern": r"TOTAL\s*\$?([\d,]+\.?\d*)",
-        "date_pattern": r"(\d{1,2}/\d{1,2}/\d{4})"
-    }
-}
-```
-
-## API Usage
-
-### Upload Document
-```bash
-curl -X POST "https://your-api.com/api/documents/upload" \
-  -H "Authorization: Bearer your_api_key" \
-  -F "file=@invoice.pdf" \
-  -F "document_type=invoice"
-```
-
-### Process Document
-```bash
-curl -X POST "https://your-api.com/api/documents/process" \
-  -H "Authorization: Bearer your_api_key" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "document_id": "doc_123",
-    "extraction_config": {
-      "fields": ["vendor", "amount", "date"],
-      "output_format": "json"
-    }
-  }'
-```
-
-### Get Results
-```bash
-curl -X GET "https://your-api.com/api/documents/doc_123/results" \
-  -H "Authorization: Bearer your_api_key"
-```
+### Styling Changes
+1. Modify Tailwind classes in components
+2. Update CSS variables in `frontend/src/index.css`
+3. Customize component themes
 
 ## Deployment
 
-### Cloud Deployment Options
-
-#### AWS Deployment
+### Frontend Deployment
 ```bash
-# Deploy to AWS Lambda with API Gateway
-sam build
-sam deploy --guided
+cd frontend
+npm run build
+# Deploy the dist/ folder to your hosting service
 ```
 
-#### Google Cloud Deployment
+### Backend Deployment
 ```bash
-# Deploy to Google Cloud Functions
-gcloud functions deploy document-processor \
-  --runtime python39 \
-  --trigger-http \
-  --allow-unauthenticated
+cd backend
+# Set environment variables on your hosting platform
+npm start
 ```
 
-#### Azure Deployment
-```bash
-# Deploy to Azure Functions
-func azure functionapp publish document-processor
-```
+## Troubleshooting
 
-### Production Configuration
-```env
-# Production environment variables
-NODE_ENV=production
-DATABASE_URL=your_production_db_url
-REDIS_URL=your_production_redis_url
-OPENAI_API_KEY=your_production_openai_key
+### Common Issues
 
-# Security
-SECRET_KEY=your_secure_secret_key
-ALLOWED_HOSTS=yourdomain.com
-CORS_ORIGINS=https://yourdomain.com
-```
+1. **CORS Errors**: Ensure the frontend URL is correctly set in the backend `.env` file
+2. **OpenAI API Errors**: Verify your API key is valid and has sufficient credits
+3. **Port Conflicts**: Change ports in `vite.config.ts` and `server.js` if needed
 
-## Integration
+### Development Tips
 
-### Webhook Configuration
-```python
-# config/webhooks.py
-WEBHOOK_ENDPOINTS = {
-    "document_processed": "https://your-crm.com/webhook/document-processed",
-    "extraction_complete": "https://your-accounting.com/webhook/extraction-complete",
-    "error_occurred": "https://your-monitoring.com/webhook/error"
-}
-```
+- Use the browser's developer tools to inspect network requests
+- Check the backend console for detailed error logs
+- Test the health endpoint to verify backend connectivity
 
-### Database Integration
-- **PostgreSQL**: Primary document storage
-- **MongoDB**: Document metadata and processing history
-- **Redis**: Caching and session management
-- **Elasticsearch**: Full-text search capabilities
+## License
 
-### External Services
-- **Accounting Software**: QuickBooks, Xero integration
-- **CRM Systems**: Salesforce, HubSpot integration
-- **Document Management**: SharePoint, Google Drive integration
-- **Email Systems**: Gmail, Outlook integration
-
-## Monitoring and Analytics
-
-### Built-in Analytics
-- **Processing Metrics**: Documents processed, success rate
-- **Performance Metrics**: Processing time, accuracy rates
-- **Error Tracking**: Failed extractions, error types
-- **Usage Analytics**: API calls, user activity
-
-### Custom Analytics
-```python
-# Track custom events
-analytics.track('document_processed', {
-    'document_type': 'invoice',
-    'processing_time': 2.5,
-    'accuracy_score': 0.95,
-    'user_id': 'user123'
-})
-```
-
-### Dashboard Access
-- **Admin Dashboard**: `/admin` - Manage processing settings
-- **Analytics Dashboard**: `/analytics` - View performance metrics
-- **Document Browser**: `/documents` - Browse processed documents
-
-## Security
-
-### File Security
-```python
-# File validation and security
-SECURITY_CONFIG = {
-    "allowed_extensions": [".pdf", ".docx", ".jpg", ".png", ".tiff"],
-    "max_file_size": 10 * 1024 * 1024,  # 10MB
-    "virus_scanning": True,
-    "file_encryption": True,
-    "access_control": "role_based"
-}
-```
-
-### Data Protection
-- **Encryption**: All documents encrypted at rest
-- **Access Control**: Role-based document access
-- **Audit Logging**: Track all document access
-- **GDPR Compliance**: Data privacy and consent management
-
-### API Security
-```python
-# Rate limiting and authentication
-API_SECURITY = {
-    "rate_limit": "100 requests per hour",
-    "authentication": "JWT tokens",
-    "input_validation": True,
-    "sql_injection_protection": True
-}
-```
-
-## Maintenance
-
-### Regular Tasks
-- **Database Cleanup**: Remove old documents and metadata
-- **Storage Management**: Archive processed documents
-- **Model Updates**: Update AI models and extraction rules
-- **Security Updates**: Keep dependencies updated
-
-### Performance Optimization
-```python
-# Caching and optimization
-PERFORMANCE_CONFIG = {
-    "cache_ttl": 3600,  # 1 hour
-    "batch_size": 10,   # Process 10 documents at once
-    "worker_processes": 4,
-    "memory_limit": "2GB"
-}
-```
-
-## Support and Documentation
-
-### Documentation
-- [API Reference](./docs/api-reference.md)
-- [Integration Guide](./docs/integration-guide.md)
-- [Customization Guide](./docs/customization-guide.md)
-- [Deployment Guide](./docs/deployment-guide.md)
-
-### Support Channels
-- **Email Support**: support@buildaiforme.com
-- **Documentation**: docs.buildaiforme.com
-- **Community Forum**: community.buildaiforme.com
-
-### Updates and Upgrades
-```bash
-# Check for updates
-pip list --outdated
-
-# Update dependencies
-pip install --upgrade -r requirements.txt
-
-# Security updates
-pip audit
-```
-
-## Pricing and Licensing
-
-### Template License
-- **Single Use**: One deployment per license
-- **Customization**: Unlimited customization allowed
-- **Support**: 30 days of email support included
-- **Updates**: Free updates for 1 year
-
-### Additional Services
-- **Custom Development**: $150/hour
-- **Integration Support**: $100/hour
-- **Training**: $500/day
-- **Maintenance**: $200/month
-
----
-
-*This template provides a complete, production-ready document processing solution that can be customized and deployed immediately to automate document workflows and data extraction.*
+This project is part of the BuildAIFor.Me Business portfolio and is intended for demonstration purposes.

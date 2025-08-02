@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ArrowLeft, MessageSquare, ShoppingCart, Package, DollarSign, BarChart3 } from 'lucide-react';
+import { ArrowLeft, MessageSquare, Clock, MapPin, Phone, ShoppingCart, DollarSign, Package, BarChart3 } from 'lucide-react';
 import { Button } from '@/components/ui/button.tsx';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card.tsx';
 import { Badge } from '@/components/ui/badge.tsx';
 import Header from '../components/Header.tsx';
 import Footer from '../components/Footer.tsx';
+import { useNavigate } from 'react-router-dom';
 
 interface Message {
   id: string;
@@ -25,6 +26,7 @@ function formatResponse(text: string) {
 }
 
 const EcommerceDemo = () => {
+  const navigate = useNavigate();
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
@@ -70,7 +72,7 @@ const EcommerceDemo = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch('http://localhost:8001/chat', {
+      const response = await fetch('http://localhost:3001/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -135,7 +137,15 @@ const EcommerceDemo = () => {
         <div className="container mx-auto px-4 lg:px-8">
           <Button
             variant="outline"
-            onClick={() => window.history.back()}
+            onClick={() => {
+              navigate('/');
+              setTimeout(() => {
+                const portfolioSection = document.getElementById('portfolio');
+                if (portfolioSection) {
+                  portfolioSection.scrollIntoView({ behavior: 'smooth' });
+                }
+              }, 100);
+            }}
             className="mb-6 group"
           >
             <ArrowLeft className="mr-2 h-4 w-4 group-hover:-translate-x-1 transition-transform" />

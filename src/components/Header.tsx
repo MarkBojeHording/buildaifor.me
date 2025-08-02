@@ -2,14 +2,15 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
 import { Menu, X } from "lucide-react";
+import { useNavigationWithScroll } from "../utils/navigation";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const { scrollToSection, navigateToPage } = useNavigationWithScroll();
 
   const handleLogoClick = () => {
-    navigate('/');
-    window.scrollTo(0, 0);
+    navigateToPage('/', true);
   };
 
   const toggleMenu = () => {
@@ -46,55 +47,31 @@ const Header = () => {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             <button
-              onClick={() => {
-                navigate('/about');
-                window.scrollTo(0, 0);
-              }}
+              onClick={() => navigateToPage('/about')}
               className="text-gray-600 hover:text-gray-900 transition-colors bg-transparent border-none cursor-pointer"
             >
               About
             </button>
             <button
-              onClick={() => {
-                navigate('/');
-                setTimeout(() => {
-                  const element = document.getElementById('services');
-                  if (element) element.scrollIntoView({ behavior: 'smooth' });
-                }, 100);
-              }}
+              onClick={() => scrollToSection('portfolio')}
               className="text-gray-600 hover:text-gray-900 transition-colors bg-transparent border-none cursor-pointer"
             >
               Services
             </button>
             <button
-              onClick={() => {
-                navigate('/tech');
-                window.scrollTo(0, 0);
-              }}
+              onClick={() => navigateToPage('/tech')}
               className="text-gray-600 hover:text-gray-900 transition-colors bg-transparent border-none cursor-pointer"
             >
               Tech
             </button>
             <button
-              onClick={() => {
-                navigate('/');
-                setTimeout(() => {
-                  const element = document.getElementById('pricing');
-                  if (element) element.scrollIntoView({ behavior: 'smooth' });
-                }, 100);
-              }}
+              onClick={() => scrollToSection('pricing')}
               className="text-gray-600 hover:text-gray-900 transition-colors bg-transparent border-none cursor-pointer"
             >
               Pricing
             </button>
             <button
-              onClick={() => {
-                navigate('/');
-                setTimeout(() => {
-                  const element = document.getElementById('contact');
-                  if (element) element.scrollIntoView({ behavior: 'smooth' });
-                }, 100);
-              }}
+              onClick={() => scrollToSection('contact')}
               className="text-gray-600 hover:text-gray-900 transition-colors bg-transparent border-none cursor-pointer"
             >
               Contact
@@ -128,8 +105,7 @@ const Header = () => {
             <nav className="flex flex-col space-y-4">
               <button
                 onClick={() => {
-                  navigate('/about');
-                  window.scrollTo(0, 0);
+                  navigateToPage('/about');
                   setIsMenuOpen(false);
                 }}
                 className="text-gray-600 hover:text-gray-900 transition-colors bg-transparent border-none cursor-pointer text-left"
@@ -138,12 +114,8 @@ const Header = () => {
               </button>
               <button
                 onClick={() => {
-                  navigate('/');
+                  scrollToSection('portfolio');
                   setIsMenuOpen(false);
-                  setTimeout(() => {
-                    const element = document.getElementById('services');
-                    if (element) element.scrollIntoView({ behavior: 'smooth' });
-                  }, 100);
                 }}
                 className="text-gray-600 hover:text-gray-900 transition-colors bg-transparent border-none cursor-pointer text-left"
               >
@@ -151,8 +123,7 @@ const Header = () => {
               </button>
               <button
                 onClick={() => {
-                  navigate('/tech');
-                  window.scrollTo(0, 0);
+                  navigateToPage('/tech');
                   setIsMenuOpen(false);
                 }}
                 className="text-gray-600 hover:text-gray-900 transition-colors bg-transparent border-none cursor-pointer text-left"
@@ -161,12 +132,8 @@ const Header = () => {
               </button>
               <button
                 onClick={() => {
-                  navigate('/');
+                  scrollToSection('pricing');
                   setIsMenuOpen(false);
-                  setTimeout(() => {
-                    const element = document.getElementById('pricing');
-                    if (element) element.scrollIntoView({ behavior: 'smooth' });
-                  }, 100);
                 }}
                 className="text-gray-600 hover:text-gray-900 transition-colors bg-transparent border-none cursor-pointer text-left"
               >
@@ -174,12 +141,8 @@ const Header = () => {
               </button>
               <button
                 onClick={() => {
-                  navigate('/');
+                  scrollToSection('contact');
                   setIsMenuOpen(false);
-                  setTimeout(() => {
-                    const element = document.getElementById('contact');
-                    if (element) element.scrollIntoView({ behavior: 'smooth' });
-                  }, 100);
                 }}
                 className="text-gray-600 hover:text-gray-900 transition-colors bg-transparent border-none cursor-pointer text-left"
               >

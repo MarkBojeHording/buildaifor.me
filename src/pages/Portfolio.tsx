@@ -71,16 +71,7 @@ const Portfolio = () => {
       metrics: ['99.2% accuracy', '1000+ regulations indexed', 'Instant compliance checks'],
       link: '/portfolio/financial-knowledge-assistant'
     },
-    {
-      id: 6,
-      title: 'Manufacturing Quality Control',
-      description: 'Computer vision system for automated defect detection',
-      category: 'data',
-      tags: ['Manufacturing', 'Computer Vision', 'Quality Control'],
-      image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-      metrics: ['99.5% defect detection', '50% quality check speed', 'Zero false positives'],
-      link: '/portfolio/manufacturing-quality-control'
-    }
+
   ];
 
   const filteredProjects = activeFilter === 'all'

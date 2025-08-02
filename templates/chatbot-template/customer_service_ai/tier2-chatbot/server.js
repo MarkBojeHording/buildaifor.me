@@ -13,16 +13,16 @@ const { v4: uuidv4 } = require('uuid');
 
 const app = express();
 app.use(cors({
-  origin: 'http://localhost:8080',
+  origin: ['http://localhost:5173', 'http://localhost:8080', 'http://localhost:3000'],
   credentials: true
 }));
 app.use(express.json());
 
-// Import the message processor
-const { processMessage } = require('./core/message-processor');
+// Import the enhanced message processor
+const EnhancedMessageProcessor = require('./core/enhanced-message-processor');
 
 console.log('🚀 SERVER STARTING...');
-console.log('📦 processMessage type:', typeof processMessage);
+console.log('📦 EnhancedMessageProcessor loaded');
 
 // Load client configurations
 function loadClientConfig(clientId) {
@@ -54,8 +54,9 @@ app.get('/test', (req, res) => {
   res.json({
     status: 'Server is running',
     timestamp: new Date().toISOString(),
-    processor: typeof processMessage,
-    sessions: Object.keys(sessions).length
+    processor: 'EnhancedMessageProcessor',
+    sessions: Object.keys(sessions).length,
+    ai_features: ['Lead Scoring', 'Case Assessment', 'Intent Detection', 'AI Response Generation']
   });
 });
 
@@ -81,12 +82,44 @@ app.post('/chat', async (req, res) => {
       return res.status(404).json({ error: `Configuration not found for client: ${clientIdFinal}` });
     }
     const clientConfig = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
-    // Call processMessage with correct arguments
-    const result = await processMessage(
+
+    // Initialize enhanced message processor
+    const enhancedProcessor = new EnhancedMessageProcessor(clientConfig);
+
+    // Get or create session data
+    if (!sessions[sessionIdFinal]) {
+      sessions[sessionIdFinal] = {
+        start_time: new Date().toISOString(),
+        conversation_stage: 'initial',
+        lead_data: {},
+        lead_score: 0,
+        message_count: 0,
+        messages: [], // Track conversation history
+        session_id: sessionIdFinal
+      };
+    }
+
+    // Add current message to conversation history
+    sessions[sessionIdFinal].messages.push({
+      text: message,
+      timestamp: new Date().toISOString(),
+      sender: 'user'
+    });
+
+    // Call enhanced processMessage
+    const result = await enhancedProcessor.processMessage(
       message,
-      {}, // sessionData (could be improved to use real session store)
+      sessions[sessionIdFinal],
       clientConfig
     );
+
+    // Add bot response to conversation history
+    sessions[sessionIdFinal].messages.push({
+      text: result.response,
+      timestamp: new Date().toISOString(),
+      sender: 'bot'
+    });
+
     res.json(result);
   } catch (error) {
     console.error('💥 CRITICAL ERROR in chat endpoint:');

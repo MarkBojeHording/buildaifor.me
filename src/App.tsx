@@ -19,9 +19,10 @@ import MachineLearning from "./pages/services/MachineLearning.tsx";
 import HealthcarePatientAssistant from "./pages/portfolio/HealthcarePatientAssistant.tsx";
 import HRRecruitmentAutomation from "./pages/portfolio/HRRecruitmentAutomation.tsx";
 import EmailAnalyzerDemo from "./pages/EmailAnalyzerDemo.tsx";
+import TechnicalDocumentationRAG from "@templates/rag-system-template/src/pages/TechnicalDocumentationRAG.tsx";
 import LegalDocumentAnalyzer from "./pages/portfolio/LegalDocumentAnalyzer.tsx";
 import EcommerceSalesIntelligence from "./pages/portfolio/EcommerceSalesIntelligence.tsx";
-import FinancialKnowledgeAssistant from "./pages/portfolio/FinancialKnowledgeAssistant.tsx";
+
 import EstateAssistant from "./pages/EstateAssistant.tsx";
 import DentalOfficeDemo from "./pages/DentalOfficeDemo.tsx";
 import RestaurantDemo from "./pages/RestaurantDemo.tsx";
@@ -32,6 +33,7 @@ import RealEstateDemo from "./pages/RealEstateDemo.tsx";
 import EcommerceDemo from './pages/EcommerceDemo.tsx';
 import LawFirmDemo from './pages/LawFirmDemo.tsx';
 import DocumentAnalyzerDemo from './pages/DocumentAnalyzerDemo.tsx';
+import EnterpriseAIAssistantDemo from './pages/EnterpriseAIAssistantDemo.tsx';
 
 const queryClient = new QueryClient();
 
@@ -63,7 +65,7 @@ const App = () => (
 
           <Route path="/portfolio/legal-document-analyzer" element={<LegalDocumentAnalyzer />} />
           <Route path="/portfolio/ecommerce-sales-intelligence" element={<EcommerceSalesIntelligence />} />
-          <Route path="/portfolio/financial-knowledge-assistant" element={<FinancialKnowledgeAssistant />} />
+          <Route path="/portfolio/technical-documentation-rag" element={<TechnicalDocumentationRAG />} />
           {/* Estate Assistant */}
           <Route path="/estate" element={<EstateAssistant />} />
           {/* Demo pages */}
@@ -75,6 +77,7 @@ const App = () => (
           <Route path="/demo/ecommerce" element={<EcommerceDemo />} />
           <Route path="/demo/law-firm" element={<LawFirmDemo />} />
           <Route path="/demo/document-analyzer" element={<DocumentAnalyzerDemo />} />
+          <Route path="/demo/enterprise-ai-assistant" element={<EnterpriseAIAssistantDemo />} />
 
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

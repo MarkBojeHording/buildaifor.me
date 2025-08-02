@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge.tsx';
 import Header from '../components/Header.tsx';
 import Footer from '../components/Footer.tsx';
+import { useNavigate } from 'react-router-dom';
 
 interface Message {
   id: string;
@@ -22,6 +23,7 @@ function formatResponse(text: string) {
 }
 
 const RestaurantDemo = () => {
+  const navigate = useNavigate();
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
@@ -146,7 +148,15 @@ const RestaurantDemo = () => {
         <div className="container mx-auto px-4 lg:px-8">
           <Button
             variant="outline"
-            onClick={() => window.history.back()}
+            onClick={() => {
+              navigate('/');
+              setTimeout(() => {
+                const portfolioSection = document.getElementById('portfolio');
+                if (portfolioSection) {
+                  portfolioSection.scrollIntoView({ behavior: 'smooth' });
+                }
+              }, 100);
+            }}
             className="mb-6 group"
           >
             <ArrowLeft className="mr-2 h-4 w-4 group-hover:-translate-x-1 transition-transform" />

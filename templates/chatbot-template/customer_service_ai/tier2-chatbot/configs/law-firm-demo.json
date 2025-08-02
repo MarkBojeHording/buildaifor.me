@@ -1,18 +1,25 @@
 {
   "client_id": "law-firm-demo",
-  "business_name": "Smith & Associates Law Firm",
+  "business_name": "Justice Partners Law Firm",
   "industry": "legal",
+  "business_type": "law_firm",
   "contact": {
     "phone": "(555) LAW-FIRM",
-    "email": "info@smithlaw.com",
-    "website": "www.smithlaw.com",
+    "email": "info@justicepartners.com",
+    "website": "www.justicepartners.com",
     "address": "123 Legal Plaza, Downtown"
   },
-  "ai_enabled": true,
+  "ai_features": {
+    "lead_scoring": true,
+    "case_assessment": true,
+    "dynamic_responses": true,
+    "intent_detection": true,
+    "followup_generation": true
+  },
   "openai_config": {
-    "model": "gpt-3.5-turbo",
+    "model": "gpt-4o-mini",
     "temperature": 0.7,
-    "max_tokens": 150
+    "max_tokens": 300
   },
   "lead_capture": {
     "enabled": true,
@@ -27,6 +34,59 @@
       "Estate Planning",
       "Employment Law"
     ]
+  },
+  "practice_areas": {
+    "personal_injury": {
+      "specializations": ["auto_accidents", "slip_fall", "medical_malpractice", "product_liability"],
+      "qualification_questions": [
+        "When did the accident occur?",
+        "What type of injuries did you sustain?",
+        "Have you received medical treatment?",
+        "Do you have any witnesses or evidence?"
+      ],
+      "assessment_criteria": {
+        "liability_factors": ["clear_fault", "mixed_liability", "unclear_fault"],
+        "damage_factors": ["medical_bills", "lost_wages", "pain_suffering", "property_damage"],
+        "time_factors": ["statute_limitations", "recent_incident", "ongoing_treatment"]
+      }
+    },
+    "family_law": {
+      "specializations": ["divorce", "custody", "support", "adoption"],
+      "qualification_questions": [
+        "What type of family law matter do you need help with?",
+        "Are there children involved?",
+        "Is this an uncontested or contested matter?",
+        "Do you have any existing court orders?"
+      ],
+      "assessment_criteria": {
+        "complexity_factors": ["children_involved", "property_division", "business_interests"],
+        "urgency_factors": ["domestic_violence", "custody_emergency", "financial_urgency"]
+      }
+    },
+    "criminal_defense": {
+      "specializations": ["dui", "drug_offenses", "assault", "theft", "white_collar"],
+      "qualification_questions": [
+        "What charges are you facing?",
+        "When were you arrested?",
+        "Do you have any prior convictions?",
+        "Have you spoken to law enforcement?"
+      ],
+      "assessment_criteria": {
+        "severity_factors": ["felony", "misdemeanor", "infraction"],
+        "evidence_factors": ["physical_evidence", "witnesses", "confession"],
+        "procedural_factors": ["rights_violation", "illegal_search", "coerced_confession"]
+      }
+    }
+  },
+  "lead_routing": {
+    "high_value_threshold": 75,
+    "senior_attorney_threshold": 85,
+    "urgent_escalation_threshold": 80,
+    "attorney_specializations": {
+      "personal_injury": ["Sarah Johnson", "Michael Chen"],
+      "family_law": ["Jennifer Davis", "Robert Wilson"],
+      "criminal_defense": ["David Martinez", "Lisa Thompson"]
+    }
   },
   "fallback_response": "I don't have specific information about that legal matter, but our attorneys can help!\n\n📞 Call us: {phone}\n📧 Email: {email}\n🌐 Visit: {website}\n\nFor legal advice, please schedule a consultation with our experienced attorneys.\n\nI can help with general information about our services, consultation fees, or office hours though!",
   "responses": {
@@ -51,5 +111,11 @@
     "accent_color": "#e74c3c",
     "text_color": "#2c3e50",
     "background_color": "#ecf0f1"
+  },
+  "demo_features": {
+    "show_lead_score": true,
+    "show_case_assessment": true,
+    "show_intent_detection": true,
+    "show_ai_processing": true
   }
 }

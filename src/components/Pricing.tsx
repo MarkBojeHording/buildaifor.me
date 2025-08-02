@@ -150,43 +150,7 @@ const Pricing = () => {
           ))}
         </div>
 
-        <div className="mt-16 text-center">
-          <div className="bg-gradient-to-r from-gray-50 to-blue-50 rounded-2xl p-8">
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">
-              Why Choose Our Monthly Service Model?
-            </h3>
-            <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-              <div className="text-center">
-                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <Check className="w-6 h-6 text-blue-600" />
-                </div>
-                <h4 className="font-semibold mb-2">No API Headaches</h4>
-                <p className="text-sm text-gray-600">We handle all API costs, rate limits, and technical maintenance</p>
-              </div>
-              <div className="text-center">
-                <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <Zap className="w-6 h-6 text-green-600" />
-                </div>
-                <h4 className="font-semibold mb-2">Always Updated</h4>
-                <p className="text-sm text-gray-600">Continuous improvements and feature updates included</p>
-              </div>
-              <div className="text-center">
-                <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <Settings className="w-6 h-6 text-purple-600" />
-                </div>
-                <h4 className="font-semibold mb-2">Ongoing Support</h4>
-                <p className="text-sm text-gray-600">Priority support and maintenance included in every plan</p>
-              </div>
-            </div>
-            <div className="mt-8">
-              <CalendlyPopup>
-                <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 text-lg cursor-pointer">
-                  Book Free Consultation
-                </Button>
-              </CalendlyPopup>
-            </div>
-          </div>
-        </div>
+
       </div>
     </section>
   );

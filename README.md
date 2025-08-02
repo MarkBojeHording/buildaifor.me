@@ -1,288 +1,168 @@
-# buildaifor.me - AI Solutions Agency
+# BuildAIFor.Me Business Platform
 
-A modern, professional website for an AI solutions agency that specializes in building custom AI automation solutions for businesses across various industries.
+A comprehensive AI-powered business solutions platform with multiple specialized chatbots and automation tools.
 
-## 🚀 Feature
+## 🚀 Quick Start
 
-### Core Services
-- **AI Chatbots & Virtual Assistants** - Intelligent customer service and support automation
-- **Document Processing & Analysis** - Automated contract analysis, data extraction, and risk assessment
-- **Data Analysis & Predictive Analytics** - Business intelligence and forecasting solutions
-- **Workflow Automation** - Process optimization and task automation
-- **RAG (Retrieval-Augmented Generation) Systems** - Knowledge management and intelligent search
-- **Computer Vision Solutions** - Quality control, defect detection, and visual analysis
-- **API Integrations** - Seamless third-party service connections
+### Prerequisites
+- Node.js (v18 or higher)
+- npm or yarn
+- Git
 
-### Industries Served
-- Healthcare
-- Legal Services
-- E-commerce & Retail
-- Manufacturing
-- Financial Services
-- Human Resources
+### Installation
+```bash
+git clone <repository-url>
+cd BuildAIFor.Me-Business
+npm install
+```
 
-### Interactive Features
-- **Contact Form** - EmailJS-powered contact form with Gmail integration
-- **Consultation Booking** - Calendly popup for scheduling free consultations
-- **Portfolio Showcase** - Interactive project gallery with detailed case studies
-- **Responsive Navigation** - Smooth scrolling and mobile-optimized navigation
+## 📋 Server Startup Instructions
 
-## 🛠️ Technology Stack
+### 1. Main Website (Frontend)
+**Port:** 5173
+**Purpose:** Main business website with portfolio, services, and demo pages
 
-- **Frontend**: React 18 + TypeScript
-- **Styling**: Tailwind CSS + shadcn/ui components
-- **Build Tool**: Vite
-- **Icons**: Lucide React
-- **Charts**: Recharts
-- **Forms**: React Hook Form + Zod validation
-- **Routing**: React Router DOM
-- **UI Components**: Radix UI primitives
-- **Email Service**: EmailJS with Gmail integration
-- **Scheduling**: Calendly popup integration
-- **Package Manager**: npm
+```bash
+# From project root
+npm run dev
+```
+**Access:** http://localhost:5173
+
+### 2. Tier 2 Law Firm Chatbot (Backend)
+**Port:** 3001
+**Purpose:** Advanced AI-powered legal chatbot with lead scoring, intent detection, and case assessment
+
+```bash
+# From project root
+cd templates/chatbot-template/customer_service_ai/tier2-chatbot
+PORT=3001 node server.js
+```
+**Access:** http://localhost:3001
+**Test Endpoint:** http://localhost:3001/test
+
+### 3. Tier 1 Basic Chatbot (Backend)
+**Port:** 8001
+**Purpose:** Basic chatbot for simple business interactions
+
+```bash
+# From project root
+cd templates/chatbot-template/customer_service_ai/tier1-chatbot
+npm start
+```
+**Access:** http://localhost:8001
+
+### 4. AI Email Workflow System
+**Port:** 3000
+**Purpose:** Automated email processing and response system
+
+```bash
+# From project root
+cd workflow-automation/ai-email-workflow
+npm start
+```
+**Access:** http://localhost:3000
+
+## 🔧 Development Commands
+
+### Kill All Node Processes
+```bash
+pkill -f "node"
+```
+
+### Start All Servers (Development)
+```bash
+# Terminal 1: Main website
+npm run dev
+
+# Terminal 2: Law Firm Chatbot
+cd templates/chatbot-template/customer_service_ai/tier2-chatbot && PORT=3001 node server.js
+
+# Terminal 3: Basic Chatbot
+cd templates/chatbot-template/customer_service_ai/tier1-chatbot && npm start
+
+# Terminal 4: Email Workflow
+cd workflow-automation/ai-email-workflow && npm start
+```
 
 ## 📁 Project Structure
 
 ```
-src/
-├── components/          # React components
-│   ├── ui/             # shadcn/ui components
-│   ├── Header.tsx      # Navigation header
-│   ├── Hero.tsx        # Landing hero section
-│   ├── Services.tsx    # Services showcase
-│   ├── Portfolio.tsx   # Project portfolio
-│   ├── Industries.tsx  # Industry solutions
-│   ├── About.tsx       # About section
-│   ├── Process.tsx     # Work process
-│   ├── Pricing.tsx     # Pricing plans
-│   ├── Contact.tsx     # Contact form with EmailJS
-│   ├── CalendlyPopup.tsx # Calendly integration
-│   └── Footer.tsx      # Footer
-├── pages/              # Page components
-│   ├── services/       # Individual service pages
-│   ├── portfolio/      # Portfolio case studies
-│   ├── About.tsx       # About page
-│   └── Index.tsx       # Home page
-├── hooks/              # Custom React hooks
-├── lib/                # Utility functions
-└── main.tsx           # App entry point
+BuildAIFor.Me-Business/
+├── website/                          # Main React frontend
+├── templates/                        # Chatbot templates
+│   └── chatbot-template/
+│       └── customer_service_ai/
+│           ├── tier1-chatbot/       # Basic chatbot
+│           └── tier2-chatbot/       # Advanced law firm chatbot
+├── workflow-automation/              # Email automation system
+├── packages/                         # Tier-based packages
+└── docs/                            # Documentation
 ```
 
-## 🎨 Design Features
+## 🎯 Key Features
 
-- **Modern UI/UX**: Clean, professional design with smooth animations
-- **Responsive Design**: Mobile-first approach with responsive breakpoints
-- **Custom Logo**: SVG logo combining building/construction and AI elements
-- **Interactive Portfolio**: Filterable project showcase with case studies
-- **Contact Forms**: Professional contact and consultation request forms
-- **Performance Optimized**: Fast loading with Vite and optimized assets
-- **High-Contrast Buttons**: Accessible button styling for all backgrounds
+### Tier 2 Law Firm Chatbot
+- **AI Response Generation:** Conversational, natural responses
+- **Lead Scoring:** Rule-based scoring with consistency logic
+- **Intent Detection:** Specialized legal intent recognition
+- **Case Assessment:** Automated case strength evaluation
+- **Attorney Routing:** Smart attorney recommendation system
+- **Criminal Defense:** Specialized handling for criminal cases
 
-## 🚀 Getting Started
+### Main Website
+- **Portfolio Showcase:** Interactive project demonstrations
+- **Service Pages:** Detailed service offerings
+- **Demo Pages:** Live chatbot demonstrations
+- **Responsive Design:** Mobile-optimized interface
 
-### Prerequisites
-- Node.js 18+
-- npm or yarn
-- EmailJS account (for contact form)
-- Calendly account (for consultation booking)
+## 🔍 Testing
 
-### Installation
-
-1. Clone the repository:
+### Test Law Firm Chatbot
 ```bash
-git clone <repository-url>
-cd buildaifor.me
+# Test basic interaction
+curl -X POST http://localhost:3001/chat \
+  -H "Content-Type: application/json" \
+  -d '{"message": "Hello", "clientId": "law-firm-demo"}'
+
+# Test personal injury case
+curl -X POST http://localhost:3001/chat \
+  -H "Content-Type: application/json" \
+  -d '{"message": "I was in a car accident with a drunk driver", "clientId": "law-firm-demo"}'
+
+# Test criminal defense
+curl -X POST http://localhost:3001/chat \
+  -H "Content-Type: application/json" \
+  -d '{"message": "I was arrested for DUI", "clientId": "law-firm-demo"}'
 ```
 
-2. Install dependencies:
+## 🛠️ Troubleshooting
+
+### Port Already in Use
 ```bash
+# Kill processes using specific ports
+lsof -ti:3001 | xargs kill -9
+lsof -ti:5173 | xargs kill -9
+lsof -ti:8001 | xargs kill -9
+```
+
+### Server Not Starting
+1. Check if Node.js is installed: `node --version`
+2. Verify dependencies: `npm install`
+3. Check port availability
+4. Review server logs for errors
+
+### Frontend Build Issues
+```bash
+# Clear cache and reinstall
+rm -rf node_modules package-lock.json
 npm install
-```
-
-3. Set up environment variables (optional):
-```bash
-# Create .env file if needed for any future environment variables
-touch .env
-```
-
-4. Start the development server:
-```bash
 npm run dev
 ```
 
-5. Open your browser and visit `http://localhost:8080`
+## 📞 Support
 
-### Available Scripts
-
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run build:dev` - Build for development
-- `npm run preview` - Preview production build
-- `npm run lint` - Run ESLint
-
-## 📧 EmailJS Setup (Contact Form)
-
-The contact form uses EmailJS to send emails through Gmail. Here's how to set it up:
-
-### 1. Create EmailJS Account
-1. Go to [https://www.emailjs.com/](https://www.emailjs.com/)
-2. Sign up for a free account
-3. Verify your email address
-
-### 2. Add Gmail Service
-1. In EmailJS dashboard, click "Add New Service"
-2. Select "Gmail" as the service type
-3. Connect your Gmail account (the one that will receive emails)
-4. Name it (e.g., "Gmail Service")
-5. **Copy the Service ID** (looks like `service_abc123`)
-
-### 3. Create Email Template
-1. Go to "Email Templates" in EmailJS dashboard
-2. Click "Create New Template"
-3. Use this template:
-
-**Subject:** `New AI Project Inquiry from {{from_name}}`
-
-**Body:**
-```
-Name: {{from_name}}
-Email: {{from_email}}
-Company: {{company_name}}
-Project Type: {{project_type}}
-Budget Range: {{budget_range}}
-Message: {{message}}
-```
-
-4. Set "To Email" to your Gmail address
-5. Set "From Name" to `{{from_name}}`
-6. Set "Reply To" to `{{from_email}}`
-7. **Copy the Template ID** (looks like `template_xyz789`)
-
-### 4. Get Your Public Key
-1. Go to "Account" → "API Keys" in EmailJS dashboard
-2. **Copy your Public Key** (looks like `QpnDI71fHb5sCSLbRI2TW`)
-
-### 5. Update Contact Component
-In `src/components/Contact.tsx`, update these values:
-```javascript
-emailjs.send(
-  'YOUR_SERVICE_ID',      // Replace with your Gmail Service ID
-  'YOUR_TEMPLATE_ID',     // Replace with your Template ID
-  {
-    from_name: formData.name,
-    from_email: formData.email,
-    company_name: formData.company,
-    project_type: formData.projectType,
-    budget_range: formData.budget,
-    message: formData.message
-  },
-  'YOUR_PUBLIC_KEY'       // Replace with your Public Key
-)
-```
-
-## 📅 Calendly Setup (Consultation Booking)
-
-The "Book Free Consultation" buttons open a Calendly popup for scheduling.
-
-### 1. Create Calendly Account
-1. Go to [https://calendly.com/](https://calendly.com/)
-2. Sign up for a free account
-3. Complete your profile setup
-
-### 2. Create Event Type
-1. Click "+ New Event Type"
-2. Set event name (e.g., "Free AI Consultation")
-3. Set duration (e.g., 30 minutes)
-4. Configure availability and timezone
-5. Add any questions for invitees
-6. Save the event
-
-### 3. Get Your Calendly URL
-1. In your Calendly dashboard, find your event
-2. Click "Share" or copy the event URL
-3. The URL should look like: `https://calendly.com/yourusername/event-name`
-
-### 4. Update Calendly Component
-In `src/components/CalendlyPopup.tsx`, update the URL:
-```javascript
-<InlineWidget
-  url="https://calendly.com/YOUR_USERNAME/YOUR_EVENT_NAME"
-  // ... other props
-/>
-```
-
-## 📱 Responsive Design
-
-The website is fully responsive and optimized for:
-- Desktop (1200px+)
-- Tablet (768px - 1199px)
-- Mobile (320px - 767px)
-
-## 🎯 Key Sections
-
-1. **Hero Section** - Compelling headline with call-to-action
-2. **Services** - Detailed service offerings with icons and descriptions
-3. **Portfolio** - Interactive project showcase with filtering
-4. **Industries** - Industry-specific solutions and use cases
-5. **About** - Company information and expertise
-6. **Process** - Step-by-step development methodology
-7. **Pricing** - Transparent pricing plans ($40/hour for custom solutions)
-8. **Contact** - EmailJS-powered contact form
-9. **Consultation Booking** - Calendly popup integration
-
-## 🔧 Customization
-
-### Colors
-The primary brand colors are defined in `tailwind.config.ts`:
-- Primary Blue: `#2563eb` (blue-600)
-- Dark Blue: `#1d4ed8` (blue-800)
-- Gray tones for text and backgrounds
-
-### Components
-All UI components are built with shadcn/ui and can be customized in the `src/components/ui/` directory.
-
-### Content
-Update content by modifying the respective component files in `src/components/`.
-
-### Button Styling
-For pages with colored/gradient backgrounds, buttons use high-contrast styling:
-- Primary: `bg-white text-[accent-color] hover:bg-gray-100`
-- Secondary: `border-white text-white hover:bg-white hover:text-[accent-color]`
-
-## 📈 Performance
-
-- Lighthouse score: 95+ (Performance, Accessibility, Best Practices, SEO)
-- Optimized images and assets
-- Efficient bundle splitting with Vite
-- Minimal JavaScript footprint
-- Fast loading with Vite HMR
-
-## 🔒 Security
-
-- No sensitive data in client-side code
-- Secure form handling with EmailJS
-- HTTPS ready
-- Content Security Policy compliant
-- EmailJS public key is safe to expose (by design)
-
-## 📦 Dependencies
-
-Key dependencies include:
-- `react-calendly` - Calendly integration
-- `@emailjs/browser` - EmailJS client library
-- `react-router-dom` - Client-side routing
-- `lucide-react` - Icon library
-- `@radix-ui/*` - UI primitives
-- `tailwindcss` - CSS framework
+For technical issues or questions about the platform, please refer to the documentation in the `docs/` directory or contact the development team.
 
 ## 📄 License
 
-This project is proprietary software for buildaifor.me AI agency.
-
-## 🤝 Support
-
-For support or questions about this website, please contact the development team.
-
----
-
-**Built with ❤️ for buildaifor.me**
+This project is proprietary software. All rights reserved.

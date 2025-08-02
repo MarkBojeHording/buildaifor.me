@@ -1,383 +1,664 @@
-import { ShoppingCart, TrendingUp, BarChart3, Target, DollarSign, Package, ArrowLeft, RefreshCw } from 'lucide-react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import React, { useState, useEffect, useCallback } from 'react';
+import {
+  Upload,
+  BarChart3,
+  TrendingUp,
+  Users,
+  DollarSign,
+  Lightbulb,
+  AlertTriangle,
+  CheckCircle,
+  Loader2,
+  FileText,
+  Sparkles,
+  Zap,
+  Target,
+  Database,
+  Settings,
+  ArrowLeft
+} from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
-const EcommerceSalesIntelligence = () => {
-  const salesMetrics = [
-    { label: 'Revenue Growth', value: '+25%', trend: 'up', period: 'vs last quarter' },
-    { label: 'Conversion Rate', value: '4.2%', trend: 'up', period: '+0.8% this month' },
-    { label: 'Average Order Value', value: '$127', trend: 'up', period: '+$23 vs last month' },
-    { label: 'Customer Lifetime Value', value: '$890', trend: 'up', period: '+15% this quarter' }
-  ];
+// Sample data for initial load
+const sampleData = [
+  { Month: 'Jan', Revenue: 100000, Marketing_Spend: 10000, New_Customers: 500, Profit: 30000 },
+  { Month: 'Feb', Revenue: 105000, Marketing_Spend: 10500, New_Customers: 520, Profit: 32000 },
+  { Month: 'Mar', Revenue: 110000, Marketing_Spend: 11000, New_Customers: 550, Profit: 34000 },
+  { Month: 'Apr', Revenue: 95000, Marketing_Spend: 12000, New_Customers: 480, Profit: 25000 },
+  { Month: 'May', Revenue: 115000, Marketing_Spend: 11200, New_Customers: 580, Profit: 36000 },
+  { Month: 'Jun', Revenue: 120000, Marketing_Spend: 11500, New_Customers: 600, Profit: 38000 },
+  { Month: 'Jul', Revenue: 125000, Marketing_Spend: 11800, New_Customers: 620, Profit: 40000 },
+  { Month: 'Aug', Revenue: 130000, Marketing_Spend: 12000, New_Customers: 650, Profit: 42000 }
+];
 
-  const topProducts = [
-    { name: 'Wireless Headphones Pro', sales: 1247, revenue: '$124,700', trend: '+23%' },
-    { name: 'Smart Fitness Tracker', sales: 892, revenue: '$89,200', trend: '+18%' },
-    { name: 'Bluetooth Speaker Mini', sales: 756, revenue: '$45,360', trend: '+12%' },
-    { name: 'USB-C Fast Charger', sales: 634, revenue: '$31,700', trend: '+8%' },
-    { name: 'Phone Case Premium', sales: 523, revenue: '$15,690', trend: '+5%' }
-  ];
+// Types for the application
+interface DataRow {
+  [key: string]: string | number;
+}
 
-  const inventoryAlerts = [
-    { product: 'Wireless Headphones Pro', status: 'low', stock: 23, reorderPoint: 50, action: 'Reorder Now' },
-    { product: 'Smart Watch Series 5', status: 'critical', stock: 8, reorderPoint: 25, action: 'Urgent Reorder' },
-    { product: 'Bluetooth Speaker', status: 'optimal', stock: 156, reorderPoint: 75, action: 'Monitor' }
-  ];
+interface InsightData {
+  summary: string;
+  trends: string[];
+  anomalies: string[];
+  prediction: string;
+}
 
-  const customerSegments = [
-    { segment: 'High-Value Customers', count: 1247, revenue: '$234,500', avgOrder: '$188' },
-    { segment: 'Frequent Buyers', count: 3456, revenue: '$189,200', avgOrder: '$55' },
-    { segment: 'New Customers', count: 892, revenue: '$67,400', avgOrder: '$76' },
-    { segment: 'At-Risk Customers', count: 234, revenue: '$23,400', avgOrder: '$100' }
-  ];
+interface AdvancedFeatures {
+  nlq: string;
+  rootCause: string;
+  recommendations: string;
+  integrations: string;
+  customization: string;
+  dataCleaning: string;
+}
+
+const EcommerceSalesIntelligence: React.FC = () => {
+  // State management
+  const [data, setData] = useState<DataRow[]>(sampleData);
+  const [isSampleData, setIsSampleData] = useState(true);
+  const [insights, setInsights] = useState<InsightData | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const [displayedRows, setDisplayedRows] = useState(16); // Show up to 16 rows initially
+
+  // Advanced features data
+  const advancedFeatures: AdvancedFeatures = {
+    nlq: "Ask your dashboard questions in plain English like 'Show me revenue trends for Q2' or 'What caused the dip in April?'",
+    rootCause: "AI identifies the 'why' behind performance changes, automatically detecting correlations and causal factors.",
+    recommendations: "Receive AI-driven suggestions for actions to improve performance, optimize spending, and increase efficiency.",
+    integrations: "Connect to your live CRM, ERP, Google Analytics, and other data sources for real-time insights.",
+    customization: "Tailor dashboard layouts, metrics, and visualizations to match your specific business needs.",
+    dataCleaning: "Automate data cleaning, validation, and preparation processes to ensure data quality."
+  };
+
+  // Generate initial insights on component mount
+  useEffect(() => {
+    generateInsights(sampleData);
+  }, []);
+
+  // CSV parsing function with robust error handling
+  const parseCSV = useCallback((csvText: string): DataRow[] => {
+    try {
+      const lines = csvText.trim().split('\n');
+      if (lines.length < 2) {
+        throw new Error('CSV must have at least a header row and one data row');
+      }
+
+      const headers = lines[0].split(',').map(header => header.trim());
+      const dataRows: DataRow[] = [];
+
+      for (let i = 1; i < lines.length; i++) {
+        const line = lines[i].trim();
+        if (!line) continue; // Skip empty lines
+
+        const values = line.split(',').map(value => value.trim());
+        if (values.length !== headers.length) {
+          console.warn(`Row ${i + 1} has ${values.length} values but expected ${headers.length}`);
+          continue;
+        }
+
+        const row: DataRow = {};
+        headers.forEach((header, index) => {
+          const value = values[index];
+
+          // Check if this looks like a date (contains dashes or slashes)
+          if (value.includes('-') || value.includes('/')) {
+            row[header] = value; // Keep as string for dates
+          } else {
+            // Try to convert to number if possible, but only if it's a pure number
+            const numValue = parseFloat(value);
+            // Only convert to number if it's a valid number and doesn't contain letters
+            const isPureNumber = /^\d+(\.\d+)?$/.test(value);
+            row[header] = (isNaN(numValue) || !isPureNumber) ? value : numValue;
+          }
+        });
+        dataRows.push(row);
+      }
+
+      return dataRows;
+    } catch (error) {
+      console.error('Error parsing CSV:', error);
+      throw new Error('Failed to parse CSV file. Please ensure it\'s properly formatted.');
+    }
+  }, []);
+
+  // AI insight generation with OpenAI API and exponential backoff
+  const generateInsights = useCallback(async (dataRows: DataRow[], retryCount = 0) => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      // Convert data to CSV string for AI analysis
+      const headers = Object.keys(dataRows[0]);
+      const csvString = [
+        headers.join(','),
+        ...dataRows.map(row => headers.map(header => row[header]).join(','))
+      ].join('\n');
+
+      // Construct AI prompt
+      const prompt = `Analyze this business data and provide insights in the following JSON format:
+{
+  "summary": "A clear, concise narrative summary highlighting key KPIs and overall trends",
+  "trends": ["List of significant trends identified in the data"],
+  "anomalies": ["List of potential anomalies or unusual patterns"],
+  "prediction": "A simple, high-level forecast for the primary metric based on recent trends"
+}
+
+Business Data (CSV):
+${csvString}
+
+Focus on:
+- Revenue trends and growth patterns
+- Marketing spend efficiency
+- Customer acquisition trends
+- Profit margin analysis
+- Any notable anomalies or patterns
+- Simple predictive insights based on the data
+
+Provide actionable insights that would be valuable for business decision-making.`;
+
+      // Note: For this integration, the API key should be in the main project's .env file
+      // since this component is part of the main application, not the standalone template
+      const apiKey = import.meta.env.VITE_OPENAI_API_KEY || ""; // Get API key from environment variable
+
+      // Debug: Check if API key is available (remove this in production)
+      if (!apiKey) {
+        console.warn("OpenAI API key not found in main application. Please check your root .env file.");
+        console.log("Available environment variables:", Object.keys(import.meta.env));
+      }
+      const maxRetries = 3;
+      const baseDelay = 1000; // 1 second
+
+      const makeRequest = async (attempt: number): Promise<Response> => {
+        const response = await fetch('https://api.openai.com/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${apiKey}`
+          },
+          body: JSON.stringify({
+            model: 'gpt-4o-mini',
+            messages: [
+              {
+                role: 'system',
+                content: 'You are a business intelligence analyst. Provide insights in the exact JSON format requested.'
+              },
+              {
+                role: 'user',
+                content: prompt
+              }
+            ],
+            temperature: 0.3,
+            max_tokens: 1000
+          })
+        });
+
+        if (!response.ok) {
+          if (response.status === 429 && attempt < maxRetries) {
+            const delay = baseDelay * Math.pow(2, attempt);
+            await new Promise(resolve => setTimeout(resolve, delay));
+            return makeRequest(attempt + 1);
+          }
+          throw new Error(`API request failed: ${response.status}`);
+        }
+
+        return response;
+      };
+
+      const response = await makeRequest(0);
+      const result = await response.json();
+
+      if (!result.choices || !result.choices[0] || !result.choices[0].message) {
+        throw new Error('Invalid response from AI service');
+      }
+
+      const aiResponse = result.choices[0].message.content;
+
+      // Clean the response by removing markdown formatting
+      let cleanedResponse = aiResponse;
+
+      // Remove markdown code blocks and "json" text
+      cleanedResponse = cleanedResponse.replace(/```json\s*/g, '').replace(/```\s*/g, '');
+
+      // Try to parse JSON response, fallback to text if needed
+      let parsedInsights: InsightData;
+      try {
+        parsedInsights = JSON.parse(cleanedResponse);
+      } catch {
+        // Fallback: create structured insights from text response
+        parsedInsights = {
+          summary: aiResponse,
+          trends: [],
+          anomalies: [],
+          prediction: "Based on the data analysis, continued monitoring of key metrics is recommended."
+        };
+      }
+
+      setInsights(parsedInsights);
+    } catch (error) {
+      console.error('Error generating insights:', error);
+      setError(error instanceof Error ? error.message : 'Failed to generate insights');
+
+      // Fallback insights
+      setInsights({
+        summary: "Unable to generate AI insights at this time. Please try again later.",
+        trends: [],
+        anomalies: [],
+        prediction: ""
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  // Handle CSV file upload
+  const handleFileUpload = useCallback(async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    setIsUploading(true);
+    setError(null);
+
+    try {
+      const text = await file.text();
+      const parsedData = parseCSV(text);
+
+      if (parsedData.length === 0) {
+        throw new Error('No valid data found in the CSV file');
+      }
+
+      setData(parsedData);
+      setIsSampleData(false);
+      setDisplayedRows(16); // Reset to show first 16 rows
+
+      // Generate insights for the new data
+      await generateInsights(parsedData);
+    } catch (error) {
+      console.error('Error uploading file:', error);
+      setError(error instanceof Error ? error.message : 'Failed to upload file');
+    } finally {
+      setIsUploading(false);
+      // Reset file input
+      event.target.value = '';
+    }
+  }, [parseCSV, generateInsights]);
+
+  // Calculate basic metrics for display
+  const calculateMetrics = useCallback(() => {
+    if (data.length === 0) return null;
+
+    const latest = data[data.length - 1];
+    const previous = data[data.length - 2];
+
+    const revenueChange = previous ? ((latest.Revenue as number) - (previous.Revenue as number)) / (previous.Revenue as number) * 100 : 0;
+    const profitChange = previous ? ((latest.Profit as number) - (previous.Profit as number)) / (previous.Profit as number) * 100 : 0;
+    const customerChange = previous ? ((latest.New_Customers as number) - (previous.New_Customers as number)) / (previous.New_Customers as number) * 100 : 0;
+
+    return {
+      currentRevenue: latest.Revenue as number,
+      currentProfit: latest.Profit as number,
+      currentCustomers: latest.New_Customers as number,
+      revenueChange,
+      profitChange,
+      customerChange
+    };
+  }, [data]);
+
+  const metrics = calculateMetrics();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
       <Header />
 
       {/* Hero Section */}
-      <section className="pt-24 pb-16">
+      <section className="pt-24 pb-8">
         <div className="container mx-auto px-4 lg:px-8">
           <Button
             variant="outline"
-            onClick={() => window.history.back()}
+            onClick={() => {
+              window.history.back();
+            }}
             className="mb-6 group"
           >
             <ArrowLeft className="mr-2 h-4 w-4 group-hover:-translate-x-1 transition-transform" />
             Back to Portfolio
           </Button>
+          <div className="text-center mb-8">
+            <h1 className="text-4xl font-bold text-gray-900 mb-4">
+              Business Dashboard Generator
+            </h1>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Experience our advanced AI-powered business intelligence system with real-time insights, predictive analytics, and automated data analysis.
+            </p>
+          </div>
+        </div>
+      </section>
 
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-8">
-              <div className="space-y-4">
-                <div className="inline-flex items-center bg-green-100 text-green-700 px-4 py-2 rounded-full text-sm font-medium">
-                  <ShoppingCart className="w-4 h-4 mr-2" />
-                  E-commerce Sales Intelligence
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Upload Section */}
+        <div className="card mb-8">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h2 className="text-lg font-semibold text-gray-900 mb-2">Upload Your Data</h2>
+              <p className="text-gray-600">
+                Upload a CSV file with your business data to get AI-powered insights and analytics.
+              </p>
+            </div>
+            <div className="mt-4 sm:mt-0">
+              <label className="btn-primary cursor-pointer inline-flex items-center space-x-2">
+                <Upload className="w-4 h-4" />
+                <span>Upload CSV File</span>
+                <input
+                  type="file"
+                  accept=".csv"
+                  onChange={handleFileUpload}
+                  className="hidden"
+                  disabled={isUploading}
+                />
+              </label>
+            </div>
+          </div>
+          {isUploading && (
+            <div className="mt-4 flex items-center space-x-2 text-primary-600">
+              <Loader2 className="w-4 h-4 animate-spin" />
+              <span>Processing your file...</span>
+            </div>
+          )}
+          {error && (
+            <div className="mt-4 flex items-center space-x-2 text-red-600 bg-red-50 p-3 rounded-lg">
+              <AlertTriangle className="w-4 h-4" />
+              <span>{error}</span>
+            </div>
+          )}
+        </div>
+
+        {/* Key Metrics */}
+        {metrics && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div className="card">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-gray-600">Revenue</p>
+                  <p className="text-2xl font-bold text-gray-900">
+                    ${metrics.currentRevenue.toLocaleString()}
+                  </p>
+                  <p className={`text-sm ${metrics.revenueChange >= 0 ? 'text-success-600' : 'text-red-600'}`}>
+                    {metrics.revenueChange >= 0 ? '+' : ''}{metrics.revenueChange.toFixed(1)}% from last month
+                  </p>
                 </div>
-
-                <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
-                  AI-Powered
-                  <span className="text-blue-600"> Sales Analytics </span>
-                  & Inventory Optimization
-                </h1>
-
-                <p className="text-xl text-gray-600 leading-relaxed">
-                  Transform your e-commerce business with predictive analytics that optimize
-                  inventory, boost sales, and maximize customer lifetime value through
-                  intelligent insights and automation.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                {salesMetrics.map((metric, index) => (
-                  <div key={index} className="bg-white rounded-lg p-4 shadow-lg">
-                    <div className="flex items-center justify-between mb-1">
-                      <div className="text-2xl font-bold text-green-600">{metric.value}</div>
-                      <TrendingUp className="w-5 h-5 text-green-500" />
-                    </div>
-                    <div className="text-sm font-medium text-gray-900">{metric.label}</div>
-                    <div className="text-xs text-green-600">{metric.period}</div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg">
-                  View Live Dashboard
-                </Button>
-                <Button variant="outline" size="lg" className="border-blue-600 text-blue-600 hover:bg-blue-50 px-8 py-4 text-lg">
-                  Download Report
-                </Button>
+                <DollarSign className="w-8 h-8 text-primary-600" />
               </div>
             </div>
 
-            <div className="relative">
-              <div className="bg-white rounded-2xl p-6 shadow-2xl">
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-semibold">Sales Dashboard</h3>
-                    <div className="flex items-center space-x-2">
-                      <RefreshCw className="w-4 h-4 text-green-500" />
-                      <Badge className="bg-green-100 text-green-700">Live Data</Badge>
-                    </div>
+            <div className="card">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-gray-600">Profit</p>
+                  <p className="text-2xl font-bold text-gray-900">
+                    ${metrics.currentProfit.toLocaleString()}
+                  </p>
+                  <p className={`text-sm ${metrics.profitChange >= 0 ? 'text-success-600' : 'text-red-600'}`}>
+                    {metrics.profitChange >= 0 ? '+' : ''}{metrics.profitChange.toFixed(1)}% from last month
+                  </p>
+                </div>
+                <TrendingUp className="w-8 h-8 text-success-600" />
+              </div>
+            </div>
+
+            <div className="card">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-gray-600">New Customers</p>
+                  <p className="text-2xl font-bold text-gray-900">
+                    {metrics.currentCustomers.toLocaleString()}
+                  </p>
+                  <p className={`text-sm ${metrics.customerChange >= 0 ? 'text-success-600' : 'text-red-600'}`}>
+                    {metrics.customerChange >= 0 ? '+' : ''}{metrics.customerChange.toFixed(1)}% from last month
+                  </p>
+                </div>
+                <Users className="w-8 h-8 text-warning-600" />
+              </div>
+            </div>
+
+            <div className="card">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-gray-600">Data Points</p>
+                  <p className="text-2xl font-bold text-gray-900">
+                    {data.length}
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    {isSampleData ? 'Sample records' : 'Your records'}
+                  </p>
+                </div>
+                <Database className="w-8 h-8 text-gray-600" />
+              </div>
+            </div>
+          </div>
+        )}
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Data Table */}
+          <div className="card">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold text-gray-900">Data Preview</h3>
+              <div className="text-sm text-gray-500">
+                Showing {Math.min(data.length, displayedRows)} of {data.length} rows
+              </div>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-gray-200">
+                    {data.length > 0 && Object.keys(data[0]).map((header) => (
+                      <th key={header} className="text-left py-2 px-2 font-medium text-gray-700">
+                        {header}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {data.slice(0, displayedRows).map((row, index) => (
+                    <tr key={index} className="border-b border-gray-100 hover:bg-gray-50">
+                      {Object.values(row).map((value, valueIndex) => (
+                        <td key={valueIndex} className="py-2 px-2">
+                          {typeof value === 'number' ? value.toLocaleString() : value}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            {data.length > displayedRows && (
+              <div className="mt-4 text-center">
+                <button
+                  onClick={() => setDisplayedRows(prev => Math.min(prev + 16, data.length))}
+                  className="text-sm text-blue-600 hover:text-blue-800 font-medium px-4 py-2 rounded-lg border border-blue-200 hover:border-blue-300 hover:bg-blue-50 transition-colors"
+                >
+                  Show {Math.min(16, data.length - displayedRows)} More Rows
+                </button>
+                <div className="text-sm text-gray-500 mt-1">
+                  ... and {data.length - displayedRows} more rows
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* AI Insights */}
+          <div className="card">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold text-gray-900">AI Insights</h3>
+              <Sparkles className="w-5 h-5 text-primary-600" />
+            </div>
+
+            {isLoading ? (
+              <div className="flex items-center justify-center py-8">
+                <div className="text-center">
+                  <Loader2 className="w-8 h-8 text-primary-600 animate-spin mx-auto mb-2" />
+                  <p className="text-gray-600">Generating insights...</p>
+                </div>
+              </div>
+            ) : insights ? (
+              <div className="space-y-4">
+                {/* Summary */}
+                <div className="bg-gradient-to-r from-primary-50 to-blue-50 p-4 rounded-lg">
+                  <h4 className="font-medium text-gray-900 mb-2 flex items-center">
+                    <Lightbulb className="w-4 h-4 mr-2 text-primary-600" />
+                    Summary
+                  </h4>
+                  <p className="text-gray-700 leading-relaxed">{insights.summary}</p>
+                </div>
+
+                {/* Trends */}
+                {insights.trends && insights.trends.length > 0 && (
+                  <div>
+                    <h4 className="font-medium text-gray-900 mb-2 flex items-center">
+                      <TrendingUp className="w-4 h-4 mr-2 text-success-600" />
+                      Key Trends
+                    </h4>
+                    <ul className="space-y-1">
+                      {insights.trends.map((trend, index) => (
+                        <li key={index} className="flex items-start">
+                          <CheckCircle className="w-4 h-4 text-success-600 mr-2 mt-0.5 flex-shrink-0" />
+                          <span className="text-gray-700">{trend}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
+                )}
 
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
-                      <div className="text-2xl font-bold text-blue-600">$47.2K</div>
-                      <div className="text-xs text-blue-700">Today's Revenue</div>
-                      <div className="text-xs text-green-600">↑ 18% vs yesterday</div>
-                    </div>
-                    <div className="bg-green-50 border border-green-200 rounded-lg p-3">
-                      <div className="text-2xl font-bold text-green-600">234</div>
-                      <div className="text-xs text-green-700">Orders Today</div>
-                      <div className="text-xs text-green-600">↑ 12% vs yesterday</div>
-                    </div>
+                {/* Anomalies */}
+                {insights.anomalies && insights.anomalies.length > 0 && (
+                  <div>
+                    <h4 className="font-medium text-gray-900 mb-2 flex items-center">
+                      <AlertTriangle className="w-4 h-4 mr-2 text-warning-600" />
+                      Anomalies Detected
+                    </h4>
+                    <ul className="space-y-1">
+                      {insights.anomalies.map((anomaly, index) => (
+                        <li key={index} className="flex items-start">
+                          <AlertTriangle className="w-4 h-4 text-warning-600 mr-2 mt-0.5 flex-shrink-0" />
+                          <span className="text-gray-700">{anomaly}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
+                )}
 
-                  <div className="bg-gray-50 rounded-lg p-4">
-                    <div className="text-sm font-medium mb-3">Top Performing Products</div>
-                    <div className="space-y-2">
-                      <div className="flex justify-between text-xs">
-                        <span>Wireless Headphones Pro</span>
-                        <span className="font-medium">$12.4K</span>
-                      </div>
-                      <Progress value={85} className="h-1" />
-
-                      <div className="flex justify-between text-xs">
-                        <span>Smart Fitness Tracker</span>
-                        <span className="font-medium">$8.9K</span>
-                      </div>
-                      <Progress value={65} className="h-1" />
-
-                      <div className="flex justify-between text-xs">
-                        <span>Bluetooth Speaker Mini</span>
-                        <span className="font-medium">$4.5K</span>
-                      </div>
-                      <Progress value={35} className="h-1" />
-                    </div>
+                {/* Prediction */}
+                {insights.prediction && (
+                  <div className="bg-gradient-to-r from-warning-50 to-orange-50 p-4 rounded-lg">
+                    <h4 className="font-medium text-gray-900 mb-2 flex items-center">
+                      <Target className="w-4 h-4 mr-2 text-warning-600" />
+                      Predictive Insight
+                    </h4>
+                    <p className="text-gray-700">{insights.prediction}</p>
                   </div>
+                )}
+              </div>
+            ) : (
+              <div className="text-center py-8 text-gray-500">
+                No insights available
+              </div>
+            )}
+          </div>
+        </div>
 
-                  <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
-                    <div className="flex items-center space-x-2 mb-1">
-                      <Package className="w-4 h-4 text-yellow-600" />
-                      <span className="text-sm font-medium text-yellow-800">Inventory Alert</span>
-                    </div>
-                    <div className="text-xs text-yellow-700">2 products need reordering</div>
-                  </div>
+        {/* Advanced Features Section */}
+        <div className="mt-8">
+          {/* Header */}
+          <div className="text-center mb-8">
+            <div className="flex items-center justify-center space-x-3 mb-4">
+              <div className="w-10 h-10 bg-gradient-to-br from-purple-600 to-purple-800 rounded-lg flex items-center justify-center">
+                <Zap className="w-5 h-5 text-white" />
+              </div>
+              <h3 className="text-2xl font-semibold text-gray-900">Explore Advanced AI Features</h3>
+            </div>
+            <p className="text-gray-600 text-lg">Discover the full potential of AI-powered business intelligence</p>
+          </div>
+
+          {/* Feature Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            <div className="card">
+              <div className="flex items-start space-x-3">
+                <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <FileText className="w-4 h-4 text-blue-600" />
+                </div>
+                <div>
+                  <h4 className="font-medium text-gray-900 mb-1">Natural Language Querying</h4>
+                  <p className="text-sm text-gray-600">{advancedFeatures.nlq}</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="card">
+              <div className="flex items-start space-x-3">
+                <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Target className="w-4 h-4 text-green-600" />
+                </div>
+                <div>
+                  <h4 className="font-medium text-gray-900 mb-1">Root Cause Analysis</h4>
+                  <p className="text-sm text-gray-600">{advancedFeatures.rootCause}</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="card">
+              <div className="flex items-start space-x-3">
+                <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Lightbulb className="w-4 h-4 text-purple-600" />
+                </div>
+                <div>
+                  <h4 className="font-medium text-gray-900 mb-1">Prescriptive Recommendations</h4>
+                  <p className="text-sm text-gray-600">{advancedFeatures.recommendations}</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="card">
+              <div className="flex items-start space-x-3">
+                <div className="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Database className="w-4 h-4 text-orange-600" />
+                </div>
+                <div>
+                  <h4 className="font-medium text-gray-900 mb-1">Real-time Integrations</h4>
+                  <p className="text-sm text-gray-600">{advancedFeatures.integrations}</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="card">
+              <div className="flex items-start space-x-3">
+                <div className="w-8 h-8 bg-indigo-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Settings className="w-4 h-4 text-indigo-600" />
+                </div>
+                <div>
+                  <h4 className="font-medium text-gray-900 mb-1">Customizable Dashboards</h4>
+                  <p className="text-sm text-gray-600">{advancedFeatures.customization}</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="card">
+              <div className="flex items-start space-x-3">
+                <div className="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Sparkles className="w-4 h-4 text-red-600" />
+                </div>
+                <div>
+                  <h4 className="font-medium text-gray-900 mb-1">AI Data Cleaning</h4>
+                  <p className="text-sm text-gray-600">{advancedFeatures.dataCleaning}</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </section>
-
-      {/* Top Products Analysis */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              Product Performance Analytics
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Real-time insights into your best-performing products and sales trends
-            </p>
-          </div>
-
-          <Card className="border-0 shadow-lg">
-            <CardHeader>
-              <CardTitle className="flex items-center space-x-2">
-                <BarChart3 className="w-6 h-6 text-blue-600" />
-                <span>Top Performing Products</span>
-              </CardTitle>
-              <CardDescription>
-                Products ranked by revenue performance this month
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {topProducts.map((product, index) => (
-                  <div key={index} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                    <div className="flex items-center space-x-4">
-                      <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                        <span className="text-sm font-bold text-blue-600">#{index + 1}</span>
-                      </div>
-                      <div>
-                        <div className="font-medium">{product.name}</div>
-                        <div className="text-sm text-gray-600">{product.sales} units sold</div>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <div className="font-bold text-lg">{product.revenue}</div>
-                      <div className="text-sm text-green-600">{product.trend}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
-
-      {/* Inventory Management */}
-      <section className="py-20 bg-gray-50">
-        <div className="container mx-auto px-4 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              Intelligent Inventory Management
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              AI-powered inventory optimization prevents stockouts and reduces carrying costs
-            </p>
-          </div>
-
-          <div className="grid lg:grid-cols-2 gap-8">
-            <Card className="border-0 shadow-lg">
-              <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
-                  <Package className="w-6 h-6 text-orange-600" />
-                  <span>Inventory Alerts</span>
-                </CardTitle>
-                <CardDescription>
-                  Products requiring immediate attention
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {inventoryAlerts.map((alert, index) => (
-                    <div key={index} className={`p-4 rounded-lg border ${
-                      alert.status === 'critical' ? 'bg-red-50 border-red-200' :
-                      alert.status === 'low' ? 'bg-yellow-50 border-yellow-200' :
-                      'bg-green-50 border-green-200'
-                    }`}>
-                      <div className="flex items-center justify-between mb-2">
-                        <div className="font-medium">{alert.product}</div>
-                        <Badge className={
-                          alert.status === 'critical' ? 'bg-red-100 text-red-700' :
-                          alert.status === 'low' ? 'bg-yellow-100 text-yellow-700' :
-                          'bg-green-100 text-green-700'
-                        }>
-                          {alert.status}
-                        </Badge>
-                      </div>
-                      <div className="text-sm text-gray-600 mb-2">
-                        Current Stock: {alert.stock} units (Reorder at: {alert.reorderPoint})
-                      </div>
-                      <Button size="sm" className={
-                        alert.status === 'critical' ? 'bg-red-600 hover:bg-red-700' :
-                        alert.status === 'low' ? 'bg-yellow-600 hover:bg-yellow-700' :
-                        'bg-green-600 hover:bg-green-700'
-                      }>
-                        {alert.action}
-                      </Button>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="border-0 shadow-lg">
-              <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
-                  <Target className="w-6 h-6 text-purple-600" />
-                  <span>Customer Segments</span>
-                </CardTitle>
-                <CardDescription>
-                  Customer analysis and targeting opportunities
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {customerSegments.map((segment, index) => (
-                    <div key={index} className="p-4 bg-gray-50 rounded-lg">
-                      <div className="flex items-center justify-between mb-2">
-                        <div className="font-medium">{segment.segment}</div>
-                        <div className="text-sm text-gray-600">{segment.count} customers</div>
-                      </div>
-                      <div className="grid grid-cols-2 gap-4 text-sm">
-                        <div>
-                          <div className="text-gray-600">Total Revenue</div>
-                          <div className="font-bold text-green-600">{segment.revenue}</div>
-                        </div>
-                        <div>
-                          <div className="text-gray-600">Avg Order Value</div>
-                          <div className="font-bold text-blue-600">{segment.avgOrder}</div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Key Benefits */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              Measurable Business Impact
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Real results from AI-powered e-commerce intelligence
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            <Card className="border-0 shadow-lg text-center">
-              <CardHeader>
-                <div className="mx-auto w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center mb-4">
-                  <DollarSign className="w-8 h-8 text-white" />
-                </div>
-                <CardTitle>25% Revenue Increase</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription>
-                  Optimized pricing, inventory, and customer targeting strategies
-                  resulted in significant revenue growth within 3 months.
-                </CardDescription>
-              </CardContent>
-            </Card>
-
-            <Card className="border-0 shadow-lg text-center">
-              <CardHeader>
-                <div className="mx-auto w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center mb-4">
-                  <Package className="w-8 h-8 text-white" />
-                </div>
-                <CardTitle>30% Inventory Optimization</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription>
-                  Reduced carrying costs and eliminated stockouts through
-                  predictive inventory management and demand forecasting.
-                </CardDescription>
-              </CardContent>
-            </Card>
-
-            <Card className="border-0 shadow-lg text-center">
-              <CardHeader>
-                <div className="mx-auto w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center mb-4">
-                  <TrendingUp className="w-8 h-8 text-white" />
-                </div>
-                <CardTitle>Real-time Insights</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription>
-                  Make data-driven decisions with live dashboards and automated
-                  alerts that keep you ahead of market trends and opportunities.
-                </CardDescription>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-green-600 to-emerald-600">
-        <div className="container mx-auto px-4 lg:px-8 text-center">
-          <h2 className="text-4xl font-bold text-white mb-4">
-            Ready to Optimize Your E-commerce Business?
-          </h2>
-          <p className="text-xl text-green-100 mb-8 max-w-2xl mx-auto">
-            Join successful e-commerce businesses using AI to boost sales,
-            optimize inventory, and maximize customer value.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="bg-white text-blue-700 hover:bg-gray-100 px-8 py-4 text-lg">
-              Request Demo
-            </Button>
-            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-blue-700 px-8 py-4 text-lg">
-              View Case Study
-            </Button>
-          </div>
-        </div>
-      </section>
+      </main>
 
       <Footer />
     </div>

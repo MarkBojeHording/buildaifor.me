@@ -91,7 +91,11 @@ const LegalDocumentAnalyzer = () => {
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg">
+                <Button
+                  size="lg"
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg"
+                  onClick={() => window.open('http://localhost:5174', '_blank')}
+                >
                   Try Document Analysis
                 </Button>
                 <Button variant="outline" size="lg" className="border-blue-600 text-blue-600 hover:bg-blue-50 px-8 py-4 text-lg">
@@ -309,7 +313,11 @@ const LegalDocumentAnalyzer = () => {
             more accurately, and at a fraction of the cost.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="bg-white text-red-700 hover:bg-gray-100 px-8 py-4 text-lg">
+            <Button
+              size="lg"
+              className="bg-white text-red-700 hover:bg-gray-100 px-8 py-4 text-lg"
+              onClick={() => window.open('http://localhost:5174', '_blank')}
+            >
               Request Demo
             </Button>
             <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-red-700 px-8 py-4 text-lg">

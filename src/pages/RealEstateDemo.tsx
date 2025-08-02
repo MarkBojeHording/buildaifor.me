@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge.tsx';
 import Header from '../components/Header.tsx';
 import Footer from '../components/Footer.tsx';
+import { useNavigate } from 'react-router-dom';
 
 interface Message {
   id: string;
@@ -29,6 +30,7 @@ const quickReplies = [
 ];
 
 const RealEstateDemo = () => {
+  const navigate = useNavigate();
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
@@ -80,7 +82,7 @@ const RealEstateDemo = () => {
     if (sessionId) payload.session_id = sessionId;
 
     try {
-      const response = await fetch('http://localhost:8001/chat', {
+      const response = await fetch('http://localhost:3001/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -139,7 +141,15 @@ const RealEstateDemo = () => {
         <div className="container mx-auto px-4 lg:px-8">
           <Button
             variant="outline"
-            onClick={() => window.history.back()}
+            onClick={() => {
+              navigate('/');
+              setTimeout(() => {
+                const portfolioSection = document.getElementById('portfolio');
+                if (portfolioSection) {
+                  portfolioSection.scrollIntoView({ behavior: 'smooth' });
+                }
+              }, 100);
+            }}
             className="mb-6 group"
           >
             <ArrowLeft className="mr-2 h-4 w-4 group-hover:-translate-x-1 transition-transform" />

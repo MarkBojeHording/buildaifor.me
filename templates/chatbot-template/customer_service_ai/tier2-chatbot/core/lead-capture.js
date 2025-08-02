@@ -344,32 +344,12 @@ class LeadCapture {
    * @returns {number} Lead score (0-100)
    */
   calculateLeadScore(leadData) {
-    let score = 0;
+    // DISABLED: Lead capture scoring system disabled
+    // Using single unified scoring system from lead-scorer.js only
+    console.log('📊 Lead Capture Scoring - DISABLED: Using single scoring system');
 
-    // Base score for having required fields
-    score += 30;
-
-    // Bonus for having optional fields
-    this.optionalFields.forEach(field => {
-      if (leadData[field]) {
-        score += 5;
-      }
-    });
-
-    // Bonus for urgency
-    if (leadData.urgency === 'Urgent') score += 20;
-    else if (leadData.urgency === 'High') score += 15;
-    else if (leadData.urgency === 'Medium') score += 10;
-
-    // Bonus for timeline
-    if (leadData.timeline === 'Immediately') score += 15;
-    else if (leadData.timeline === 'Within 1 week') score += 10;
-
-    // Bonus for detailed descriptions
-    if (leadData.case_description && leadData.case_description.length > 50) score += 10;
-    if (leadData.use_case && leadData.use_case.length > 50) score += 10;
-
-    return Math.min(score, 100);
+    // Return neutral score that won't affect the main lead scoring
+    return 50; // Neutral score - will be ignored by main scoring system
   }
 
   /**
