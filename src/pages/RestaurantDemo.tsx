@@ -92,9 +92,9 @@ const RestaurantDemo = () => {
     } else if (/reservation|book.*table|table.*book/i.test(messageText)) {
       customBotMessage =
         "📅 Reservations:\n\n• Call us at (555) 123-4567\n• Book online at bellavista.com\n• Walk-ins welcome (subject to availability)\n\nWe recommend reservations for weekends!";
-    } else if (/delivery|takeout|take.*out/i.test(messageText)) {
+    } else if (/delivery|deliver|takeout|take.*out/i.test(messageText)) {
       customBotMessage =
-        "🚚 Delivery & Takeout:\n\n• Delivery available through DoorDash & Uber Eats\n• Takeout orders: Call (555) 123-4567\n• Pickup available in 20-30 minutes\n\nPerfect for enjoying our food at home!";
+        "🚚 Delivery & Takeout:\n\n• Delivery available through DoorDash & Uber Eats\n• Takeout orders: Call (555) 123-4567\n• Pickup available in 20-30 minutes\n• Delivery radius: 5 miles from restaurant\n• Delivery time: 30-45 minutes\n\nPerfect for enjoying our food at home!";
     } else if (/price|cost|expensive|cheap/i.test(messageText)) {
       customBotMessage =
         "💰 Pricing:\n\n• Appetizers: $8-15\n• Main Courses: $18-35\n• Desserts: $8-12\n• Wine: $8-15 per glass\n\nWe offer great value for quality dining!";
