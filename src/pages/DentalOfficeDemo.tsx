@@ -90,6 +90,21 @@ const DentalOfficeDemo = () => {
     } else if (/how do i book an appointment/i.test(messageText)) {
       customBotMessage =
         "📅 Booking an Appointment:\n\n• Call us at (555) 123-4567\n• Visit our website to book online\n• Or stop by our clinic at 123 Main Street\n\nLet us know if you need a specific date or time!";
+    } else if (/what are your hours/i.test(messageText)) {
+      customBotMessage =
+        "🕒 Our Hours:\n\n• Monday - Friday: 8:00 AM - 6:00 PM\n• Saturday: 9:00 AM - 3:00 PM\n• Sunday: Closed\n\nWe're here to serve you during these hours!";
+    } else if (/do you accept insurance/i.test(messageText)) {
+      customBotMessage =
+        "💳 Insurance & Payment:\n\n• We accept most major insurance plans\n• Call us to verify your coverage\n• We also offer payment plans\n• Contact us at (555) 123-4567 for details";
+    } else if (/how much does a cleaning cost/i.test(messageText)) {
+      customBotMessage =
+        "💰 Pricing Information:\n\n• Regular Cleaning: $120\n• Deep Cleaning: $200\n• Exam & X-rays: $150\n\n*Prices may vary based on insurance coverage. Call us for a personalized quote!";
+    } else if (/emergency/i.test(messageText)) {
+      customBotMessage =
+        "🚨 Emergency Care:\n\n• We offer emergency dental services\n• Call us immediately at (555) 123-4567\n• After hours: (555) 999-8888\n\nDon't wait - dental emergencies need immediate attention!";
+    } else if (/contact|phone|call/i.test(messageText)) {
+      customBotMessage =
+        "📞 Contact Information:\n\n• Phone: (555) 123-4567\n• Address: 123 Main Street, City, State 12345\n• Email: info@abcdental.com\n\nWe're here to help!";
     }
 
     if (customBotMessage) {
@@ -107,6 +122,23 @@ const DentalOfficeDemo = () => {
       }, 1000);
       return;
     }
+
+    // Fallback response for unmatched questions
+    const fallbackMessage = "I don't have specific information about that, but I can help you with:\n\n• Our services and treatments\n• Hours and appointments\n• Insurance and pricing\n• Contact information\n\nOr call us directly at (555) 123-4567 for personalized assistance!";
+    
+    setTimeout(() => {
+      setMessages(prev => [
+        ...prev,
+        {
+          id: (Date.now() + 1).toString(),
+          text: fallbackMessage,
+          isUser: false,
+          timestamp: new Date()
+        }
+      ]);
+      setIsLoading(false);
+    }, 1000);
+    return;
 
     try {
       const response = await fetch('http://localhost:8001/chat', {
