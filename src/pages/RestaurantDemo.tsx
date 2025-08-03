@@ -78,6 +78,67 @@ const RestaurantDemo = () => {
     setInputMessage('');
     setIsLoading(true);
 
+    // Custom restaurant responses
+    let customBotMessage: string | null = null;
+    if (/what.*menu|menu.*what|food.*serve|serve.*food/i.test(messageText)) {
+      customBotMessage =
+        "🍽️ Our Menu:\n\n• Appetizers: Bruschetta, Calamari, Caprese Salad\n• Main Courses: Pasta Carbonara, Grilled Salmon, Beef Tenderloin\n• Desserts: Tiramisu, Chocolate Lava Cake, Gelato\n• Beverages: Wine, Cocktails, Coffee, Tea\n\nAll dishes are made with fresh, local ingredients!";
+    } else if (/what.*hours|hours.*what|open.*time|time.*open/i.test(messageText)) {
+      customBotMessage =
+        "🕒 Our Hours:\n\n• Monday - Thursday: 11:00 AM - 10:00 PM\n• Friday - Saturday: 11:00 AM - 11:00 PM\n• Sunday: 12:00 PM - 9:00 PM\n\nWe're open for lunch and dinner!";
+    } else if (/vegetarian|vegan|plant.*based/i.test(messageText)) {
+      customBotMessage =
+        "🌱 Vegetarian & Vegan Options:\n\n• Vegetarian Pasta Primavera\n• Vegan Buddha Bowl\n• Grilled Vegetable Platter\n• Plant-based Desserts\n\nWe have many delicious vegetarian and vegan options!";
+    } else if (/reservation|book.*table|table.*book/i.test(messageText)) {
+      customBotMessage =
+        "📅 Reservations:\n\n• Call us at (555) 123-4567\n• Book online at bellavista.com\n• Walk-ins welcome (subject to availability)\n\nWe recommend reservations for weekends!";
+    } else if (/delivery|takeout|take.*out/i.test(messageText)) {
+      customBotMessage =
+        "🚚 Delivery & Takeout:\n\n• Delivery available through DoorDash & Uber Eats\n• Takeout orders: Call (555) 123-4567\n• Pickup available in 20-30 minutes\n\nPerfect for enjoying our food at home!";
+    } else if (/price|cost|expensive|cheap/i.test(messageText)) {
+      customBotMessage =
+        "💰 Pricing:\n\n• Appetizers: $8-15\n• Main Courses: $18-35\n• Desserts: $8-12\n• Wine: $8-15 per glass\n\nWe offer great value for quality dining!";
+    } else if (/contact|phone|call|address/i.test(messageText)) {
+      customBotMessage =
+        "📞 Contact Information:\n\n• Phone: (555) 123-4567\n• Address: 456 Oak Street, Downtown\n• Email: info@bellavista.com\n• Website: bellavista.com\n\nWe'd love to hear from you!";
+    } else if (/parking|park/i.test(messageText)) {
+      customBotMessage =
+        "🅿️ Parking:\n\n• Free street parking available\n• Valet parking on weekends\n• Public parking garage nearby\n• Easy access from main roads\n\nConvenient parking for all guests!";
+    }
+
+    if (customBotMessage) {
+      setTimeout(() => {
+        setMessages(prev => [
+          ...prev,
+          {
+            id: (Date.now() + 1).toString(),
+            text: customBotMessage!,
+            isUser: false,
+            timestamp: new Date()
+          }
+        ]);
+        setIsLoading(false);
+      }, 1000);
+      return;
+    }
+
+    // Fallback response for unmatched questions
+    const fallbackMessage = "I don't have specific information about that, but I can help you with:\n\n• Our menu and food options\n• Hours and reservations\n• Delivery and takeout\n• Contact information\n\nOr call us directly at (555) 123-4567 for personalized assistance!";
+
+    setTimeout(() => {
+      setMessages(prev => [
+        ...prev,
+        {
+          id: (Date.now() + 1).toString(),
+          text: fallbackMessage,
+          isUser: false,
+          timestamp: new Date()
+        }
+      ]);
+      setIsLoading(false);
+    }, 1000);
+    return;
+
     try {
       const response = await fetch('http://localhost:8001/chat', {
         method: 'POST',

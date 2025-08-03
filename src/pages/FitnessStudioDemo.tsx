@@ -78,6 +78,64 @@ const FitnessStudioDemo = () => {
     setInputMessage('');
     setIsLoading(true);
 
+    // Custom fitness studio responses
+    let customBotMessage: string | null = null;
+    if (/what.*classes|classes.*what|schedule.*classes/i.test(messageText)) {
+      customBotMessage =
+        "🏋️‍♀️ Our Classes:\n\n• HIIT Training (Mon, Wed, Fri)\n• Yoga Flow (Tue, Thu, Sat)\n• Strength Training (Mon, Wed, Fri)\n• Cardio Kickboxing (Tue, Thu)\n• Pilates (Wed, Sat)\n• Zumba (Fri, Sun)\n\nWe have classes for all fitness levels!";
+    } else if (/membership|rates|pricing|cost|how.*much/i.test(messageText)) {
+      customBotMessage =
+        "💰 Membership Rates:\n\n• Basic: $49/month (gym access only)\n• Standard: $79/month (gym + classes)\n• Premium: $99/month (gym + classes + personal training)\n• Day Pass: $15\n• Family Plan: $149/month\n\nNo long-term contracts required!";
+    } else if (/what.*hours|hours.*what|open.*time/i.test(messageText)) {
+      customBotMessage =
+        "🕒 Our Hours:\n\n• Monday - Friday: 5:00 AM - 11:00 PM\n• Saturday: 6:00 AM - 10:00 PM\n• Sunday: 7:00 AM - 9:00 PM\n\nWe're open early and late to fit your schedule!";
+    } else if (/contact|phone|call|address/i.test(messageText)) {
+      customBotMessage =
+        "📞 Contact Information:\n\n• Phone: (555) 123-4567\n• Address: 321 Fitness Drive, Downtown\n• Email: info@fitzone.com\n• Website: fitzone.com\n\nWe'd love to hear from you!";
+    } else if (/equipment|machines|weights/i.test(messageText)) {
+      customBotMessage =
+        "🏋️ Equipment:\n\n• Cardio machines (treadmills, ellipticals, bikes)\n• Free weights and weight machines\n• Functional training area\n• Yoga and stretching space\n• Locker rooms with showers\n\nState-of-the-art equipment for all your fitness needs!";
+    } else if (/trainer|personal.*training/i.test(messageText)) {
+      customBotMessage =
+        "👨‍💼 Personal Training:\n\n• Certified personal trainers available\n• One-on-one sessions: $60/hour\n• Small group training: $30/person\n• Free fitness assessment with membership\n• Custom workout plans\n\nLet's help you reach your fitness goals!";
+    } else if (/trial|free.*trial/i.test(messageText)) {
+      customBotMessage =
+        "🎁 Free Trial:\n\n• 7-day free trial for new members\n• No credit card required\n• Access to gym and classes\n• Free fitness assessment\n• Personal consultation\n\nTry us out risk-free!";
+    }
+
+    if (customBotMessage) {
+      setTimeout(() => {
+        setMessages(prev => [
+          ...prev,
+          {
+            id: (Date.now() + 1).toString(),
+            text: customBotMessage!,
+            isUser: false,
+            timestamp: new Date()
+          }
+        ]);
+        setIsLoading(false);
+      }, 1000);
+      return;
+    }
+
+    // Fallback response for unmatched questions
+    const fallbackMessage = "I don't have specific information about that, but I can help you with:\n\n• Class schedules and types\n• Membership rates and options\n• Hours and contact information\n• Equipment and facilities\n\nOr call us directly at (555) 123-4567 for personalized assistance!";
+
+    setTimeout(() => {
+      setMessages(prev => [
+        ...prev,
+        {
+          id: (Date.now() + 1).toString(),
+          text: fallbackMessage,
+          isUser: false,
+          timestamp: new Date()
+        }
+      ]);
+      setIsLoading(false);
+    }, 1000);
+    return;
+
     try {
       const response = await fetch('http://localhost:8001/chat', {
         method: 'POST',

@@ -78,6 +78,64 @@ const HairSalonDemo = () => {
     setInputMessage('');
     setIsLoading(true);
 
+    // Custom hair salon responses
+    let customBotMessage: string | null = null;
+    if (/what.*services|services.*what|offer.*services/i.test(messageText)) {
+      customBotMessage =
+        "💇‍♀️ Our Services:\n\n• Haircuts & Styling\n• Hair Coloring & Highlights\n• Hair Extensions\n• Keratin Treatments\n• Hair & Scalp Treatments\n• Bridal & Special Occasion Styling\n\nWe offer a full range of hair services!";
+    } else if (/how.*much|price|cost|expensive|cheap/i.test(messageText)) {
+      customBotMessage =
+        "💰 Pricing:\n\n• Haircut: $45-75\n• Hair Color: $85-150\n• Highlights: $120-200\n• Hair Extensions: $200-500\n• Keratin Treatment: $150-300\n\nPrices vary based on hair length and complexity!";
+    } else if (/who.*stylists|stylists.*who|staff/i.test(messageText)) {
+      customBotMessage =
+        "👩‍🎨 Our Stylists:\n\n• Sarah - Master Colorist (10+ years)\n• Mike - Cutting Specialist (8+ years)\n• Emma - Styling Expert (5+ years)\n• Lisa - Extension Specialist (12+ years)\n\nAll our stylists are licensed and experienced!";
+    } else if (/appointment|book.*appointment|schedule/i.test(messageText)) {
+      customBotMessage =
+        "📅 Appointments:\n\n• Call us at (555) 123-4567\n• Book online at elegancehair.com\n• Walk-ins welcome (subject to availability)\n• We recommend booking 1-2 weeks in advance\n\nWe'll help you find the perfect time!";
+    } else if (/what.*hours|hours.*what|open.*time/i.test(messageText)) {
+      customBotMessage =
+        "🕒 Our Hours:\n\n• Tuesday - Friday: 9:00 AM - 8:00 PM\n• Saturday: 9:00 AM - 6:00 PM\n• Sunday: 10:00 AM - 4:00 PM\n• Monday: Closed\n\nWe're here to make you beautiful!";
+    } else if (/contact|phone|call|address/i.test(messageText)) {
+      customBotMessage =
+        "📞 Contact Information:\n\n• Phone: (555) 123-4567\n• Address: 789 Beauty Lane, Downtown\n• Email: info@elegancehair.com\n• Website: elegancehair.com\n\nWe'd love to hear from you!";
+    } else if (/consultation|consult/i.test(messageText)) {
+      customBotMessage =
+        "💡 Consultations:\n\n• Free consultations available\n• Color consultations: 30 minutes\n• Style consultations: 15 minutes\n• Book your consultation today!\n\nLet's discuss your hair goals!";
+    }
+
+    if (customBotMessage) {
+      setTimeout(() => {
+        setMessages(prev => [
+          ...prev,
+          {
+            id: (Date.now() + 1).toString(),
+            text: customBotMessage!,
+            isUser: false,
+            timestamp: new Date()
+          }
+        ]);
+        setIsLoading(false);
+      }, 1000);
+      return;
+    }
+
+    // Fallback response for unmatched questions
+    const fallbackMessage = "I don't have specific information about that, but I can help you with:\n\n• Our services and pricing\n• Stylist information\n• Appointments and hours\n• Contact information\n\nOr call us directly at (555) 123-4567 for personalized assistance!";
+
+    setTimeout(() => {
+      setMessages(prev => [
+        ...prev,
+        {
+          id: (Date.now() + 1).toString(),
+          text: fallbackMessage,
+          isUser: false,
+          timestamp: new Date()
+        }
+      ]);
+      setIsLoading(false);
+    }, 1000);
+    return;
+
     try {
       const response = await fetch('http://localhost:8001/chat', {
         method: 'POST',
