@@ -132,7 +132,7 @@ app.post('/chat', async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 8001;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`🚀 Tier 2 Chatbot Server running on port ${PORT}`);
   console.log(`🧪 Test endpoint: http://localhost:${PORT}/test`);

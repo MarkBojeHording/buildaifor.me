@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge.tsx';
 import Header from '../components/Header.tsx';
 import Footer from '../components/Footer.tsx';
 import { useNavigate } from 'react-router-dom';
+import { getApiUrl } from '@/config/api';
 
 interface Message {
   id: string;
@@ -82,7 +83,9 @@ const RealEstateDemo = () => {
     if (sessionId) payload.session_id = sessionId;
 
     try {
-      const response = await fetch('http://localhost:3001/chat', {
+
+    try {
+      const response = await fetch(`${getApiUrl('tier2')}/chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
