@@ -212,6 +212,13 @@ const HairSalonDemo = () => {
                 const portfolioSection = document.getElementById('portfolio');
                 if (portfolioSection) {
                   portfolioSection.scrollIntoView({ behavior: 'smooth' });
+                  // Set the chatbots filter to active
+                  setTimeout(() => {
+                    const chatbotButton = document.querySelector('[data-filter="chatbots"]');
+                    if (chatbotButton) {
+                      (chatbotButton as HTMLElement).click();
+                    }
+                  }, 200);
                 }
               }, 100);
             }}

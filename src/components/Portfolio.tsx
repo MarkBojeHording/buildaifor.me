@@ -405,6 +405,7 @@ const Portfolio = () => {
           {filters.map((filter) => (
             <Button
               key={filter.id}
+              data-filter={filter.id}
               variant={activeFilter === filter.id ? "default" : "outline"}
               onClick={() => setActiveFilter(filter.id)}
               className={`${

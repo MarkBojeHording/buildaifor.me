@@ -125,7 +125,7 @@ const DentalOfficeDemo = () => {
 
     // Fallback response for unmatched questions
     const fallbackMessage = "I don't have specific information about that, but I can help you with:\n\n• Our services and treatments\n• Hours and appointments\n• Insurance and pricing\n• Contact information\n\nOr call us directly at (555) 123-4567 for personalized assistance!";
-    
+
     setTimeout(() => {
       setMessages(prev => [
         ...prev,
@@ -220,6 +220,13 @@ const DentalOfficeDemo = () => {
                 const portfolioSection = document.getElementById('portfolio');
                 if (portfolioSection) {
                   portfolioSection.scrollIntoView({ behavior: 'smooth' });
+                  // Set the chatbots filter to active
+                  setTimeout(() => {
+                    const chatbotButton = document.querySelector('[data-filter="chatbots"]');
+                    if (chatbotButton) {
+                      (chatbotButton as HTMLElement).click();
+                    }
+                  }, 200);
                 }
               }, 100);
             }}
