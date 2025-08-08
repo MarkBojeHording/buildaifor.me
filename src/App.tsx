@@ -84,8 +84,7 @@ const App = () => (
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
-      {/* Temporary deployment debug. Remove after verifying Vercel shows latest build. */}
-      <DeploymentDebug />
+
     </TooltipProvider>
   </QueryClientProvider>
 );
