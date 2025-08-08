@@ -5,7 +5,8 @@ node_modules
 .env
 dist
 build
-api/
+api/utils/logger.js
+api/utils/session-manager.js
 templates/
 supabase/
 client-packages/

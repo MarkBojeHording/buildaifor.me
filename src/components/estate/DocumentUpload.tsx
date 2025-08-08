@@ -1,5 +1,5 @@
-import React, { useState, useCallback } from 'react';
-import { Upload, File, CheckCircle, AlertCircle, X, FileText, Home, TrendingUp, FileCheck, Loader2 } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { Upload, File, X, CheckCircle, AlertCircle } from 'lucide-react';
 import { DocumentUpload as DocumentUploadType } from '../../types';
 import { apiClient } from '../../api/client';
 

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { X, Phone, Mail, MessageCircle, AlertTriangle, Clock, User } from 'lucide-react';
-import { EscalationRequest } from '../../types';
+import { Phone, Mail, MessageSquare, X, CheckCircle } from 'lucide-react';
 import { apiClient } from '../../api/client';
 
 interface EscalationModalProps {
@@ -16,7 +15,7 @@ export const EscalationModal: React.FC<EscalationModalProps> = ({
   chatId,
   context,
 }) => {
-  const [escalationData, setEscalationData] = useState<Partial<EscalationRequest>>({
+  const [escalationData, setEscalationData] = useState<Partial<any>>({
     reason: '',
     urgency: 'medium',
     clientMessage: '',
@@ -46,7 +45,7 @@ export const EscalationModal: React.FC<EscalationModalProps> = ({
     setIsSubmitting(true);
 
     try {
-      const request: EscalationRequest = {
+      const request = {
         chatId,
         reason: escalationData.reason!,
         urgency: escalationData.urgency!,
