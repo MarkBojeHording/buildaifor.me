@@ -5,3 +5,13 @@ node_modules
 .env
 dist
 build
+api/
+templates/
+supabase/
+client-packages/
+packages/
+demos/
+email-analyzer/
+ecommerce-sales-intelligence-package/
+ai-email-analyzer-client-package/
+rag-ai-tool-client-package/
