@@ -11,6 +11,11 @@ export default defineConfig({
     },
     extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json']
   },
+  build: {
+    outDir: 'dist',
+    sourcemap: false
+  },
+  base: '/',
   server: {
     proxy: {
       '/api': {

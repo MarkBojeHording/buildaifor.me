@@ -35,6 +35,7 @@ import EcommerceDemo from './pages/EcommerceDemo.tsx';
 import LawFirmDemo from './pages/LawFirmDemo.tsx';
 import DocumentAnalyzerDemo from './pages/DocumentAnalyzerDemo.tsx';
 import EnterpriseAIAssistantDemo from './pages/EnterpriseAIAssistantDemo.tsx';
+import DeploymentDebug from '@/components/DeploymentDebug';
 
 const queryClient = new QueryClient();
 
@@ -85,6 +86,8 @@ const App = () => (
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
+      {/* Temporary deployment debug. Remove after verifying Vercel shows latest build. */}
+      <DeploymentDebug />
     </TooltipProvider>
   </QueryClientProvider>
 );
