@@ -20,7 +20,6 @@ import HealthcarePatientAssistant from "./pages/portfolio/HealthcarePatientAssis
 import HRRecruitmentAutomation from "./pages/portfolio/HRRecruitmentAutomation.tsx";
 import EmailAnalyzerDemo from "./pages/EmailAnalyzerDemo.tsx";
 import EmailAnalyzerSupabase from "./pages/EmailAnalyzerSupabase.tsx";
-import TechnicalDocumentationRAG from "@templates/rag-system-template/src/pages/TechnicalDocumentationRAG.tsx";
 import LegalDocumentAnalyzer from "./pages/portfolio/LegalDocumentAnalyzer.tsx";
 import EcommerceSalesIntelligence from "./pages/portfolio/EcommerceSalesIntelligence.tsx";
 
@@ -68,7 +67,6 @@ const App = () => (
 
           <Route path="/portfolio/legal-document-analyzer" element={<LegalDocumentAnalyzer />} />
           <Route path="/portfolio/ecommerce-sales-intelligence" element={<EcommerceSalesIntelligence />} />
-          <Route path="/portfolio/technical-documentation-rag" element={<TechnicalDocumentationRAG />} />
           {/* Estate Assistant */}
           <Route path="/estate" element={<EstateAssistant />} />
           {/* Demo pages */}
