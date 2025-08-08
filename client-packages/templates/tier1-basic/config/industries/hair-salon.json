@@ -1,0 +1,73 @@
+{
+  "industry": "hair-salon",
+  "name": "Hair Salon",
+  "description": "Professional hair salon chatbot for appointments and services",
+  "branding": {
+    "name": "Style Studio",
+    "description": "Professional Hair Care • Powered by AI",
+    "welcomeMessage": "Hi! Welcome to Style Studio! 💇‍♀️ I'm here to help you with our services, appointments, pricing, and styling consultations. How can I assist you today?"
+  },
+  "theme": {
+    "primaryColor": "#8b5cf6",
+    "secondaryColor": "#7c3aed",
+    "backgroundColor": "#ffffff",
+    "textColor": "#1f2937"
+  },
+  "quickReplies": [
+    {
+      "text": "What are your hours?",
+      "icon": "Clock",
+      "category": "hours"
+    },
+    {
+      "text": "Book appointment",
+      "icon": "Calendar",
+      "category": "appointments"
+    },
+    {
+      "text": "View services",
+      "icon": "Scissors",
+      "category": "services"
+    },
+    {
+      "text": "Pricing",
+      "icon": "DollarSign",
+      "category": "pricing"
+    }
+  ],
+  "responses": {
+    "hours": {
+      "keywords": ["hours", "open", "close", "time", "schedule"],
+      "response": "🕒 Our Hours:\n\n• Tuesday - Friday: 9:00 AM - 8:00 PM\n• Saturday: 9:00 AM - 6:00 PM\n• Sunday - Monday: Closed\n\nWe're here to make you beautiful!"
+    },
+    "appointments": {
+      "keywords": ["appointment", "book", "schedule", "reserve", "booking"],
+      "response": "📅 Booking an Appointment:\n\n• Call us at (555) 123-4567\n• Book online through our website\n• Or visit us in person\n\nWe recommend booking 1-2 weeks in advance!"
+    },
+    "services": {
+      "keywords": ["services", "haircut", "color", "styling", "treatment"],
+      "response": "💇‍♀️ Our Services:\n\n• Haircuts & Styling\n• Hair Color & Highlights\n• Extensions & Weaves\n• Keratin Treatments\n• Hair & Scalp Treatments\n\nAll services include consultation!"
+    },
+    "pricing": {
+      "keywords": ["price", "cost", "how much", "expensive", "cheap"],
+      "response": "💰 Our Pricing:\n\n• Women's Haircut: $45-75\n• Men's Haircut: $25-35\n• Hair Color: $80-150\n• Highlights: $100-200\n• Keratin Treatment: $200-300\n\n*Prices vary by stylist and hair length"
+    },
+    "stylists": {
+      "keywords": ["stylist", "hairdresser", "who", "best", "recommend"],
+      "response": "👩‍🎨 Our Stylists:\n\n• Sarah - Master Colorist (15 years)\n• Mike - Men's Specialist (10 years)\n• Jessica - Styling Expert (8 years)\n• Lisa - Treatment Specialist (12 years)\n\nAll our stylists are licensed professionals!"
+    },
+    "products": {
+      "keywords": ["products", "shampoo", "conditioner", "styling", "buy"],
+      "response": "🛍️ Professional Products:\n\n• Redken\n• Matrix\n• Biolage\n• Pureology\n\nWe carry professional-grade products and offer expert recommendations!"
+    },
+    "contact": {
+      "keywords": ["contact", "phone", "call", "address", "location"],
+      "response": "📞 Contact Information:\n\n• Phone: (555) 123-4567\n• Address: 123 Main Street, City, State 12345\n• Email: info@stylestudio.com\n\nWe're here to help you look your best!"
+    },
+    "emergency": {
+      "keywords": ["emergency", "urgent", "broken", "damage", "help"],
+      "response": "🚨 Emergency Hair Care:\n\n• We offer emergency hair repair services\n• Call us immediately at (555) 123-4567\n• We can often fit you in same-day\n\nDon't panic - we can fix most hair emergencies!"
+    }
+  },
+  "fallback": "I don't have specific information about that, but I can help you with:\n\n• Our services and pricing\n• Hours and appointments\n• Stylist recommendations\n• Product information\n\nOr call us directly at (555) 123-4567 for personalized assistance!"
+}

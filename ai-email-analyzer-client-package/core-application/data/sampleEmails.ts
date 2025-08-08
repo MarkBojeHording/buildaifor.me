@@ -1,0 +1,238 @@
+import { SampleEmails } from '../types/emailTypes';
+
+export const sampleEmails: SampleEmails = {
+  "urgent": [
+    {
+      "id": 1,
+      "subject": "URGENT: System completely down - losing $10K/hour",
+      "sender": "Sarah Johnson (CTO, TechCorp)",
+      "preview": "Our entire platform has been down for 3 hours. Enterprise account ENT-4471...",
+      "timestamp": "2 hours ago",
+      "content": "URGENT: Our entire platform has been down for 3 hours. I'm Sarah Johnson, CTO at TechCorp (Account #ENT-4471, $4,200/month enterprise plan). This outage is costing us $10,000 per hour in lost revenue. We have 200+ users unable to access critical business functions. This is completely unacceptable for an enterprise customer. If not resolved within the next hour, we're activating our disaster recovery with your competitor. Need immediate escalation to your engineering leadership team."
+    },
+    {
+      "id": 2,
+      "subject": "CRITICAL: Data breach - customer PII exposed",
+      "sender": "Michael Chen (CISO, DataSecure Inc)",
+      "preview": "We discovered unauthorized access to customer data through your API...",
+      "timestamp": "45 minutes ago",
+      "content": "CRITICAL SECURITY INCIDENT: We discovered unauthorized access to customer PII data through your API integration. Account DS-8892. This affects 15,000+ customer records. We need immediate incident response, forensic analysis, and legal compliance support. This is a potential GDPR violation with massive financial implications. Need your security team and legal counsel involved immediately."
+    },
+    {
+      "id": 3,
+      "subject": "EMERGENCY: Production database corrupted - all data lost",
+      "sender": "David Rodriguez (DevOps Lead, CloudScale)",
+      "preview": "Our production database shows corruption and we can't access any data...",
+      "timestamp": "1 hour ago",
+      "content": "EMERGENCY: Our production database shows corruption and we can't access any customer data. Account CS-6677. This affects 50,000+ active users and our entire business operations. We need immediate database recovery support. Our backup system also appears to be compromised. This is a complete business continuity crisis. David Rodriguez, DevOps Lead, david@cloudscale.com"
+    },
+    {
+      "id": 4,
+      "subject": "URGENT: Payment processing down - customers can't pay",
+      "sender": "Amanda Foster (COO, EcommercePro)",
+      "preview": "Payment gateway integration is completely broken, customers getting errors...",
+      "timestamp": "30 minutes ago",
+      "content": "URGENT: Our payment gateway integration is completely broken. Customers are getting 'Payment Failed' errors on every transaction. Account EP-3344. This is our peak shopping season and we're losing thousands in sales every minute. Need immediate technical support to restore payment processing. Amanda Foster, COO, amanda@ecommercepro.com"
+    }
+  ],
+  "billing": [
+    {
+      "id": 5,
+      "subject": "Invoice discrepancy - charged $2,400 instead of $299",
+      "sender": "Jennifer Martinez (CFO, StartupXYZ)",
+      "preview": "Invoice #INV-2024-445 shows $2,400 but our plan should be $299/month...",
+      "timestamp": "1 day ago",
+      "content": "Hello, I received Invoice #INV-2024-445 for $2,400 but our Pro plan should only be $299/month. Account: SXZ-1123. This appears to be a significant billing error. Can you please review and provide a corrected invoice? We need this resolved before our monthly board meeting on Friday. Jennifer Martinez, CFO at StartupXYZ, jennifer@startupxyz.com"
+    },
+    {
+      "id": 6,
+      "subject": "Payment failed - need to update card urgently",
+      "sender": "Robert Kim (Operations, GrowthCorp)",
+      "preview": "Our payment method failed and services are suspended. Account GC-5567...",
+      "timestamp": "6 hours ago",
+      "content": "Our payment method on file failed and I see our services are now suspended. Account: GC-5567. We need to update our credit card information immediately as this is affecting our operations. Can you please temporarily reinstate service while we update payment details? We're a 3-year customer and this is just a card expiration issue. Contact: robert.kim@growthcorp.com"
+    },
+    {
+      "id": 7,
+      "subject": "Double billing this month - need refund",
+      "sender": "Thomas Wilson (Finance Manager, RetailChain)",
+      "preview": "We were charged twice for our monthly subscription. Invoice #INV-2024-556...",
+      "timestamp": "3 days ago",
+      "content": "We noticed we were charged twice for our monthly subscription this month. Invoice #INV-2024-556 and #INV-2024-557 both show $899 charges. Account: RC-7788. This is clearly a duplicate charge. Can you please process a refund for the duplicate payment? Thomas Wilson, Finance Manager, thomas@retailchain.com"
+    },
+    {
+      "id": 8,
+      "subject": "Annual plan renewal - pricing increase concerns",
+      "sender": "Rachel Green (VP Finance, MarketingAgency)",
+      "preview": "Our annual plan is up for renewal but the price increased 40%...",
+      "timestamp": "1 week ago",
+      "content": "Our annual plan is up for renewal next month, but I see the price has increased from $12,000 to $16,800 (40% increase). Account: MA-4455. This is a significant jump with no advance notice. We're a 5-year customer and this increase is not sustainable for our budget. Can we discuss pricing options or grandfather our current rate? Rachel Green, VP Finance, rachel@marketingagency.com"
+    },
+    {
+      "id": 9,
+      "subject": "Pro-rated refund request - downgraded plan",
+      "sender": "Kevin Lee (Operations Director, TechStartup)",
+      "preview": "We downgraded from Enterprise to Pro plan mid-month. Need pro-rated refund...",
+      "timestamp": "4 days ago",
+      "content": "We downgraded from Enterprise ($2,500/month) to Pro ($299/month) plan on the 15th of this month. Account: TS-6677. According to your terms, we should receive a pro-rated refund for the unused portion of the Enterprise plan. Can you please process this refund? Kevin Lee, Operations Director, kevin@techstartup.com"
+    }
+  ],
+  "technical": [
+    {
+      "id": 10,
+      "subject": "API integration returning 500 errors consistently",
+      "sender": "Alex Thompson (Lead Developer, DevTools Inc)",
+      "preview": "Our production API integration has been returning 500 errors for 2 hours...",
+      "timestamp": "3 hours ago",
+      "content": "Our production API integration has been returning 500 errors consistently for the past 2 hours. Account: DT-3344. This is affecting our customer-facing application and we're getting complaints. Error occurs on POST requests to /api/v2/data endpoint. We haven't changed anything on our end. Can your technical team investigate urgently? Alex Thompson, Lead Developer, alex@devtools.com"
+    },
+    {
+      "id": 11,
+      "subject": "Dashboard loading extremely slowly - performance issue",
+      "sender": "Lisa Park (Product Manager, AnalyticsPro)",
+      "preview": "The main dashboard is taking 45+ seconds to load, making it unusable...",
+      "timestamp": "5 hours ago",
+      "content": "The main dashboard is taking 45+ seconds to load for all our users, making it essentially unusable. Account: AP-7789. This started yesterday around 3 PM EST. We have 50+ daily active users who depend on real-time data visualization. Is there a known performance issue? Our users are getting frustrated. Lisa Park, Product Manager, lisa@analyticspro.com"
+    },
+    {
+      "id": 12,
+      "subject": "SSO authentication not working with Azure AD",
+      "sender": "Maria Garcia (IT Manager, EnterpriseCorp)",
+      "preview": "Single Sign-On integration with Azure AD stopped working this morning...",
+      "timestamp": "4 hours ago",
+      "content": "Our Single Sign-On integration with Azure AD stopped working this morning. Account: EC-1122. Users are getting 'Authentication Failed' errors when trying to log in. We've verified our Azure AD configuration is correct and hasn't changed. This affects 200+ employees. Can your SSO team investigate? Maria Garcia, IT Manager, maria@enterprisecorp.com"
+    },
+    {
+      "id": 13,
+      "subject": "Webhook notifications not being received",
+      "sender": "James Brown (Integration Specialist, DataFlow)",
+      "preview": "Our webhook endpoint is not receiving notifications from your system...",
+      "timestamp": "2 days ago",
+      "content": "Our webhook endpoint (https://api.dataflow.com/webhooks/events) is not receiving notifications from your system. Account: DF-8899. We've verified our endpoint is working and can receive test webhooks. This is critical for our real-time data synchronization. Can you check if there are any issues with webhook delivery? James Brown, Integration Specialist, james@dataflow.com"
+    },
+    {
+      "id": 14,
+      "subject": "Mobile app crashes on iOS 17.2",
+      "sender": "Sophie Chen (Mobile Developer, AppWorks)",
+      "preview": "Your mobile app crashes immediately on iOS 17.2 devices...",
+      "timestamp": "1 day ago",
+      "content": "Your mobile app crashes immediately when launched on iOS 17.2 devices. Account: AW-3344. We've tested on multiple devices and the issue is consistent. This affects 30% of our users who recently updated to iOS 17.2. Can you please release a hotfix? Sophie Chen, Mobile Developer, sophie@appworks.com"
+    },
+    {
+      "id": 15,
+      "subject": "Data export feature missing from admin panel",
+      "sender": "Daniel Miller (Data Analyst, InsightCorp)",
+      "preview": "The data export feature mentioned in documentation is not available...",
+      "timestamp": "3 days ago",
+      "content": "According to your documentation, there should be a data export feature in the admin panel, but I can't find it. Account: IC-5566. We need to export our historical data for compliance reporting. Is this feature available in our current plan? If not, how can we access it? Daniel Miller, Data Analyst, daniel@insightcorp.com"
+    }
+  ],
+  "complaints": [
+    {
+      "id": 16,
+      "subject": "Terrible customer service - considering cancellation",
+      "sender": "Mark Williams (CEO, BusinessFlow)",
+      "preview": "I've been trying to get support for 5 days with no real help...",
+      "timestamp": "2 days ago",
+      "content": "I've been trying to get support for 5 days and gotten nowhere. Ticket #78432. Your support team keeps asking me to restart my browser and clear cache - this is clearly a deeper technical issue. I'm the CEO of BusinessFlow (Account BF-9876, $1,200/month) and I'm seriously considering switching to your competitor. Your product is good but your support is terrible. Either escalate this properly or we're canceling. Mark Williams, CEO, mark@businessflow.com"
+    },
+    {
+      "id": 17,
+      "subject": "Feature promised 6 months ago still not delivered",
+      "sender": "Patricia Johnson (Product Director, InnovationLabs)",
+      "preview": "You promised the advanced reporting feature would be available by Q4...",
+      "timestamp": "1 week ago",
+      "content": "Your sales team promised us the advanced reporting feature would be available by Q4 2023. Account: IL-7788. It's now Q1 2024 and there's still no timeline. We made our purchasing decision based on this promise. This is unacceptable for a $5,000/month enterprise customer. Either deliver the feature or provide a significant discount. Patricia Johnson, Product Director, patricia@innovationlabs.com"
+    },
+    {
+      "id": 18,
+      "subject": "Constant downtime - service reliability issues",
+      "sender": "Carlos Mendez (CTO, ReliableTech)",
+      "preview": "We've experienced 12 hours of downtime this month alone...",
+      "timestamp": "4 days ago",
+      "content": "We've experienced 12 hours of downtime this month alone. Account: RT-4455. Your SLA promises 99.9% uptime but we're nowhere close. This is affecting our business operations and customer trust. We need a detailed explanation of what's causing these outages and a plan to prevent them. Carlos Mendez, CTO, carlos@reliabletech.com"
+    },
+    {
+      "id": 19,
+      "subject": "Security audit failed - compliance concerns",
+      "sender": "Nina Patel (Compliance Officer, SecureBank)",
+      "preview": "Our security audit found several compliance issues with your platform...",
+      "timestamp": "2 weeks ago",
+      "content": "Our annual security audit found several compliance issues with your platform. Account: SB-6677. The auditor flagged concerns about data encryption, access controls, and audit logging. As a financial institution, we have strict regulatory requirements. We need immediate remediation or we'll have to terminate our contract. Nina Patel, Compliance Officer, nina@securebank.com"
+    },
+    {
+      "id": 20,
+      "subject": "Unprofessional support staff - need escalation",
+      "sender": "Frank Anderson (VP Operations, ServiceCorp)",
+      "preview": "Your support representative was rude and unhelpful. Ticket #89234...",
+      "timestamp": "3 days ago",
+      "content": "Your support representative (Agent ID: 8472) was extremely rude and unhelpful during our call yesterday. Ticket #89234. Account: SC-8899. They refused to escalate our issue and hung up on us. This is completely unacceptable for a $3,000/month enterprise customer. We need immediate escalation to management and a formal apology. Frank Anderson, VP Operations, frank@servicecorp.com"
+    }
+  ],
+  "general": [
+    {
+      "id": 21,
+      "subject": "How to export data to CSV format?",
+      "sender": "Emma Davis (Analyst, DataCorp)",
+      "preview": "I need to export our monthly reports to CSV but can't find the option...",
+      "timestamp": "1 day ago",
+      "content": "Hi, I need to export our monthly reports to CSV format for our board presentation, but I can't find the export option in the dashboard. Account: DC-2211. Is this feature available in our Pro plan? If so, could you provide step-by-step instructions? Thanks, Emma Davis, Data Analyst, emma@datacorp.com"
+    },
+    {
+      "id": 22,
+      "subject": "Request for feature: Dark mode theme",
+      "sender": "Ryan Taylor (UX Designer, CreativeAgency)",
+      "preview": "Would love to see a dark mode theme option for the dashboard...",
+      "timestamp": "5 days ago",
+      "content": "Hi team, I'd love to see a dark mode theme option for the dashboard. Account: CA-3344. Many of our team members work late hours and would appreciate this feature. Is this something you're planning to add? If so, any timeline? Thanks, Ryan Taylor, UX Designer, ryan@creativeagency.com"
+    },
+    {
+      "id": 23,
+      "subject": "Training session request for new team members",
+      "sender": "Hannah Wilson (HR Manager, GrowthStartup)",
+      "preview": "We have 5 new team members who need training on your platform...",
+      "timestamp": "1 week ago",
+      "content": "We have 5 new team members who need training on your platform. Account: GS-5566. Is there a way to schedule a group training session? We'd prefer a live session rather than just documentation. What options do you offer for customer training? Hannah Wilson, HR Manager, hannah@growthstartup.com"
+    },
+    {
+      "id": 24,
+      "subject": "Documentation update needed - API reference",
+      "sender": "Lucas Rodriguez (Senior Developer, TechInnovation)",
+      "preview": "The API documentation is missing several endpoints and examples...",
+      "timestamp": "3 days ago",
+      "content": "The API documentation is missing several endpoints and doesn't include enough code examples. Account: TI-7788. Specifically, the webhook configuration and user management endpoints need better documentation. Can you update the docs or provide additional examples? Lucas Rodriguez, Senior Developer, lucas@techinnovation.com"
+    },
+    {
+      "id": 25,
+      "subject": "Partnership inquiry - integration opportunities",
+      "sender": "Zoe Kim (Business Development, PlatformCorp)",
+      "preview": "We're interested in exploring partnership opportunities with your platform...",
+      "timestamp": "2 weeks ago",
+      "content": "We're interested in exploring partnership opportunities with your platform. Account: PC-1122. Our company provides complementary services and we see potential for integration. Could we schedule a call to discuss partnership possibilities? Zoe Kim, Business Development, zoe@platformcorp.com"
+    },
+    {
+      "id": 26,
+      "subject": "Feedback on new dashboard design",
+      "sender": "Oliver Thompson (Product Manager, UserExperience)",
+      "preview": "The new dashboard design is great! A few suggestions for improvement...",
+      "timestamp": "4 days ago",
+      "content": "The new dashboard design is great! Much cleaner and more intuitive. Account: UE-4455. A few suggestions: could you add the ability to customize widget sizes and add more chart types? Also, the mobile version could use some improvements. Overall, really happy with the update! Oliver Thompson, Product Manager, oliver@userexperience.com"
+    },
+    {
+      "id": 27,
+      "subject": "Account upgrade request - need more storage",
+      "sender": "Isabella Martinez (Operations Manager, ContentCreator)",
+      "preview": "We're approaching our storage limit and need to upgrade our plan...",
+      "timestamp": "1 day ago",
+      "content": "We're approaching our storage limit and need to upgrade our plan. Account: CC-6677. Currently on Pro plan with 100GB, need at least 500GB. What are our upgrade options and pricing? Also, can we get a trial of the higher tier before committing? Isabella Martinez, Operations Manager, isabella@contentcreator.com"
+    },
+    {
+      "id": 28,
+      "subject": "Holiday schedule - support availability",
+      "sender": "William Davis (IT Director, GlobalCorp)",
+      "preview": "What are your support hours during the upcoming holiday season?",
+      "timestamp": "1 week ago",
+      "content": "What are your support hours during the upcoming holiday season? Account: GC-8899. We need to plan our maintenance windows and want to ensure support is available if we encounter issues. Do you offer 24/7 support for enterprise customers during holidays? William Davis, IT Director, william@globalcorp.com"
+    }
+  ]
+};

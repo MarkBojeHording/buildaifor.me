@@ -8,6 +8,8 @@ import { Send, Loader2, FileText, MessageSquare, ArrowLeft, BookOpen, Search, Fi
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header.tsx';
 import Footer from '../components/Footer.tsx';
+import { useScrollToTop } from '../hooks/useScrollToTop';
+import { getApiUrl } from '../config/api';
 
 // Enhanced sample documents data with structured sections
 const sampleDocuments = [
@@ -322,6 +324,7 @@ interface ChatMessage {
 
 const DocumentAnalyzerDemo: React.FC = () => {
   const navigate = useNavigate();
+  useScrollToTop();
   const [currentDocument, setCurrentDocument] = useState('lease-agreement');
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -356,12 +359,20 @@ const DocumentAnalyzerDemo: React.FC = () => {
     setInputValue('');
 
     try {
-      // Call the real backend API
-      const response = await fetch('http://localhost:3002/api/chat', {
+      // Call the Supabase Edge Function with fallback to local development
+      const apiUrl = getApiUrl('documentAnalyzer');
+      const headers: Record<string, string> = {
+        'Content-Type': 'application/json'
+      };
+
+      // Add authorization header if we have a valid anon key
+      if (import.meta.env.VITE_SUPABASE_ANON_KEY && import.meta.env.VITE_SUPABASE_ANON_KEY !== 'your-anon-key') {
+        headers['Authorization'] = `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`;
+      }
+
+      const response = await fetch(apiUrl, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers,
         body: JSON.stringify({
           message: message,
           documentId: currentDocument,
@@ -417,12 +428,7 @@ const DocumentAnalyzerDemo: React.FC = () => {
     setHighlightedSection(citation.documentId + '-' + citation.section.replace('.', '-'));
 
     // Scroll to the section after a brief delay to ensure the highlight is applied
-    setTimeout(() => {
-      const sectionElement = document.getElementById(citation.documentId + '-' + citation.section.replace('.', '-'));
-      if (sectionElement) {
-        sectionElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
-    }, 100);
+
 
     // Remove highlight after 3 seconds
     setTimeout(() => {
@@ -452,13 +458,18 @@ const DocumentAnalyzerDemo: React.FC = () => {
           <Button
             variant="outline"
             onClick={() => {
-              navigate('/');
-              setTimeout(() => {
-                const portfolioSection = document.getElementById('portfolio');
-                if (portfolioSection) {
-                  portfolioSection.scrollIntoView({ behavior: 'smooth' });
+              // Clear saved scroll position for main page
+              const savedPositions = sessionStorage.getItem('scrollPositions');
+              if (savedPositions) {
+                try {
+                  const positions = JSON.parse(savedPositions);
+                  delete positions['/'];
+                  sessionStorage.setItem('scrollPositions', JSON.stringify(positions));
+                } catch (error) {
+                  console.warn('Failed to clear scroll position:', error);
                 }
-              }, 100);
+              }
+              navigate('/');
             }}
             className="mb-6 group"
           >

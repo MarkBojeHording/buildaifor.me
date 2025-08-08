@@ -20,7 +20,7 @@ const NotFound = () => {
                 <button
           onClick={() => {
             navigate('/');
-            window.scrollTo(0, 0);
+
           }}
           className="text-blue-500 hover:text-blue-700 underline bg-transparent border-none cursor-pointer"
         >

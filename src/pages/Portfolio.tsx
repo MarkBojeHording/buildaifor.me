@@ -71,6 +71,16 @@ const Portfolio = () => {
       metrics: ['99.2% accuracy', '1000+ regulations indexed', 'Instant compliance checks'],
       link: '/portfolio/financial-knowledge-assistant'
     },
+    {
+      id: 6,
+      title: 'Enterprise AI Assistant',
+      description: 'Advanced AI assistant with workflow automation, analytics, and multi-modal capabilities',
+      category: 'chatbots',
+      tags: ['Enterprise', 'Workflow Automation', 'Analytics', 'Multi-Modal'],
+      image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      metrics: ['Real-time automation', 'Advanced analytics', 'Multi-modal processing'],
+      link: '/portfolio/enterprise-ai-assistant'
+    },
 
   ];
 
@@ -140,7 +150,6 @@ const Portfolio = () => {
                       onClick={(e) => {
                         e.stopPropagation();
                         navigate(project.link);
-                        window.scrollTo(0, 0);
                       }}
                     >
                       <ExternalLink className="w-4 h-4" />
@@ -156,7 +165,6 @@ const Portfolio = () => {
                     className="group-hover:text-blue-600 transition-colors cursor-pointer"
                     onClick={() => {
                       navigate(project.link);
-                      window.scrollTo(0, 0);
                     }}
                   >
                     {project.title}

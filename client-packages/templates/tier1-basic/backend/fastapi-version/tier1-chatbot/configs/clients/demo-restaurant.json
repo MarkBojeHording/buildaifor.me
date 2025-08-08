@@ -1,0 +1,34 @@
+{
+  "business_name": "Bella Vista Restaurant",
+  "responses": {
+    "hours|open|time|when are you open": "🕒 Bella Vista Hours:\n\n• Monday-Thursday: 11AM-10PM\n• Friday-Saturday: 11AM-11PM\n• Sunday: 12PM-9PM\n\nWe're open for lunch and dinner daily!",
+
+    "menu|food|dishes|what do you serve": "🍽️ Our Menu Highlights:\n\n• Appetizers: Bruschetta, Calamari, Caprese Salad\n• Pasta: Fettuccine Alfredo, Spaghetti Carbonara, Lasagna\n• Entrees: Chicken Marsala, Salmon Piccata, Beef Tenderloin\n• Desserts: Tiramisu, Cannoli, Gelato\n\nFull menu available on our website!",
+
+    "reservation|book|table|reserve": "📅 Reservations:\n\n• Call us at (555) 123-4567\n• Online booking available\n• Groups of 6+ require 24-hour notice\n• Walk-ins welcome for smaller parties\n\nWhat time and how many people?",
+
+    "delivery|takeout|to go|pickup": "🚚 Takeout & Delivery:\n\n• Takeout: Available during all hours\n• Delivery: Through DoorDash & Uber Eats\n• Curbside Pickup: Call ahead for quick pickup\n• Catering: Available for events\n\nCall (555) 123-4567 to order!",
+
+    "price|cost|expensive|cheap|budget": "💰 Price Range:\n\n• Appetizers: $8-15\n• Pasta Dishes: $16-24\n• Entrees: $22-38\n• Desserts: $8-12\n\nWe offer daily specials and happy hour deals!",
+
+    "location|address|where are you": "📍 Bella Vista Location:\n\n456 Main Street, Downtown\nBetween 5th and 6th Avenue\nFree parking in rear lot\n10-minute walk from City Center\n\nEasy to find with plenty of parking!",
+
+    "parking|car|drive": "🚗 Parking Options:\n\n• Free Parking: Available in rear lot\n• Street Parking: Available on Main Street\n• Valet: Available Friday-Saturday evenings\n• Public Transit: Bus routes 15, 22, 45\n\nNo parking worries here!",
+
+    "vegetarian|vegan|dietary|allergies": "🥬 Dietary Options:\n\n• Vegetarian: 8+ options including pasta and salads\n• Vegan: 4 dedicated vegan dishes\n• Gluten-Free: Available pasta and bread options\n• Allergies: We accommodate all dietary restrictions\n\nJust let us know your needs!",
+
+    "wine|drinks|bar|alcohol": "🍷 Beverage Selection:\n\n• Wine: Extensive Italian and local wine list\n• Cocktails: House specialties and classics\n• Beer: Local craft beers and imports\n• Non-Alcoholic: Fresh juices, sodas, coffee\n\nHappy Hour: 4-6PM daily!",
+
+    "hi|hello|hey|good morning|good afternoon": "👋 Welcome to Bella Vista Restaurant! We serve authentic Italian cuisine in a warm, family atmosphere. How can I help you today?",
+
+    "contact|phone|call": "📞 Contact Bella Vista:\n\nPhone: (555) 123-4567\nEmail: info@bellavista.com\nWebsite: www.bellavista.com\nSocial: @bellavistarestaurant\n\nWe'd love to hear from you!"
+  },
+  "contact": {
+    "phone": "(555) 123-4567",
+    "email": "info@bellavista.com",
+    "address": "456 Main Street, Downtown",
+    "website": "www.bellavista.com"
+  },
+  "industry": "restaurant",
+  "fallback_response": "I don't have details on that, but our team does!\n\n\ud83d\udcde Call us: {phone}\n\ud83d\udcdd Visit: {website}\n\nFor special requests or detailed questions, our staff is here to help!\n\nI can help with our menu, hours, delivery, or reservations though!"
+}

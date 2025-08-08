@@ -7,6 +7,7 @@ import Header from '../components/Header.tsx';
 import Footer from '../components/Footer.tsx';
 import { useNavigate } from 'react-router-dom';
 import { getApiUrl } from '@/config/api';
+import { useScrollToTop } from '../hooks/useScrollToTop';
 
 interface Message {
   id: string;
@@ -15,8 +16,14 @@ interface Message {
   timestamp: Date;
 }
 
-function formatResponse(text: string) {
+function formatResponse(text: string | undefined | null) {
+  if (!text || typeof text !== 'string') {
+    return 'No response received';
+  }
+
   return text
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Convert **bold** to <strong>
+    .replace(/\*(.*?)\*/g, '<em>$1</em>') // Convert *italic* to <em>
     .replace(/\n/g, '<br>')
     .replace(/(?!^)<br>• /g, '<br><br>• ')
     .replace(/^• /gm, '<br>• ')
@@ -32,6 +39,7 @@ const quickReplies = [
 
 const RealEstateDemo = () => {
   const navigate = useNavigate();
+  useScrollToTop();
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
@@ -58,9 +66,7 @@ const RealEstateDemo = () => {
     }
   }, [messages]);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+
 
   async function sendMessage(messageText: string) {
     if (!messageText.trim() || isLoading) return;
@@ -83,8 +89,6 @@ const RealEstateDemo = () => {
     if (sessionId) payload.session_id = sessionId;
 
     try {
-
-    try {
       const response = await fetch(`${getApiUrl('tier2')}/chat`, {
         method: 'POST',
         headers: {
@@ -101,9 +105,12 @@ const RealEstateDemo = () => {
 
       if (data.session_id) setSessionId(data.session_id);
 
+      // Handle nested response structure from fallback responses
+      const responseText = data.response?.response || data.response || 'No response received';
+
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: data.response,
+        text: responseText,
         isUser: false,
         timestamp: new Date()
       };
@@ -116,7 +123,7 @@ const RealEstateDemo = () => {
       console.error('Error sending message:', error);
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: "I'm sorry, I'm having trouble connecting right now. Please check that the backend server is running or try again in a moment.",
+        text: "I'm sorry, I'm having trouble connecting to the Supabase Edge Function right now. Please try again in a moment.",
         isUser: false,
         timestamp: new Date()
       };
@@ -145,13 +152,18 @@ const RealEstateDemo = () => {
           <Button
             variant="outline"
             onClick={() => {
-              navigate('/');
-              setTimeout(() => {
-                const portfolioSection = document.getElementById('portfolio');
-                if (portfolioSection) {
-                  portfolioSection.scrollIntoView({ behavior: 'smooth' });
+              // Clear saved scroll position for main page
+              const savedPositions = sessionStorage.getItem('scrollPositions');
+              if (savedPositions) {
+                try {
+                  const positions = JSON.parse(savedPositions);
+                  delete positions['/'];
+                  sessionStorage.setItem('scrollPositions', JSON.stringify(positions));
+                } catch (error) {
+                  console.warn('Failed to clear scroll position:', error);
                 }
-              }, 100);
+              }
+              navigate('/');
             }}
             className="mb-6 group"
           >

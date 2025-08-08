@@ -282,7 +282,7 @@ const About = () => {
           <Button
             className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-4 text-lg font-semibold group"
             onClick={() => {
-              window.scrollTo(0, 0);
+
               // Navigate to contact or home
             }}
           >

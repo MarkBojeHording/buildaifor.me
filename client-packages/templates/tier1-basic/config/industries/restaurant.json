@@ -1,0 +1,69 @@
+{
+  "industry": "restaurant",
+  "name": "Restaurant",
+  "description": "Professional restaurant chatbot for customer inquiries and reservations",
+  "branding": {
+    "name": "Taste of Italy",
+    "description": "Authentic Italian Cuisine • Powered by AI",
+    "welcomeMessage": "Hi! Welcome to Taste of Italy! 🍝 I'm here to help you with our menu, hours, reservations, and specials. How can I assist you today?"
+  },
+  "theme": {
+    "primaryColor": "#dc2626",
+    "secondaryColor": "#991b1b",
+    "backgroundColor": "#ffffff",
+    "textColor": "#1f2937"
+  },
+  "quickReplies": [
+    {
+      "text": "What are your hours?",
+      "icon": "Clock",
+      "category": "hours"
+    },
+    {
+      "text": "Make a reservation",
+      "icon": "Calendar",
+      "category": "reservations"
+    },
+    {
+      "text": "View our menu",
+      "icon": "Utensils",
+      "category": "menu"
+    },
+    {
+      "text": "Today's specials",
+      "icon": "Star",
+      "category": "specials"
+    }
+  ],
+  "responses": {
+    "hours": {
+      "keywords": ["hours", "open", "close", "time", "schedule"],
+      "response": "🕒 Our Hours:\n\n• Monday - Thursday: 11:00 AM - 10:00 PM\n• Friday - Saturday: 11:00 AM - 11:00 PM\n• Sunday: 12:00 PM - 9:00 PM\n\nWe're open for lunch and dinner!"
+    },
+    "reservations": {
+      "keywords": ["reservation", "book", "table", "reserve", "booking"],
+      "response": "📅 Making a Reservation:\n\n• Call us at (555) 123-4567\n• Visit our website to book online\n• Or use OpenTable for instant booking\n\nWe recommend booking ahead for weekends!"
+    },
+    "menu": {
+      "keywords": ["menu", "food", "dishes", "pasta", "pizza"],
+      "response": "🍝 Our Menu:\n\n• Appetizers: Bruschetta, Calamari\n• Pasta: Spaghetti Carbonara, Fettuccine Alfredo\n• Pizza: Margherita, Pepperoni, Vegetarian\n• Desserts: Tiramisu, Cannoli\n\nAll dishes made fresh daily!"
+    },
+    "specials": {
+      "keywords": ["specials", "today", "daily", "feature", "chef"],
+      "response": "⭐ Today's Specials:\n\n• Chef's Special: Lobster Ravioli - $28\n• Wine Pairing: Italian Red - $12/glass\n• Happy Hour: 4-6 PM, 50% off appetizers\n\nAsk your server for the full specials menu!"
+    },
+    "delivery": {
+      "keywords": ["delivery", "takeout", "take out", "pickup", "order"],
+      "response": "🚚 Delivery & Takeout:\n\n• Available through DoorDash and Uber Eats\n• Call us directly for pickup orders\n• Minimum order: $25 for delivery\n• Delivery time: 30-45 minutes"
+    },
+    "contact": {
+      "keywords": ["contact", "phone", "call", "address", "location"],
+      "response": "📞 Contact Information:\n\n• Phone: (555) 123-4567\n• Address: 123 Main Street, City, State 12345\n• Email: info@tasteofitaly.com\n\nWe're here to serve you!"
+    },
+    "pricing": {
+      "keywords": ["price", "cost", "how much", "expensive", "cheap"],
+      "response": "💰 Our Pricing:\n\n• Appetizers: $8-15\n• Pasta Dishes: $18-25\n• Pizza: $16-22\n• Desserts: $8-12\n\nWe offer great value for authentic Italian cuisine!"
+    }
+  },
+  "fallback": "I don't have specific information about that, but I can help you with:\n\n• Our menu and daily specials\n• Hours and reservations\n• Delivery and takeout options\n• Contact information\n\nOr call us directly at (555) 123-4567 for personalized assistance!"
+}

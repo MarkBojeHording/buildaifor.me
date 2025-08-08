@@ -214,4 +214,4 @@ npx supabase functions invoke my-function
 6. 🔄 Deploy Edge Functions
 7. 🔄 Integrate with frontend
 
-Your Supabase setup is now ready! 🎉 
+Your Supabase setup is now ready! 🎉

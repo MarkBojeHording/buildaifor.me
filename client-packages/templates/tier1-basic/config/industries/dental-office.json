@@ -1,0 +1,69 @@
+{
+  "industry": "dental-office",
+  "name": "Dental Office",
+  "description": "Professional dental practice chatbot for patient inquiries",
+  "branding": {
+    "name": "ABC Dental Office",
+    "description": "Professional Dental Care • Powered by AI",
+    "welcomeMessage": "Hi! Welcome to ABC Dental Office! 🦷 I'm here to help you with information about our services, hours, insurance, and appointments. How can I assist you today?"
+  },
+  "theme": {
+    "primaryColor": "#10b981",
+    "secondaryColor": "#059669",
+    "backgroundColor": "#ffffff",
+    "textColor": "#1f2937"
+  },
+  "quickReplies": [
+    {
+      "text": "What are your hours?",
+      "icon": "Clock",
+      "category": "hours"
+    },
+    {
+      "text": "How do I book an appointment?",
+      "icon": "Calendar",
+      "category": "appointments"
+    },
+    {
+      "text": "What services do you offer?",
+      "icon": "Stethoscope",
+      "category": "services"
+    },
+    {
+      "text": "Do you accept insurance?",
+      "icon": "CreditCard",
+      "category": "insurance"
+    }
+  ],
+  "responses": {
+    "hours": {
+      "keywords": ["hours", "open", "close", "time", "schedule"],
+      "response": "🕒 Our Hours:\n\n• Monday - Friday: 8:00 AM - 6:00 PM\n• Saturday: 9:00 AM - 3:00 PM\n• Sunday: Closed\n\nWe're here to serve you during these hours!"
+    },
+    "appointments": {
+      "keywords": ["book", "appointment", "schedule", "reserve", "booking"],
+      "response": "📅 Booking an Appointment:\n\n• Call us at (555) 123-4567\n• Visit our website to book online\n• Or stop by our clinic at 123 Main Street\n\nLet us know if you need a specific date or time!"
+    },
+    "services": {
+      "keywords": ["services", "treatments", "procedures", "offer", "provide"],
+      "response": "🦷 Our Dental Services:\n\n• Cleanings\n• Exams\n• Fillings\n• Emergency Care\n\nLet us know if you have a specific dental need!"
+    },
+    "insurance": {
+      "keywords": ["insurance", "coverage", "payment", "cost", "price"],
+      "response": "💳 Insurance & Payment:\n\n• We accept most major insurance plans\n• Call us to verify your coverage\n• We also offer payment plans\n• Contact us at (555) 123-4567 for details"
+    },
+    "emergency": {
+      "keywords": ["emergency", "urgent", "pain", "hurt", "broken"],
+      "response": "🚨 Emergency Care:\n\n• We offer emergency dental services\n• Call us immediately at (555) 123-4567\n• After hours: (555) 999-8888\n\nDon't wait - dental emergencies need immediate attention!"
+    },
+    "contact": {
+      "keywords": ["contact", "phone", "call", "address", "location"],
+      "response": "📞 Contact Information:\n\n• Phone: (555) 123-4567\n• Address: 123 Main Street, City, State 12345\n• Email: info@abcdental.com\n\nWe're here to help!"
+    },
+    "pricing": {
+      "keywords": ["cost", "price", "how much", "fee", "charge"],
+      "response": "💰 Pricing Information:\n\n• Regular Cleaning: $120\n• Deep Cleaning: $200\n• Exam & X-rays: $150\n\n*Prices may vary based on insurance coverage. Call us for a personalized quote!"
+    }
+  },
+  "fallback": "I don't have specific information about that, but I can help you with:\n\n• Our services and treatments\n• Hours and appointments\n• Insurance and pricing\n• Contact information\n\nOr call us directly at (555) 123-4567 for personalized assistance!"
+}

@@ -1,4 +1,6 @@
 import { Heart, MessageSquare, Calendar, Clock, Users, TrendingUp, ArrowLeft, CheckCircle, Star, Phone } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { useScrollToTop } from '../../hooks/useScrollToTop';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { Badge } from '@/components/ui/badge.tsx';
@@ -7,6 +9,8 @@ import Header from '../../components/Header.tsx';
 import Footer from '../../components/Footer.tsx';
 
 const HealthcarePatientAssistant = () => {
+  const navigate = useNavigate();
+  useScrollToTop();
   const queryExamples = [
     {
       question: "I need to schedule an appointment with Dr. Smith",
@@ -68,7 +72,20 @@ const HealthcarePatientAssistant = () => {
         <div className="container mx-auto px-4 lg:px-8">
           <Button
             variant="outline"
-            onClick={() => window.history.back()}
+            onClick={() => {
+              // Clear saved scroll position for main page
+              const savedPositions = sessionStorage.getItem('scrollPositions');
+              if (savedPositions) {
+                try {
+                  const positions = JSON.parse(savedPositions);
+                  delete positions['/'];
+                  sessionStorage.setItem('scrollPositions', JSON.stringify(positions));
+                } catch (error) {
+                  console.warn('Failed to clear scroll position:', error);
+                }
+              }
+              navigate('/');
+            }}
             className="mb-6 group"
           >
             <ArrowLeft className="mr-2 h-4 w-4 group-hover:-translate-x-1 transition-transform" />

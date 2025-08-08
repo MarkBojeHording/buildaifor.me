@@ -1,0 +1,62 @@
+{
+  "version": "1.0.0",
+  "name": "Tier 1 Basic Chatbot Template",
+  "description": "Professional FAQ chatbot template with customizable responses and branding",
+  "features": [
+    "Keyword-based response matching",
+    "Customizable branding and themes",
+    "Quick reply buttons",
+    "Multiple deployment options",
+    "Industry-specific templates"
+  ],
+  "api": {
+    "endpoints": {
+      "chat": "/chat",
+      "health": "/health",
+      "config": "/clients/{client_id}/config"
+    },
+    "methods": {
+      "chat": "POST",
+      "health": "GET",
+      "config": "GET"
+    }
+  },
+  "defaults": {
+    "theme": {
+      "primaryColor": "#3b82f6",
+      "secondaryColor": "#1e40af",
+      "backgroundColor": "#ffffff",
+      "textColor": "#1f2937"
+    },
+    "branding": {
+      "name": "AI Assistant",
+      "description": "How can I help you today?",
+      "logo": null
+    },
+    "quickReplies": [
+      "What are your hours?",
+      "How do I book an appointment?",
+      "What services do you offer?",
+      "What is your address?"
+    ]
+  },
+  "deployment": {
+    "options": [
+      "supabase",
+      "fastapi",
+      "express",
+      "docker",
+      "railway"
+    ],
+    "recommended": "supabase"
+  },
+  "customization": {
+    "supported": [
+      "branding",
+      "theme",
+      "responses",
+      "quickReplies",
+      "industry"
+    ]
+  }
+}

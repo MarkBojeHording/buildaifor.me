@@ -1,6 +1,4 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { initializeApp } from 'firebase/app';
-import { getAuth, signInAnonymously, onAuthStateChanged, User } from 'firebase/auth';
 import {
   Upload,
   BarChart3,
@@ -18,32 +16,7 @@ import {
   Database,
   Settings
 } from 'lucide-react';
-
-// Firebase configuration (placeholder - replace with actual config)
-const firebaseConfig = {
-  apiKey: "your-api-key",
-  authDomain: "your-auth-domain",
-  projectId: "your-project-id",
-  storageBucket: "your-storage-bucket",
-  messagingSenderId: "your-messaging-sender-id",
-  appId: "your-app-id"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-
-// Sample data for initial load
-const sampleData = [
-  { Month: 'Jan', Revenue: 100000, Marketing_Spend: 10000, New_Customers: 500, Profit: 30000 },
-  { Month: 'Feb', Revenue: 105000, Marketing_Spend: 10500, New_Customers: 520, Profit: 32000 },
-  { Month: 'Mar', Revenue: 110000, Marketing_Spend: 11000, New_Customers: 550, Profit: 34000 },
-  { Month: 'Apr', Revenue: 95000, Marketing_Spend: 12000, New_Customers: 480, Profit: 25000 },
-  { Month: 'May', Revenue: 115000, Marketing_Spend: 11200, New_Customers: 580, Profit: 36000 },
-  { Month: 'Jun', Revenue: 120000, Marketing_Spend: 11500, New_Customers: 600, Profit: 38000 },
-  { Month: 'Jul', Revenue: 125000, Marketing_Spend: 11800, New_Customers: 620, Profit: 40000 },
-  { Month: 'Aug', Revenue: 130000, Marketing_Spend: 12000, New_Customers: 650, Profit: 42000 }
-];
+import { supabase, BusinessDashboardAPI, signInAnonymously, getCurrentUser } from './utils/supabase';
 
 // Types for the application
 interface DataRow {
@@ -68,8 +41,8 @@ interface AdvancedFeatures {
 
 const App: React.FC = () => {
   // State management
-  const [user, setUser] = useState<User | null>(null);
-  const [data, setData] = useState<DataRow[]>(sampleData);
+  const [user, setUser] = useState<any>(null);
+  const [data, setData] = useState<DataRow[]>([]);
   const [isSampleData, setIsSampleData] = useState(true);
   const [insights, setInsights] = useState<InsightData | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -87,181 +60,58 @@ const App: React.FC = () => {
     dataCleaning: "Automate data cleaning, validation, and preparation processes to ensure data quality."
   };
 
-  // Firebase authentication setup
+  // Supabase authentication setup
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
-      if (!user) {
-        // Sign in anonymously if no user
-        signInAnonymously(auth).catch(console.error);
+    const setupAuth = async () => {
+      try {
+        // Check for existing user
+        const currentUser = await getCurrentUser();
+        if (currentUser) {
+          setUser(currentUser);
+        } else {
+          // Sign in anonymously if no user
+          const newUser = await signInAnonymously();
+          setUser(newUser);
+        }
+      } catch (error) {
+        console.error('Authentication error:', error);
       }
-    });
+    };
 
-    return () => unsubscribe();
+    setupAuth();
   }, []);
 
   // Generate initial insights on component mount
   useEffect(() => {
-    generateInsights(sampleData);
+    loadSampleData();
   }, []);
 
-  // CSV parsing function with robust error handling
-  const parseCSV = useCallback((csvText: string): DataRow[] => {
+  // Load sample data and generate insights
+  const loadSampleData = async () => {
     try {
-      const lines = csvText.trim().split('\n');
-      if (lines.length < 2) {
-        throw new Error('CSV must have at least a header row and one data row');
-      }
-
-      const headers = lines[0].split(',').map(header => header.trim());
-      const dataRows: DataRow[] = [];
-
-      for (let i = 1; i < lines.length; i++) {
-        const line = lines[i].trim();
-        if (!line) continue; // Skip empty lines
-
-        const values = line.split(',').map(value => value.trim());
-        if (values.length !== headers.length) {
-          console.warn(`Row ${i + 1} has ${values.length} values but expected ${headers.length}`);
-          continue;
-        }
-
-        const row: DataRow = {};
-        headers.forEach((header, index) => {
-          const value = values[index];
-
-          // Check if this looks like a date (contains dashes or slashes)
-          if (value.includes('-') || value.includes('/')) {
-            row[header] = value; // Keep as string for dates
-          } else {
-            // Try to convert to number if possible, but only if it's a pure number
-            const numValue = parseFloat(value);
-            // Only convert to number if it's a valid number and doesn't contain letters
-            const isPureNumber = /^\d+(\.\d+)?$/.test(value);
-            row[header] = (isNaN(numValue) || !isPureNumber) ? value : numValue;
-          }
-        });
-        dataRows.push(row);
-      }
-
-      return dataRows;
+      setIsLoading(true);
+      const result = await BusinessDashboardAPI.getSampleData();
+      setData(result.data);
+      setIsSampleData(true);
+      
+      // Generate insights for sample data
+      await generateInsights(result.data);
     } catch (error) {
-      console.error('Error parsing CSV:', error);
-      throw new Error('Failed to parse CSV file. Please ensure it\'s properly formatted.');
+      console.error('Error loading sample data:', error);
+      setError('Failed to load sample data');
+    } finally {
+      setIsLoading(false);
     }
-  }, []);
+  };
 
-  // AI insight generation with exponential backoff
-  const generateInsights = useCallback(async (dataRows: DataRow[], retryCount = 0) => {
+  // AI insight generation
+  const generateInsights = useCallback(async (dataRows: DataRow[]) => {
     setIsLoading(true);
     setError(null);
 
     try {
-      // Convert data to CSV string for AI analysis
-      const headers = Object.keys(dataRows[0]);
-      const csvString = [
-        headers.join(','),
-        ...dataRows.map(row => headers.map(header => row[header]).join(','))
-      ].join('\n');
-
-      // Construct AI prompt
-      const prompt = `Analyze this business data and provide insights in the following JSON format:
-{
-  "summary": "A clear, concise narrative summary highlighting key KPIs and overall trends",
-  "trends": ["List of significant trends identified in the data"],
-  "anomalies": ["List of potential anomalies or unusual patterns"],
-  "prediction": "A simple, high-level forecast for the primary metric based on recent trends"
-}
-
-Business Data (CSV):
-${csvString}
-
-Focus on:
-- Revenue trends and growth patterns
-- Marketing spend efficiency
-- Customer acquisition trends
-- Profit margin analysis
-- Any notable anomalies or patterns
-- Simple predictive insights based on the data
-
-Provide actionable insights that would be valuable for business decision-making.`;
-
-      const apiKey = import.meta.env.OPENAI_KEY || ""; // Get API key from environment variable
-
-      // Debug: Check if API key is available (remove this in production)
-      if (!apiKey) {
-        console.warn("OpenAI API key not found. Please check your .env file.");
-        console.log("Available environment variables:", Object.keys(import.meta.env));
-      }
-      const maxRetries = 3;
-      const baseDelay = 1000; // 1 second
-
-      const makeRequest = async (attempt: number): Promise<Response> => {
-        const response = await fetch('https://api.openai.com/v1/chat/completions', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${apiKey}`
-          },
-          body: JSON.stringify({
-            model: 'gpt-4o-mini',
-            messages: [
-              {
-                role: 'system',
-                content: 'You are a business intelligence analyst. Provide insights in the exact JSON format requested.'
-              },
-              {
-                role: 'user',
-                content: prompt
-              }
-            ],
-            temperature: 0.3,
-            max_tokens: 1000
-          })
-        });
-
-        if (!response.ok) {
-          if (response.status === 429 && attempt < maxRetries) {
-            const delay = baseDelay * Math.pow(2, attempt);
-            await new Promise(resolve => setTimeout(resolve, delay));
-            return makeRequest(attempt + 1);
-          }
-          throw new Error(`API request failed: ${response.status}`);
-        }
-
-        return response;
-      };
-
-      const response = await makeRequest(0);
-      const result = await response.json();
-
-      if (!result.choices || !result.choices[0] || !result.choices[0].message) {
-        throw new Error('Invalid response from AI service');
-      }
-
-      const aiResponse = result.choices[0].message.content;
-
-      // Clean the response by removing markdown formatting
-      let cleanedResponse = aiResponse;
-
-      // Remove markdown code blocks and "json" text
-      cleanedResponse = cleanedResponse.replace(/```json\s*/g, '').replace(/```\s*/g, '');
-
-      // Try to parse JSON response, fallback to text if needed
-      let parsedInsights: InsightData;
-      try {
-        parsedInsights = JSON.parse(cleanedResponse);
-      } catch {
-        // Fallback: create structured insights from text response
-        parsedInsights = {
-          summary: aiResponse,
-          trends: [],
-          anomalies: [],
-          prediction: "Based on the data analysis, continued monitoring of key metrics is recommended."
-        };
-      }
-
-      setInsights(parsedInsights);
+      const result = await BusinessDashboardAPI.generateInsights(dataRows);
+      setInsights(result.insights);
     } catch (error) {
       console.error('Error generating insights:', error);
       setError(error instanceof Error ? error.message : 'Failed to generate insights');
@@ -288,18 +138,16 @@ Provide actionable insights that would be valuable for business decision-making.
 
     try {
       const text = await file.text();
-      const parsedData = parseCSV(text);
-
-      if (parsedData.length === 0) {
-        throw new Error('No valid data found in the CSV file');
-      }
-
-      setData(parsedData);
+      
+      // Process CSV through Supabase Edge Function
+      const result = await BusinessDashboardAPI.processCSV(text, file.name);
+      
+      setData(result.data);
       setIsSampleData(false);
       setDisplayedRows(16); // Reset to show first 16 rows
 
       // Generate insights for the new data
-      await generateInsights(parsedData);
+      await generateInsights(result.data);
     } catch (error) {
       console.error('Error uploading file:', error);
       setError(error instanceof Error ? error.message : 'Failed to upload file');
@@ -308,7 +156,7 @@ Provide actionable insights that would be valuable for business decision-making.
       // Reset file input
       event.target.value = '';
     }
-  }, [parseCSV, generateInsights]);
+  }, [generateInsights]);
 
   // Calculate basic metrics for display
   const calculateMetrics = useCallback(() => {
@@ -357,7 +205,7 @@ Provide actionable insights that would be valuable for business decision-making.
               )}
               {user && (
                 <div className="text-xs text-gray-500">
-                  User: {user.uid.slice(0, 8)}...
+                  User: {user.id.slice(0, 8)}...
                 </div>
               )}
             </div>

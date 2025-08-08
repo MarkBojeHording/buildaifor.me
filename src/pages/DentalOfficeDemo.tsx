@@ -6,6 +6,8 @@ import { Badge } from '@/components/ui/badge';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { useNavigate } from 'react-router-dom';
+import { getApiUrl } from '@/config/api';
+import { useScrollToTop } from '../hooks/useScrollToTop';
 
 interface Message {
   id: string;
@@ -14,7 +16,11 @@ interface Message {
   timestamp: Date;
 }
 
-function formatResponse(text: string) {
+function formatResponse(text: string | undefined | null) {
+  if (!text || typeof text !== 'string') {
+    return 'No response received';
+  }
+
   return text
     .replace(/\n/g, '<br>')
     .replace(/(?!^)<br>• /g, '<br><br>• ') // double break before bullets except at start
@@ -24,6 +30,7 @@ function formatResponse(text: string) {
 
 const DentalOfficeDemo = () => {
   const navigate = useNavigate();
+  useScrollToTop();
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
@@ -59,10 +66,7 @@ const DentalOfficeDemo = () => {
     }
   }, [messages]);
 
-  // Add effect to ensure page starts at top
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+
 
   // Update the sendMessage function to handle the new quick replies with custom answers
   const sendMessage = async (messageText: string) => {
@@ -141,7 +145,7 @@ const DentalOfficeDemo = () => {
     return;
 
     try {
-      const response = await fetch('http://localhost:8001/chat', {
+      const response = await fetch(`${getApiUrl('tier1')}/chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -180,7 +184,7 @@ const DentalOfficeDemo = () => {
       console.error('Error sending message:', error);
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: "I'm sorry, I'm having trouble connecting right now. Please check that the backend server is running at http://localhost:8001 or try again in a moment.",
+        text: "I'm sorry, I'm having trouble connecting right now. Please check that the Supabase Edge Function is deployed or try again in a moment.",
         isUser: false,
         timestamp: new Date()
       };
@@ -215,13 +219,18 @@ const DentalOfficeDemo = () => {
           <Button
             variant="outline"
             onClick={() => {
-              navigate('/');
-              setTimeout(() => {
-                const portfolioSection = document.getElementById('portfolio');
-                if (portfolioSection) {
-                  portfolioSection.scrollIntoView({ behavior: 'smooth' });
+              // Clear saved scroll position for main page
+              const savedPositions = sessionStorage.getItem('scrollPositions');
+              if (savedPositions) {
+                try {
+                  const positions = JSON.parse(savedPositions);
+                  delete positions['/'];
+                  sessionStorage.setItem('scrollPositions', JSON.stringify(positions));
+                } catch (error) {
+                  console.warn('Failed to clear scroll position:', error);
                 }
-              }, 100);
+              }
+              navigate('/');
             }}
             className="mb-6 group"
           >

@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useScrollToTop } from '../../hooks/useScrollToTop';
 import {
   Upload,
   BarChart3,
@@ -22,6 +24,95 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import { createClient } from '@supabase/supabase-js';
+
+// Supabase client configuration
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://uqkzthavpupgpbusqhwy.supabase.co';
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVxa3p0aGF2cHVwZ3BidXNxaHd5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQyMTM0MTgsImV4cCI6MjA2OTc4OTQxOH0.PKWpeC4dfdqUS25STLFEIzlwmW_ZDIyQ9ZezPcrnke8';
+
+export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+// Ecommerce API class for Supabase Edge Functions
+export class EcommerceSalesAPI {
+  static async processCSV(csvData: string, fileName?: string) {
+    const response = await fetch(`${supabaseUrl}/functions/v1/ecommerce-sales-intelligence`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${supabaseAnonKey}`,
+      },
+      body: JSON.stringify({
+        action: 'process_csv',
+        data: csvData,
+        file_name: fileName || 'uploaded_data.csv'
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(`API request failed: ${response.status}`);
+    }
+
+    return response.json();
+  }
+
+  static async generateInsights(data: DataRow[]) {
+    const response = await fetch(`${supabaseUrl}/functions/v1/ecommerce-sales-intelligence`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${supabaseAnonKey}`,
+      },
+      body: JSON.stringify({
+        action: 'generate_insights',
+        data: JSON.stringify(data)
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(`API request failed: ${response.status}`);
+    }
+
+    return response.json();
+  }
+
+  static async getSampleData() {
+    const response = await fetch(`${supabaseUrl}/functions/v1/ecommerce-sales-intelligence`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${supabaseAnonKey}`,
+      },
+      body: JSON.stringify({
+        action: 'get_sample_data'
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(`API request failed: ${response.status}`);
+    }
+
+    return response.json();
+  }
+
+  static async healthCheck() {
+    const response = await fetch(`${supabaseUrl}/functions/v1/ecommerce-sales-intelligence`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${supabaseAnonKey}`,
+      },
+      body: JSON.stringify({
+        action: 'health_check'
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(`API request failed: ${response.status}`);
+    }
+
+    return response.json();
+  }
+}
 
 // Sample data for initial load
 const sampleData = [
@@ -57,6 +148,8 @@ interface AdvancedFeatures {
 }
 
 const EcommerceSalesIntelligence: React.FC = () => {
+  const navigate = useNavigate();
+  useScrollToTop();
   // State management
   const [data, setData] = useState<DataRow[]>(sampleData);
   const [isSampleData, setIsSampleData] = useState(true);
@@ -65,6 +158,16 @@ const EcommerceSalesIntelligence: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const [displayedRows, setDisplayedRows] = useState(16); // Show up to 16 rows initially
+  const [edgeFunctionMetrics, setEdgeFunctionMetrics] = useState<{
+    revenue: number;
+    profit: number;
+    customerAcquisition: number;
+    dataPoints: number;
+    growthRate: number;
+    profitMargin: number;
+    conversionRate: number;
+    averageOrderValue: number;
+  } | null>(null);
 
   // Advanced features data
   const advancedFeatures: AdvancedFeatures = {
@@ -76,9 +179,38 @@ const EcommerceSalesIntelligence: React.FC = () => {
     dataCleaning: "Automate data cleaning, validation, and preparation processes to ensure data quality."
   };
 
-  // Generate initial insights on component mount
+      // Generate initial insights on component mount
   useEffect(() => {
-    generateInsights(sampleData);
+    const loadSampleData = async () => {
+      console.log('loadSampleData called');
+      try {
+        console.log('Calling EcommerceSalesAPI.getSampleData...');
+        const result = await EcommerceSalesAPI.getSampleData();
+        console.log('getSampleData result:', result);
+
+        if (result.success) {
+          console.log('Setting data:', result.data);
+          setData(result.data);
+          // Store metrics from sample data
+          if (result.metrics) {
+            console.log('Setting metrics from sample data:', result.metrics);
+            setEdgeFunctionMetrics(result.metrics);
+          }
+          console.log('Calling generateInsights with result.data...');
+          await generateInsights(result.data);
+        } else {
+          console.log('getSampleData failed, using fallback');
+          // Fallback to local sample data
+          generateInsights(sampleData);
+        }
+      } catch (error) {
+        console.error('Error loading sample data:', error);
+        // Fallback to local sample data
+        generateInsights(sampleData);
+      }
+    };
+
+    loadSampleData();
   }, []);
 
   // CSV parsing function with robust error handling
@@ -127,119 +259,29 @@ const EcommerceSalesIntelligence: React.FC = () => {
     }
   }, []);
 
-  // AI insight generation with OpenAI API and exponential backoff
-  const generateInsights = useCallback(async (dataRows: DataRow[], retryCount = 0) => {
+  // AI insight generation with Supabase Edge Functions
+  const generateInsights = useCallback(async (dataRows: DataRow[]) => {
+    console.log('generateInsights called with data:', dataRows);
     setIsLoading(true);
     setError(null);
 
     try {
-      // Convert data to CSV string for AI analysis
-      const headers = Object.keys(dataRows[0]);
-      const csvString = [
-        headers.join(','),
-        ...dataRows.map(row => headers.map(header => row[header]).join(','))
-      ].join('\n');
+      console.log('Calling EcommerceSalesAPI.generateInsights...');
+      const result = await EcommerceSalesAPI.generateInsights(dataRows);
+      console.log('EcommerceSalesAPI.generateInsights result:', result);
 
-      // Construct AI prompt
-      const prompt = `Analyze this business data and provide insights in the following JSON format:
-{
-  "summary": "A clear, concise narrative summary highlighting key KPIs and overall trends",
-  "trends": ["List of significant trends identified in the data"],
-  "anomalies": ["List of potential anomalies or unusual patterns"],
-  "prediction": "A simple, high-level forecast for the primary metric based on recent trends"
-}
-
-Business Data (CSV):
-${csvString}
-
-Focus on:
-- Revenue trends and growth patterns
-- Marketing spend efficiency
-- Customer acquisition trends
-- Profit margin analysis
-- Any notable anomalies or patterns
-- Simple predictive insights based on the data
-
-Provide actionable insights that would be valuable for business decision-making.`;
-
-      // Note: For this integration, the API key should be in the main project's .env file
-      // since this component is part of the main application, not the standalone template
-      const apiKey = import.meta.env.VITE_OPENAI_API_KEY || ""; // Get API key from environment variable
-
-      // Debug: Check if API key is available (remove this in production)
-      if (!apiKey) {
-        console.warn("OpenAI API key not found in main application. Please check your root .env file.");
-        console.log("Available environment variables:", Object.keys(import.meta.env));
-      }
-      const maxRetries = 3;
-      const baseDelay = 1000; // 1 second
-
-      const makeRequest = async (attempt: number): Promise<Response> => {
-        const response = await fetch('https://api.openai.com/v1/chat/completions', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${apiKey}`
-          },
-          body: JSON.stringify({
-            model: 'gpt-4o-mini',
-            messages: [
-              {
-                role: 'system',
-                content: 'You are a business intelligence analyst. Provide insights in the exact JSON format requested.'
-              },
-              {
-                role: 'user',
-                content: prompt
-              }
-            ],
-            temperature: 0.3,
-            max_tokens: 1000
-          })
-        });
-
-        if (!response.ok) {
-          if (response.status === 429 && attempt < maxRetries) {
-            const delay = baseDelay * Math.pow(2, attempt);
-            await new Promise(resolve => setTimeout(resolve, delay));
-            return makeRequest(attempt + 1);
-          }
-          throw new Error(`API request failed: ${response.status}`);
-        }
-
-        return response;
-      };
-
-      const response = await makeRequest(0);
-      const result = await response.json();
-
-      if (!result.choices || !result.choices[0] || !result.choices[0].message) {
-        throw new Error('Invalid response from AI service');
+      if (!result.success) {
+        throw new Error(result.error || 'Failed to generate insights');
       }
 
-      const aiResponse = result.choices[0].message.content;
+      console.log('Setting insights:', result.insights);
+      setInsights(result.insights);
 
-      // Clean the response by removing markdown formatting
-      let cleanedResponse = aiResponse;
-
-      // Remove markdown code blocks and "json" text
-      cleanedResponse = cleanedResponse.replace(/```json\s*/g, '').replace(/```\s*/g, '');
-
-      // Try to parse JSON response, fallback to text if needed
-      let parsedInsights: InsightData;
-      try {
-        parsedInsights = JSON.parse(cleanedResponse);
-      } catch {
-        // Fallback: create structured insights from text response
-        parsedInsights = {
-          summary: aiResponse,
-          trends: [],
-          anomalies: [],
-          prediction: "Based on the data analysis, continued monitoring of key metrics is recommended."
-        };
+      // Store the metrics returned from the Edge Function for display
+      if (result.metrics) {
+        console.log('Setting edge function metrics:', result.metrics);
+        setEdgeFunctionMetrics(result.metrics);
       }
-
-      setInsights(parsedInsights);
     } catch (error) {
       console.error('Error generating insights:', error);
       setError(error instanceof Error ? error.message : 'Failed to generate insights');
@@ -266,18 +308,18 @@ Provide actionable insights that would be valuable for business decision-making.
 
     try {
       const text = await file.text();
-      const parsedData = parseCSV(text);
+      const result = await EcommerceSalesAPI.processCSV(text, file.name);
 
-      if (parsedData.length === 0) {
-        throw new Error('No valid data found in the CSV file');
+      if (!result.success) {
+        throw new Error(result.error || 'Failed to process CSV file');
       }
 
-      setData(parsedData);
+      setData(result.data);
       setIsSampleData(false);
       setDisplayedRows(16); // Reset to show first 16 rows
 
       // Generate insights for the new data
-      await generateInsights(parsedData);
+      await generateInsights(result.data);
     } catch (error) {
       console.error('Error uploading file:', error);
       setError(error instanceof Error ? error.message : 'Failed to upload file');
@@ -286,7 +328,7 @@ Provide actionable insights that would be valuable for business decision-making.
       // Reset file input
       event.target.value = '';
     }
-  }, [parseCSV, generateInsights]);
+  }, [generateInsights]);
 
   // Calculate basic metrics for display
   const calculateMetrics = useCallback(() => {
@@ -295,21 +337,51 @@ Provide actionable insights that would be valuable for business decision-making.
     const latest = data[data.length - 1];
     const previous = data[data.length - 2];
 
-    const revenueChange = previous ? ((latest.Revenue as number) - (previous.Revenue as number)) / (previous.Revenue as number) * 100 : 0;
-    const profitChange = previous ? ((latest.Profit as number) - (previous.Profit as number)) / (previous.Profit as number) * 100 : 0;
-    const customerChange = previous ? ((latest.New_Customers as number) - (previous.New_Customers as number)) / (previous.New_Customers as number) * 100 : 0;
+    // Handle different column name formats (from Supabase vs local data)
+    const revenue = Number(latest.revenue || latest.Revenue || 0);
+    const costs = Number(latest.costs || latest.Costs || 0);
+    const customers = Number(latest.customers || latest.New_Customers || 0);
+
+    const prevRevenue = previous ? Number(previous.revenue || previous.Revenue || 0) : 0;
+    const prevCosts = previous ? Number(previous.costs || previous.Costs || 0) : 0;
+    const prevCustomers = previous ? Number(previous.customers || previous.New_Customers || 0) : 0;
+
+    const profit = revenue - costs;
+    const prevProfit = prevRevenue - prevCosts;
+
+    const revenueChange = prevRevenue > 0 ? ((revenue - prevRevenue) / prevRevenue) * 100 : 0;
+    const profitChange = prevProfit > 0 ? ((profit - prevProfit) / prevProfit) * 100 : 0;
+    const customerChange = prevCustomers > 0 ? ((customers - prevCustomers) / prevCustomers) * 100 : 0;
 
     return {
-      currentRevenue: latest.Revenue as number,
-      currentProfit: latest.Profit as number,
-      currentCustomers: latest.New_Customers as number,
+      currentRevenue: revenue,
+      currentProfit: profit,
+      currentCustomers: customers,
       revenueChange,
       profitChange,
       customerChange
     };
   }, [data]);
 
-  const metrics = calculateMetrics();
+  // Create unified metrics object that works with both Edge Function and local calculations
+  const getDisplayMetrics = () => {
+    if (edgeFunctionMetrics) {
+      // Use Edge Function metrics (more accurate)
+      return {
+        currentRevenue: edgeFunctionMetrics.revenue,
+        currentProfit: edgeFunctionMetrics.profit,
+        currentCustomers: edgeFunctionMetrics.customerAcquisition,
+        revenueChange: edgeFunctionMetrics.growthRate,
+        profitChange: edgeFunctionMetrics.profitMargin,
+        customerChange: edgeFunctionMetrics.conversionRate
+      };
+    }
+
+    // Fallback to local calculation
+    return calculateMetrics();
+  };
+
+  const metrics = getDisplayMetrics();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
@@ -321,7 +393,18 @@ Provide actionable insights that would be valuable for business decision-making.
           <Button
             variant="outline"
             onClick={() => {
-              window.history.back();
+              // Clear saved scroll position for main page
+              const savedPositions = sessionStorage.getItem('scrollPositions');
+              if (savedPositions) {
+                try {
+                  const positions = JSON.parse(savedPositions);
+                  delete positions['/'];
+                  sessionStorage.setItem('scrollPositions', JSON.stringify(positions));
+                } catch (error) {
+                  console.warn('Failed to clear scroll position:', error);
+                }
+              }
+              navigate('/');
             }}
             className="mb-6 group"
           >

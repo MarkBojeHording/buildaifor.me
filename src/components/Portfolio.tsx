@@ -190,16 +190,12 @@ const Portfolio = () => {
                     onClick={() => {
                       if (chatbot.title === 'Dental Office') {
                         navigate('/demo/dental-office');
-                        window.scrollTo(0, 0);
                       } else if (chatbot.title === 'Restaurant') {
                         navigate('/demo/restaurant');
-                        window.scrollTo(0, 0);
                       } else if (chatbot.title === 'Hair Salon') {
                         navigate('/demo/hair-salon');
-                        window.scrollTo(0, 0);
                       } else if (chatbot.title === 'Fitness Studio') {
                         navigate('/demo/fitness-studio');
-                        window.scrollTo(0, 0);
                       }
                     }}
                   >
@@ -248,13 +244,10 @@ const Portfolio = () => {
                     onClick={() => {
                       if (chatbot.title === 'Real Estate Office') {
                         navigate('/demo/real-estate');
-                        window.scrollTo(0, 0);
                       } else if (chatbot.title === 'E-commerce Store') {
                         navigate('/demo/ecommerce');
-                        window.scrollTo(0, 0);
                       } else if (chatbot.title === 'Law Firm') {
                         navigate('/demo/law-firm');
-                        window.scrollTo(0, 0);
                       }
                     }}
                   >
@@ -301,12 +294,11 @@ const Portfolio = () => {
                     </div>
                     <Button
                       className="w-full bg-purple-600 hover:bg-purple-700 text-white text-sm"
-                      onClick={() => {
-                        if (chatbot.title === 'Enterprise AI Assistant') {
-                          navigate('/demo/enterprise-ai-assistant');
-                          window.scrollTo(0, 0);
-                        }
-                      }}
+                                          onClick={() => {
+                      if (chatbot.title === 'Enterprise AI Assistant') {
+                        navigate('/demo/enterprise-ai-assistant');
+                      }
+                    }}
                     >
                       Try Live Demo
                     </Button>
@@ -372,10 +364,8 @@ const Portfolio = () => {
                 onClick={() => {
                   if (project.title === 'Legal Document Analyzer') {
                     navigate('/demo/document-analyzer');
-                    window.scrollTo(0, 0);
                   } else if (project.link) {
                     navigate(project.link);
-                    window.scrollTo(0, 0);
                   }
                 }}
               >
@@ -392,7 +382,7 @@ const Portfolio = () => {
     <section id="portfolio" className="py-20 bg-gray-50">
       <div className="container mx-auto px-4 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+          <h2 id="ai-solutions" className="text-4xl font-bold text-gray-900 mb-4">
             AI Solutions
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">

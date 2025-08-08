@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ArrowLeft, Mail, Brain, Zap, Users, Clock, Download, MessageSquare, FileText, Plus, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
@@ -8,7 +8,14 @@ import { ScrollArea } from '../components/ui/scroll-area';
 import { Textarea } from '../components/ui/textarea';
 import Header from '../components/Header.tsx';
 import Footer from '../components/Footer.tsx';
+import { useScrollToTop } from '../hooks/useScrollToTop';
 import axios from 'axios';
+import { createClient } from '@supabase/supabase-js';
+
+// Initialize Supabase client
+const supabaseUrl = 'https://uqkzthavpupgpbusqhwy.supabase.co';
+const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVxa3p0aGF2cHVwZ3BidXNxaHd5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQyMTM0MTgsImV4cCI6MjA2OTc4OTQxOH0.PKWpeC4dfdqUS25STLFEIzlwmW_ZDIyQ9ZezPcrnke8';
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 // Enhanced sample emails data with structured categories
 const sampleEmails = {
@@ -250,6 +257,7 @@ const sampleEmails = {
 
 const EmailAnalyzerDemo: React.FC = () => {
   const navigate = useNavigate();
+  useScrollToTop();
   const [selectedCategory, setSelectedCategory] = useState('urgent');
   const [selectedEmail, setSelectedEmail] = useState(null);
   const [analysis, setAnalysis] = useState(null);
@@ -276,44 +284,45 @@ const EmailAnalyzerDemo: React.FC = () => {
     setError(null);
 
     try {
-      const prompt = `
-Analyze this customer support email and return JSON:
-
-Email: "${emailContent}"
-
-Return this exact JSON structure:
-{
-  "urgency": "Critical|High|Medium|Low",
-  "importance": "High|Medium|Low",
-  "category": "Technical|Billing|Account|Feature Request|Complaint|General",
-  "subcategory": "specific issue type",
-  "sentiment": "Angry|Frustrated|Confused|Neutral|Happy",
-  "churnRisk": "High|Medium|Low",
-  "customerName": "extracted name or Unknown",
-  "company": "extracted company or Unknown",
-  "accountNumber": "extracted account/order number or None",
-  "responseTime": "15 minutes|1 hour|4 hours|24 hours",
-  "routeTo": "L1 Support|L2 Technical|Billing|Management|Engineering",
-  "reasoning": "brief explanation of classification",
-  "confidence": 85
-}`;
-
-      const response = await axios.post('https://api.openai.com/v1/chat/completions', {
-        model: 'gpt-3.5-turbo',
-        messages: [{ role: 'user', content: prompt }],
-        temperature: 0.3,
+      // Call Supabase Edge Function instead of direct OpenAI API
+      const response = await axios.post('https://uqkzthavpupgpbusqhwy.supabase.co/functions/v1/email-analyzer-demo', {
+        subject: 'Email Analysis',
+        body: emailContent,
+        senderEmail: 'user@example.com',
+        receivedAt: new Date().toISOString()
       }, {
         headers: {
-          'Authorization': `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${supabaseAnonKey}`,
         },
       });
 
-      const result = JSON.parse(response.data.choices[0].message.content);
-      setAnalysis(result);
+      if (response.data.success) {
+        // Transform Supabase response to match existing format
+        const supabaseResult = response.data.analysis;
+        const result = {
+          urgency: supabaseResult.priority_level === 'high' ? 'Critical' : supabaseResult.priority_level === 'medium' ? 'High' : 'Medium',
+          importance: supabaseResult.priority_level === 'high' ? 'High' : supabaseResult.priority_level === 'medium' ? 'Medium' : 'Low',
+          category: supabaseResult.primary_category || 'General',
+          subcategory: supabaseResult.secondary_categories?.[0] || 'General Inquiry',
+          sentiment: supabaseResult.sentiment_label === 'negative' ? 'Angry' : supabaseResult.sentiment_label === 'positive' ? 'Happy' : 'Neutral',
+          churnRisk: supabaseResult.sentiment_label === 'negative' ? 'High' : 'Low',
+          customerName: 'Unknown',
+          company: 'Unknown',
+          accountNumber: 'None',
+          responseTime: supabaseResult.estimated_resolution_time <= 30 ? '15 minutes' : supabaseResult.estimated_resolution_time <= 120 ? '1 hour' : '4 hours',
+          routeTo: supabaseResult.recommended_department || 'L1 Support',
+          reasoning: supabaseResult.summary || 'AI analysis completed',
+          confidence: Math.round((supabaseResult.confidence || 0.8) * 100)
+                };
+
+        setAnalysis(result);
+      } else {
+        throw new Error(response.data.error || 'Analysis failed');
+      }
     } catch (err) {
       console.error('Analysis error:', err);
-      setError('Failed to analyze email. Please check your API key and try again.');
+      setError('Failed to analyze email. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -383,13 +392,18 @@ Return this exact JSON structure:
           <Button
             variant="outline"
             onClick={() => {
-              navigate('/');
-              setTimeout(() => {
-                const portfolioSection = document.getElementById('portfolio');
-                if (portfolioSection) {
-                  portfolioSection.scrollIntoView({ behavior: 'smooth' });
+              // Clear saved scroll position for main page
+              const savedPositions = sessionStorage.getItem('scrollPositions');
+              if (savedPositions) {
+                try {
+                  const positions = JSON.parse(savedPositions);
+                  delete positions['/'];
+                  sessionStorage.setItem('scrollPositions', JSON.stringify(positions));
+                } catch (error) {
+                  console.warn('Failed to clear scroll position:', error);
                 }
-              }, 100);
+              }
+              navigate('/');
             }}
             className="mb-6 group"
           >

@@ -4,6 +4,7 @@ import { ArrowLeft, MessageSquare, Workflow, BarChart3, Settings, Brain, Zap, Us
 import { Button } from '@/components/ui/button';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { useScrollToTop } from '../hooks/useScrollToTop';
 
 // Import the Tier 3 chatbot components
 import ChatInterface from './tier3-chatbot/ChatInterface';
@@ -13,6 +14,7 @@ import MultiModal from './tier3-chatbot/MultiModal';
 
 const EnterpriseAIAssistantDemo: React.FC = () => {
   const navigate = useNavigate();
+  useScrollToTop();
   const [activeTab, setActiveTab] = useState('chat');
 
   const tabs = [
@@ -34,13 +36,18 @@ const EnterpriseAIAssistantDemo: React.FC = () => {
           <Button
             variant="outline"
             onClick={() => {
-              navigate('/');
-              setTimeout(() => {
-                const portfolioSection = document.getElementById('portfolio');
-                if (portfolioSection) {
-                  portfolioSection.scrollIntoView({ behavior: 'smooth' });
+              // Clear saved scroll position for main page
+              const savedPositions = sessionStorage.getItem('scrollPositions');
+              if (savedPositions) {
+                try {
+                  const positions = JSON.parse(savedPositions);
+                  delete positions['/'];
+                  sessionStorage.setItem('scrollPositions', JSON.stringify(positions));
+                } catch (error) {
+                  console.warn('Failed to clear scroll position:', error);
                 }
-              }, 100);
+              }
+              navigate('/');
             }}
             className="mb-6 group"
           >

@@ -26,18 +26,18 @@ if (process.env.OPENAI_API_KEY && process.env.OPENAI_API_KEY !== 'sk-demo-key-fo
   console.log('⚠️ No valid OpenAI API key found, using fallback responses');
 }
 
-// Middleware
+// Simple CORS configuration for development
 app.use(cors({
-  origin: function (origin, callback) {
-    const allowedOrigins = ['http://localhost:5173', 'http://localhost:5174'];
-    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:5175', 'http://127.0.0.1:5175'],
   credentials: true
 }));
+
+// Request logging for debugging
+app.use((req, res, next) => {
+  console.log(`${new Date().toISOString()} - ${req.method} ${req.path} from ${req.get('Origin') || 'no-origin'}`);
+  next();
+});
+
 app.use(express.json());
 
 // Enhanced sample document data with comprehensive content
@@ -577,8 +577,10 @@ app.post('/api/chat', async (req, res) => {
 // Health check endpoint
 app.get('/api/health', (req, res) => {
   res.json({
-    status: 'ok',
+    status: 'OK',
+    message: 'Legal Document Analyzer API is running',
     timestamp: new Date().toISOString(),
+    server_port: PORT,
     openai_available: !!openai
   });
 });

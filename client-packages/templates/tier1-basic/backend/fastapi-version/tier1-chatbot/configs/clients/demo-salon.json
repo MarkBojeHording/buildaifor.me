@@ -1,0 +1,36 @@
+{
+  "business_name": "Elegance Hair Salon",
+  "responses": {
+    "hours|open|time|when are you open": "🕒 Elegance Salon Hours:\n\n• Tuesday-Saturday: 9AM-8PM\n• Sunday: 10AM-6PM\n• Monday: Closed\n\nWe're here to make you beautiful!",
+
+    "services|haircut|styling|what do you offer": "💇‍♀️ Our Services:\n\n• Haircuts: $35-75 (includes wash & style)\n• Color: $85-150 (highlights, balayage, full color)\n• Styling: $45-85 (blowout, updo, special occasion)\n• Treatments: $25-60 (deep conditioning, keratin)\n• Extensions: $200-500\n\nWhat service interests you?",
+
+    "price|cost|how much|pricing": "💰 Service Pricing:\n\n• Women's Cut: $45-75\n• Men's Cut: $25-35\n• Color: $85-150\n• Highlights: $95-180\n• Styling: $45-85\n• Treatments: $25-60\n\nStudent and senior discounts available!",
+
+    "appointment|book|schedule|reserve": "📅 Appointments:\n\n• Call us at (555) 987-6543\n• Online booking available\n• Walk-ins welcome (subject to availability)\n• 24-hour cancellation policy\n\nWhat service and when would you like to come in?",
+
+    "stylists|hairdresser|who cuts hair": "👩‍🎨 Our Stylists:\n\n• Sarah: Master Colorist (15 years)\n• Mike: Cutting Specialist (12 years)\n• Emma: Styling Expert (8 years)\n• David: Men's Specialist (10 years)\n\nAll stylists are licensed and experienced!",
+
+    "color|dye|highlights|balayage": "🎨 Color Services:\n\n• Full Color: $85-120\n• Highlights: $95-150\n• Balayage: $120-180\n• Root Touch-up: $65-85\n• Color Correction: $150-250\n\nFree consultation for all color services!",
+
+    "location|address|where are you": "📍 Elegance Salon Location:\n\n789 Beauty Lane, Shopping District\nNext to the mall entrance\nFree parking in front\n5-minute walk from downtown\n\nEasy to find and plenty of parking!",
+
+    "parking|car|drive": "🚗 Parking:\n\n• Free Parking: Available in front of salon\n• Mall Parking: Large lot available\n• Street Parking: Available on Beauty Lane\n• Accessibility: Wheelchair accessible entrance\n\nNo parking worries!",
+
+    "products|shampoo|conditioner|buy": "🛍️ Retail Products:\n\n• Professional Shampoos: $15-35\n• Styling Products: $12-45\n• Hair Care: $18-60\n• Tools: $25-150\n\nWe carry top professional brands!",
+
+    "bridal|wedding|special occasion": "👰 Special Occasion:\n\n• Bridal Styling: $85-150\n• Bridal Party: $65-95 per person\n• Updos: $45-85\n• Makeup: $45-75\n\nPerfect for your special day!",
+
+    "hi|hello|hey|good morning|good afternoon": "👋 Welcome to Elegance Hair Salon! We're here to help you look and feel your best. How can I assist you today?",
+
+    "contact|phone|call": "📞 Contact Elegance Salon:\n\nPhone: (555) 987-6543\nEmail: info@elegancesalon.com\nWebsite: www.elegancesalon.com\nSocial: @elegancesalon\n\nWe'd love to hear from you!"
+  },
+  "contact": {
+    "phone": "(555) 987-6543",
+    "email": "info@elegancesalon.com",
+    "address": "789 Beauty Lane, Shopping District",
+    "website": "www.elegancesalon.com"
+  },
+  "industry": "salon",
+  "fallback_response": "I don't have that answer, but our stylists do!\n\n\ud83d\udcde Call us: {phone}\n\ud83d\udcdd Visit: {website}\n\nFor special requests, please contact our team directly.\n\nI can help with services, pricing, or appointments though!"
+}

@@ -12,4 +12,4 @@ serve(async (req) => {
     JSON.stringify(data),
     { headers: { "Content-Type": "application/json" } },
   )
-}) 
+})

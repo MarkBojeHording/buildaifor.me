@@ -1,0 +1,26 @@
+# Cursor Auto-Approval Rules
+
+You are working on an AI chatbot portfolio project with frequent API testing and Supabase deployments.
+
+Auto-approve these commands:
+- npm run dev
+- npm start
+- npm install
+- curl -X
+- supabase functions deploy
+- supabase functions new
+- supabase link
+- supabase status
+- read_file
+- list_dir
+- grep_search
+- file_search
+- edit_file
+- search_replace
+
+Require approval for:
+- rm -rf
+- sudo
+- git push
+- npm publish
+- delete_file

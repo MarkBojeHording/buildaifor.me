@@ -1,0 +1,88 @@
+{
+  "branding": {
+    "company": {
+      "name": "Your Company Name",
+      "description": "Your company description",
+      "logo": {
+        "url": "https://example.com/logo.png",
+        "alt": "Company Logo",
+        "size": {
+          "width": "32px",
+          "height": "32px"
+        }
+      },
+      "colors": {
+        "primary": "#3b82f6",
+        "secondary": "#1e40af",
+        "accent": "#f59e0b",
+        "background": "#ffffff",
+        "text": "#1f2937"
+      }
+    },
+    "chatbot": {
+      "name": "AI Assistant",
+      "description": "How can I help you today?",
+      "welcomeMessage": "Hi! Welcome to {company_name}! I'm here to help you with information about our services, hours, and more. How can I assist you today?",
+      "fallbackMessage": "I don't have specific information about that, but I can help you with our services, hours, appointments, and contact information. Or call us directly for personalized assistance!",
+      "errorMessage": "Sorry, I'm having trouble connecting right now. Please try again later.",
+      "typingIndicator": "AI is typing..."
+    },
+    "ui": {
+      "theme": {
+        "primaryColor": "#3b82f6",
+        "secondaryColor": "#1e40af",
+        "backgroundColor": "#ffffff",
+        "textColor": "#1f2937",
+        "borderColor": "#e5e7eb",
+        "shadowColor": "rgba(0, 0, 0, 0.1)"
+      },
+      "layout": {
+        "maxWidth": "400px",
+        "borderRadius": "12px",
+        "padding": "16px",
+        "margin": "0 auto"
+      },
+      "animations": {
+        "enabled": true,
+        "duration": "200ms",
+        "easing": "ease-in-out"
+      }
+    },
+    "quickReplies": [
+      {
+        "text": "What are your hours?",
+        "icon": "Clock",
+        "category": "hours"
+      },
+      {
+        "text": "How do I book an appointment?",
+        "icon": "Calendar",
+        "category": "appointments"
+      },
+      {
+        "text": "What services do you offer?",
+        "icon": "List",
+        "category": "services"
+      },
+      {
+        "text": "What is your address?",
+        "icon": "MapPin",
+        "category": "location"
+      }
+    ]
+  },
+  "customization": {
+    "instructions": "Replace the values above with your company's information. The chatbot will automatically use these settings for branding and theming.",
+    "required": [
+      "company.name",
+      "company.description",
+      "chatbot.name"
+    ],
+    "optional": [
+      "company.logo",
+      "company.colors",
+      "ui.theme",
+      "ui.layout"
+    ]
+  }
+}

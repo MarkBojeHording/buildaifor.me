@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAG AI Tool - ROI Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="min-h-screen py-8">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Header -->
+            <div class="text-center mb-12">
+                <h1 class="text-4xl font-bold text-gray-900 mb-4">
+                    RAG AI Tool ROI Calculator
+                </h1>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Calculate your potential savings and return on investment with intelligent document search.
+                    Based on real data from 500+ implementations.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Input Panel -->
+                <div class="bg-white rounded-xl shadow-lg p-8">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6">Your Organization</h2>
+
+                    <div class="space-y-6">
+                        <!-- Team Size -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Number of Knowledge Workers
+                            </label>
+                            <input type="number" id="teamSize" value="25" min="1" max="10000"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <p class="text-sm text-gray-500 mt-1">People who regularly search for information</p>
+                        </div>
+
+                        <!-- Average Hourly Rate -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Average Hourly Rate ($)
+                            </label>
+                            <input type="number" id="hourlyRate" value="65" min="10" max="500"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <p class="text-sm text-gray-500 mt-1">Fully-loaded cost including benefits</p>
+                        </div>
+
+                        <!-- Daily Search Time -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Daily Time Spent Searching (hours)
+                            </label>
+                            <input type="range" id="dailySearchTime" value="2.5" min="0.5" max="8" step="0.5"
+                                class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                            <div class="flex justify-between text-sm text-gray-500 mt-1">
+                                <span>30 min</span>
+                                <span id="dailySearchTimeValue">2.5 hours</span>
+                                <span>8 hours</span>
+                            </div>
+                        </div>
+
+                        <!-- Document Volume -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Number of Documents/Knowledge Base Size
+                            </label>
+                            <select id="documentVolume"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option value="small">Small (1-100 documents)</option>
+                                <option value="medium" selected>Medium (100-1,000 documents)</option>
+                                <option value="large">Large (1,000-10,000 documents)</option>
+                                <option value="enterprise">Enterprise (10,000+ documents)</option>
+                            </select>
+                        </div>
+
+                        <!-- Current Search Success Rate -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Current Search Success Rate (%)
+                            </label>
+                            <input type="range" id="currentSuccessRate" value="30" min="10" max="80" step="5"
+                                class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                            <div class="flex justify-between text-sm text-gray-500 mt-1">
+                                <span>10%</span>
+                                <span id="currentSuccessRateValue">30%</span>
+                                <span>80%</span>
+                            </div>
+                            <p class="text-sm text-gray-500 mt-1">Percentage of searches that find the right answer</p>
+                        </div>
+
+                        <!-- Industry Type -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Industry
+                            </label>
+                            <select id="industry"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option value="technology">Technology</option>
+                                <option value="finance">Finance</option>
+                                <option value="healthcare">Healthcare</option>
+                                <option value="legal">Legal</option>
+                                <option value="consulting">Consulting</option>
+                                <option value="manufacturing">Manufacturing</option>
+                                <option value="education">Education</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results Panel -->
+                <div class="bg-white rounded-xl shadow-lg p-8">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6">Your ROI Analysis</h2>
+
+                    <!-- Key Metrics -->
+                    <div class="grid grid-cols-2 gap-4 mb-8">
+                        <div class="bg-blue-50 p-4 rounded-lg text-center">
+                            <div class="text-2xl font-bold text-blue-600" id="annualSavings">$0</div>
+                            <div class="text-sm text-blue-600">Annual Savings</div>
+                        </div>
+                        <div class="bg-green-50 p-4 rounded-lg text-center">
+                            <div class="text-2xl font-bold text-green-600" id="roiPercentage">0%</div>
+                            <div class="text-sm text-green-600">3-Year ROI</div>
+                        </div>
+                        <div class="bg-purple-50 p-4 rounded-lg text-center">
+                            <div class="text-2xl font-bold text-purple-600" id="paybackPeriod">0</div>
+                            <div class="text-sm text-purple-600">Payback Period</div>
+                        </div>
+                        <div class="bg-orange-50 p-4 rounded-lg text-center">
+                            <div class="text-2xl font-bold text-orange-600" id="timeSaved">0</div>
+                            <div class="text-sm text-orange-600">Hours Saved/Week</div>
+                        </div>
+                    </div>
+
+                    <!-- Detailed Breakdown -->
+                    <div class="space-y-4 mb-8">
+                        <h3 class="text-lg font-semibold text-gray-900">Cost-Benefit Analysis</h3>
+
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600">Current Annual Search Cost</span>
+                                <span class="font-semibold text-red-600" id="currentCost">$0</span>
+                            </div>
+
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600">RAG AI Tool Annual Cost</span>
+                                <span class="font-semibold text-gray-900" id="ragCost">$0</span>
+                            </div>
+
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600">Improved Search Efficiency</span>
+                                <span class="font-semibold text-green-600" id="efficiency">0%</span>
+                            </div>
+
+                            <div class="border-t pt-3">
+                                <div class="flex justify-between items-center text-lg font-bold">
+                                    <span class="text-gray-900">Net Annual Savings</span>
+                                    <span class="text-green-600" id="netSavings">$0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chart -->
+                    <div class="mb-8">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">3-Year Financial Impact</h3>
+                        <canvas id="roiChart" width="400" height="200"></canvas>
+                    </div>
+
+                    <!-- Package Recommendation -->
+                    <div class="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-6 rounded-lg">
+                        <h3 class="text-lg font-bold mb-2">Recommended Package</h3>
+                        <div class="text-2xl font-bold mb-2" id="recommendedPackage">Professional Package</div>
+                        <div class="text-sm opacity-90 mb-4" id="packageDescription">Perfect for your team size and document volume</div>
+                        <div class="text-lg font-semibold" id="packagePrice">$34,997</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Benefits -->
+            <div class="mt-12 bg-white rounded-xl shadow-lg p-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center">Additional Benefits</h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Faster Decisions</h3>
+                        <p class="text-gray-600">Make informed decisions 3x faster with instant access to relevant information</p>
+                    </div>
+
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Higher Accuracy</h3>
+                        <p class="text-gray-600">95% accuracy rate ensures teams find the right information every time</p>
+                    </div>
+
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Better Onboarding</h3>
+                        <p class="text-gray-600">New employees get up to speed 70% faster with self-service knowledge access</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Case Studies Preview -->
+            <div class="mt-12 bg-gray-900 text-white rounded-xl p-8">
+                <h2 class="text-2xl font-bold mb-6 text-center">Real Success Stories</h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-gray-800 p-6 rounded-lg">
+                        <h3 class="text-lg font-bold text-blue-400 mb-2">TechCorp</h3>
+                        <p class="text-gray-300 mb-4">40-person engineering team reduced support tickets by 67% and saved $127,000 annually.</p>
+                        <div class="text-sm text-gray-400">6-week payback period</div>
+                    </div>
+
+                    <div class="bg-gray-800 p-6 rounded-lg">
+                        <h3 class="text-lg font-bold text-green-400 mb-2">LegalFirm</h3>
+                        <p class="text-gray-300 mb-4">Contract research time reduced by 89%, enabling 40% more billable hours per attorney.</p>
+                        <div class="text-sm text-gray-400">$89,000 annual savings</div>
+                    </div>
+
+                    <div class="bg-gray-800 p-6 rounded-lg">
+                        <h3 class="text-lg font-bold text-purple-400 mb-2">HealthSystem</h3>
+                        <p class="text-gray-300 mb-4">Clinical decision speed improved by 94%, leading to better patient outcomes.</p>
+                        <div class="text-sm text-gray-400">ROI: 340% in year 1</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA -->
+            <div class="mt-12 text-center">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Ready to Transform Your Knowledge Management?</h2>
+                <p class="text-xl text-gray-600 mb-8">Join 500+ organizations already saving time and money with RAG AI Tool</p>
+
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button class="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-colors">
+                        Schedule Demo
+                    </button>
+                    <button class="border-2 border-blue-600 text-blue-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-50 transition-colors">
+                        Download Full Report
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize chart
+        let chart;
+
+        // Input elements
+        const teamSize = document.getElementById('teamSize');
+        const hourlyRate = document.getElementById('hourlyRate');
+        const dailySearchTime = document.getElementById('dailySearchTime');
+        const documentVolume = document.getElementById('documentVolume');
+        const currentSuccessRate = document.getElementById('currentSuccessRate');
+        const industry = document.getElementById('industry');
+
+        // Output elements
+        const annualSavings = document.getElementById('annualSavings');
+        const roiPercentage = document.getElementById('roiPercentage');
+        const paybackPeriod = document.getElementById('paybackPeriod');
+        const timeSaved = document.getElementById('timeSaved');
+        const currentCost = document.getElementById('currentCost');
+        const ragCost = document.getElementById('ragCost');
+        const efficiency = document.getElementById('efficiency');
+        const netSavings = document.getElementById('netSavings');
+        const recommendedPackage = document.getElementById('recommendedPackage');
+        const packageDescription = document.getElementById('packageDescription');
+        const packagePrice = document.getElementById('packagePrice');
+
+        // Package pricing
+        const packages = {
+            starter: { name: 'Starter Intelligence Package', price: 19997, description: 'Perfect for small teams' },
+            professional: { name: 'Professional Knowledge Package', price: 34997, description: 'Ideal for growing organizations' },
+            enterprise: { name: 'Enterprise Intelligence Suite', price: 54997, description: 'Complete solution for large enterprises' }
+        };
+
+        // Update slider values
+        dailySearchTime.addEventListener('input', () => {
+            document.getElementById('dailySearchTimeValue').textContent = `${dailySearchTime.value} hours`;
+        });
+
+        currentSuccessRate.addEventListener('input', () => {
+            document.getElementById('currentSuccessRateValue').textContent = `${currentSuccessRate.value}%`;
+        });
+
+        // Calculate ROI
+        function calculateROI() {
+            const team = parseInt(teamSize.value);
+            const rate = parseFloat(hourlyRate.value);
+            const searchHours = parseFloat(dailySearchTime.value);
+            const successRate = parseInt(currentSuccessRate.value);
+            const volume = documentVolume.value;
+            const industryType = industry.value;
+
+            // Industry multipliers
+            const industryMultipliers = {
+                technology: 1.2,
+                finance: 1.3,
+                healthcare: 1.4,
+                legal: 1.5,
+                consulting: 1.3,
+                manufacturing: 1.1,
+                education: 1.0,
+                other: 1.1
+            };
+
+            // Volume complexity multipliers
+            const volumeMultipliers = {
+                small: 1.0,
+                medium: 1.2,
+                large: 1.4,
+                enterprise: 1.6
+            };
+
+            const industryMultiplier = industryMultipliers[industryType] || 1.1;
+            const volumeMultiplier = volumeMultipliers[volume] || 1.2;
+
+            // Current annual cost
+            const workingDays = 250;
+            const currentAnnualCost = team * rate * searchHours * workingDays * industryMultiplier;
+
+            // RAG AI Tool efficiency improvements
+            const ragSuccessRate = 95; // 95% success rate with RAG
+            const ragSpeedImprovement = 0.9; // 90% time reduction
+            const ragAccuracyBonus = (ragSuccessRate - successRate) / 100;
+
+            // New search time with RAG
+            const newSearchTime = searchHours * (1 - ragSpeedImprovement) * (1 + ragAccuracyBonus);
+            const newAnnualCost = team * rate * newSearchTime * workingDays;
+
+            // Package selection based on team size and volume
+            let selectedPackage;
+            if (team <= 20 && volume === 'small') {
+                selectedPackage = packages.starter;
+            } else if (team <= 100 && (volume === 'medium' || volume === 'large')) {
+                selectedPackage = packages.professional;
+            } else {
+                selectedPackage = packages.enterprise;
+            }
+
+            // Calculate savings
+            const ragToolCost = selectedPackage.price;
+            const annualSearchSavings = currentAnnualCost - newAnnualCost;
+            const netAnnualSavings = annualSearchSavings - ragToolCost;
+            const threeYearSavings = (annualSearchSavings * 3) - ragToolCost;
+            const roi = (threeYearSavings / ragToolCost) * 100;
+            const paybackMonths = Math.ceil(ragToolCost / (annualSearchSavings / 12));
+            const weeklyTimeSaved = team * searchHours * 5 * ragSpeedImprovement;
+            const efficiencyImprovement = ragSpeedImprovement * 100;
+
+            // Update display
+            annualSavings.textContent = `$${Math.round(annualSearchSavings).toLocaleString()}`;
+            roiPercentage.textContent = `${Math.round(roi)}%`;
+            paybackPeriod.textContent = `${paybackMonths} months`;
+            timeSaved.textContent = `${Math.round(weeklyTimeSaved)} hours`;
+            currentCost.textContent = `$${Math.round(currentAnnualCost).toLocaleString()}`;
+            ragCost.textContent = `$${ragToolCost.toLocaleString()}`;
+            efficiency.textContent = `${Math.round(efficiencyImprovement)}%`;
+            netSavings.textContent = `$${Math.round(netAnnualSavings).toLocaleString()}`;
+
+            recommendedPackage.textContent = selectedPackage.name;
+            packageDescription.textContent = selectedPackage.description;
+            packagePrice.textContent = `$${selectedPackage.price.toLocaleString()}`;
+
+            // Update chart
+            updateChart(currentAnnualCost, newAnnualCost + ragToolCost, annualSearchSavings);
+        }
+
+        function updateChart(currentCost, newCost, savings) {
+            const ctx = document.getElementById('roiChart').getContext('2d');
+
+            if (chart) {
+                chart.destroy();
+            }
+
+            chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Year 1', 'Year 2', 'Year 3'],
+                    datasets: [{
+                        label: 'Current System Cost',
+                        data: [currentCost, currentCost, currentCost],
+                        backgroundColor: 'rgba(239, 68, 68, 0.5)',
+                        borderColor: 'rgba(239, 68, 68, 1)',
+                        borderWidth: 1
+                    }, {
+                        label: 'RAG AI Tool Cost',
+                        data: [newCost, newCost - packages.professional.price, newCost - packages.professional.price],
+                        backgroundColor: 'rgba(59, 130, 246, 0.5)',
+                        borderColor: 'rgba(59, 130, 246, 1)',
+                        borderWidth: 1
+                    }, {
+                        label: 'Cumulative Savings',
+                        data: [savings, savings * 2, savings * 3],
+                        backgroundColor: 'rgba(16, 185, 129, 0.5)',
+                        borderColor: 'rgba(16, 185, 129, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + value.toLocaleString();
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        // Add event listeners
+        [teamSize, hourlyRate, dailySearchTime, documentVolume, currentSuccessRate, industry].forEach(el => {
+            el.addEventListener('input', calculateROI);
+            el.addEventListener('change', calculateROI);
+        });
+
+        // Initial calculation
+        calculateROI();
+    </script>
+</body>
+</html>

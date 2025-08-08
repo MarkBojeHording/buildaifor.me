@@ -6,6 +6,8 @@ import { Badge } from '@/components/ui/badge.tsx';
 import Header from '../components/Header.tsx';
 import Footer from '../components/Footer.tsx';
 import { useNavigate } from 'react-router-dom';
+import { getApiUrl } from '@/config/api';
+import { useScrollToTop } from '../hooks/useScrollToTop';
 
 interface Message {
   id: string;
@@ -21,12 +23,19 @@ const quickReplies = [
   { text: 'Sales analytics', icon: BarChart3 },
 ];
 
-function formatResponse(text: string) {
-  return text.replace(/\n/g, '<br>');
+function formatResponse(text: string | undefined | null) {
+  if (!text || typeof text !== 'string') {
+    return 'No response received';
+  }
+  return text
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Convert **bold** to <strong>
+    .replace(/\*(.*?)\*/g, '<em>$1</em>') // Convert *italic* to <em>
+    .replace(/\n/g, '<br>'); // Convert newlines to <br>
 }
 
 const EcommerceDemo = () => {
   const navigate = useNavigate();
+  useScrollToTop();
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
@@ -53,9 +62,7 @@ const EcommerceDemo = () => {
     }
   }, [messages]);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+
 
   const sendMessage = async (messageText: string) => {
     if (!messageText.trim() || isLoading) return;
@@ -72,15 +79,15 @@ const EcommerceDemo = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch('http://localhost:3001/chat', {
+      const response = await fetch(`${getApiUrl('tier2')}/chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           message: messageText,
-          clientId: 'ecommerce-demo',
-          ...(conversationId && { conversationId })
+          client_id: 'ecommerce-demo',
+          ...(conversationId && { session_id: conversationId })
         }),
       });
 
@@ -90,13 +97,16 @@ const EcommerceDemo = () => {
 
       const data = await response.json();
 
-      if (data.conversationId && !conversationId) {
-        setConversationId(data.conversationId);
+      if (data.session_id && !conversationId) {
+        setConversationId(data.session_id);
       }
+
+      // Handle nested response structure from fallback responses
+      const responseText = data.response?.response || data.response || 'No response received';
 
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: data.response,
+        text: responseText,
         isUser: false,
         timestamp: new Date()
       };
@@ -109,7 +119,7 @@ const EcommerceDemo = () => {
       console.error('Error sending message:', error);
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: "I'm sorry, I'm having trouble connecting right now. Please check that the backend server is running or try again in a moment.",
+        text: "I'm sorry, I'm having trouble connecting to the Supabase Edge Function right now. Please try again in a moment.",
         isUser: false,
         timestamp: new Date()
       };
@@ -138,13 +148,18 @@ const EcommerceDemo = () => {
           <Button
             variant="outline"
             onClick={() => {
-              navigate('/');
-              setTimeout(() => {
-                const portfolioSection = document.getElementById('portfolio');
-                if (portfolioSection) {
-                  portfolioSection.scrollIntoView({ behavior: 'smooth' });
+              // Clear saved scroll position for main page
+              const savedPositions = sessionStorage.getItem('scrollPositions');
+              if (savedPositions) {
+                try {
+                  const positions = JSON.parse(savedPositions);
+                  delete positions['/'];
+                  sessionStorage.setItem('scrollPositions', JSON.stringify(positions));
+                } catch (error) {
+                  console.warn('Failed to clear scroll position:', error);
                 }
-              }, 100);
+              }
+              navigate('/');
             }}
             className="mb-6 group"
           >

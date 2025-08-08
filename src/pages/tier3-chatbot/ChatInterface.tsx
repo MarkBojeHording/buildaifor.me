@@ -1,26 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Send, Paperclip, Mic, Bot, User, Calendar, Mail, FileText } from 'lucide-react';
-import io from 'socket.io-client';
+import { getApiUrl } from '../../config/api';
 
 const ChatInterface = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
-  const [socket, setSocket] = useState(null);
   const [isTyping, setIsTyping] = useState(false);
+  const [sessionId, setSessionId] = useState('');
 
   useEffect(() => {
-    const newSocket = io('http://localhost:8003');
-    setSocket(newSocket);
-
-    newSocket.on('bot_response', (data) => {
-      setMessages(prev => [...prev, {
-        type: 'bot',
-        content: data.message,
-        actions: data.actions,
-        timestamp: data.timestamp
-      }]);
-      setIsTyping(false);
-    });
+    // Generate session ID
+    setSessionId(crypto.randomUUID());
 
     // Add welcome message
     setMessages([{
@@ -32,11 +22,9 @@ const ChatInterface = () => {
         { type: 'email', label: 'Send Email', icon: Mail }
       ]
     }]);
-
-    return () => newSocket.close();
   }, []);
 
-  const sendMessage = () => {
+  const sendMessage = async () => {
     if (!input.trim()) return;
 
     const userMessage = {
@@ -49,7 +37,42 @@ const ChatInterface = () => {
     setInput('');
     setIsTyping(true);
 
-    socket?.emit('chat_message', { message: input, userId: 'demo_user' });
+    try {
+      const response = await fetch(`${getApiUrl('tier3')}/chat`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message: input,
+          userId: 'demo_user',
+          sessionId: sessionId
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send message');
+      }
+
+      const data = await response.json();
+      
+      setMessages(prev => [...prev, {
+        type: 'bot',
+        content: data.response,
+        actions: data.actions || [],
+        timestamp: data.timestamp
+      }]);
+    } catch (error) {
+      console.error('Error sending message:', error);
+      setMessages(prev => [...prev, {
+        type: 'bot',
+        content: "I apologize, but I'm experiencing technical difficulties. Please try again in a moment.",
+        actions: [],
+        timestamp: new Date()
+      }]);
+    } finally {
+      setIsTyping(false);
+    }
   };
 
   const executeAction = (action) => {

@@ -6,6 +6,19 @@ import { Send, Loader2, Brain, Target, TrendingUp, Scale, Clock, User, MessageSq
 import { Link, useNavigate } from 'react-router-dom';
 import Header from '../components/Header.tsx';
 import Footer from '../components/Footer.tsx';
+import { getApiUrl } from '@/config/api';
+import { useScrollToTop } from '../hooks/useScrollToTop';
+
+// Function to format response text with markdown support
+function formatResponse(text: string | undefined | null) {
+  if (!text || typeof text !== 'string') {
+    return 'No response received';
+  }
+  return text
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Convert **bold** to <strong>
+    .replace(/\*(.*?)\*/g, '<em>$1</em>') // Convert *italic* to <em>
+    .replace(/\n/g, '<br>'); // Convert newlines to <br>
+}
 
 interface Message {
   id: string;
@@ -33,6 +46,7 @@ interface ProcessingLog {
 
 const LawFirmDemo: React.FC = () => {
   const navigate = useNavigate();
+  useScrollToTop();
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
@@ -81,32 +95,36 @@ const LawFirmDemo: React.FC = () => {
     setProcessingLog(prev => [...prev.slice(-9), newEntry]); // Keep last 10 entries
   };
 
-  const updateDashboard = (aiData: any) => {
-    console.log('🔄 Updating dashboard with AI data:', aiData);
+  const updateDashboard = (aiData: any, responseData: any) => {
+    console.log('🔄 Updating dashboard with AI data:', aiData, 'Response data:', responseData);
 
-    // Update Lead Score
-    if (aiData?.lead_score !== undefined) {
-      setCurrentLeadScore(aiData.lead_score);
-      if (aiData.reasoning) {
-        addLogEntry(`Lead Score: ${aiData.lead_score}/100 - ${aiData.reasoning}`);
+    // Update Lead Score (check both aiData and top-level response)
+    const leadScore = responseData?.lead_score || aiData?.lead_score;
+    if (leadScore !== undefined) {
+      setCurrentLeadScore(leadScore);
+      const reasoning = aiData?.reasoning;
+      if (reasoning) {
+        addLogEntry(`Lead Score: ${leadScore}/100 - ${reasoning}`);
       }
     }
 
-    // Update Intent Detection
-    if (aiData?.detected_intent) {
-      setCurrentIntent(aiData.detected_intent);
-      if (aiData.intent_confidence) {
-        setCurrentConfidence(aiData.intent_confidence);
-        addLogEntry(`Intent: ${aiData.detected_intent} (${Math.round(aiData.intent_confidence * 100)}% confidence)`);
+    // Update Intent Detection (check both aiData and top-level response)
+    const intent = responseData?.intent || aiData?.detected_intent;
+    if (intent) {
+      setCurrentIntent(intent);
+      const confidence = responseData?.confidence || aiData?.intent_confidence;
+      if (confidence) {
+        setCurrentConfidence(confidence);
+        addLogEntry(`Intent: ${intent} (${Math.round(confidence * 100)}% confidence)`);
       }
     }
 
     // Update Case Assessment
     if (aiData?.case_strength) {
       setCurrentCaseAssessment(aiData.case_strength);
-      if (aiData.lead_score) {
-        setCurrentCaseScore(aiData.lead_score);
-        addLogEntry(`Case Assessment: ${aiData.case_strength} (Score: ${aiData.lead_score}/100)`);
+      if (leadScore) {
+        setCurrentCaseScore(leadScore);
+        addLogEntry(`Case Assessment: ${aiData.case_strength} (Score: ${leadScore}/100)`);
       }
     }
 
@@ -117,7 +135,7 @@ const LawFirmDemo: React.FC = () => {
     }
 
     // Update Business Intelligence
-    updateBusinessMetrics(aiData?.lead_score || 0);
+    updateBusinessMetrics(leadScore || 0);
 
     // Add a visual update indicator
     addLogEntry('🎯 Dashboard updated with latest AI analysis', 'complete');
@@ -165,15 +183,15 @@ const LawFirmDemo: React.FC = () => {
     addLogEntry('Processing user message...', 'processing');
 
     try {
-      const response = await fetch('http://localhost:8001/chat', {
+      const response = await fetch(`${getApiUrl('tier2')}/chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           message: inputValue,
-          clientId: 'law-firm-demo',
-          ...(conversationId && { conversationId })
+          client_id: 'law-firm-demo',
+          ...(conversationId && { session_id: conversationId })
         }),
       });
 
@@ -188,23 +206,23 @@ const LawFirmDemo: React.FC = () => {
 
       const botMessage: Message = {
         id: `bot-${Date.now()}`,
-        text: data.response.response,
+        text: data.response,
         sender: 'bot',
         timestamp: new Date(),
         aiData: {
-          leadScore: data.aiData?.lead_score,
+          leadScore: data.lead_score || data.aiData?.lead_score,
           leadReasoning: data.aiData?.reasoning,
-          detectedIntent: data.aiData?.detected_intent,
-          confidence: data.aiData?.intent_confidence,
+          detectedIntent: data.intent || data.aiData?.detected_intent,
+          confidence: data.confidence || data.aiData?.intent_confidence,
           caseAssessment: data.aiData?.case_strength,
-          caseScore: data.aiData?.lead_score,
+          caseScore: data.lead_score || data.aiData?.lead_score,
           attorneyMatch: data.aiData?.attorney_match,
           escalationNeeded: data.aiData?.escalation_needed
         }
       };
 
       setMessages(prev => [...prev, botMessage]);
-      updateDashboard(data.aiData);
+      updateDashboard(data.aiData, data);
       addLogEntry('Analysis complete', 'complete');
 
       if (!conversationId) {
@@ -319,13 +337,18 @@ const LawFirmDemo: React.FC = () => {
           <Button
             variant="outline"
             onClick={() => {
-              navigate('/');
-              setTimeout(() => {
-                const portfolioSection = document.getElementById('portfolio');
-                if (portfolioSection) {
-                  portfolioSection.scrollIntoView({ behavior: 'smooth' });
+              // Clear saved scroll position for main page
+              const savedPositions = sessionStorage.getItem('scrollPositions');
+              if (savedPositions) {
+                try {
+                  const positions = JSON.parse(savedPositions);
+                  delete positions['/'];
+                  sessionStorage.setItem('scrollPositions', JSON.stringify(positions));
+                } catch (error) {
+                  console.warn('Failed to clear scroll position:', error);
                 }
-              }, 100);
+              }
+              navigate('/');
             }}
             className="mb-6 group"
           >
@@ -378,7 +401,10 @@ const LawFirmDemo: React.FC = () => {
                           : 'bg-gray-100 text-gray-900'
                       }`}
                     >
-                      <p className="text-sm whitespace-pre-wrap">{message.text}</p>
+                      <div
+                        className="text-sm whitespace-pre-wrap"
+                        dangerouslySetInnerHTML={{ __html: formatResponse(message.text) }}
+                      />
                     </div>
                   </div>
                 ))}

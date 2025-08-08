@@ -89,7 +89,7 @@ const Services = () => {
                   className="w-full border-blue-600 text-blue-600 hover:bg-blue-50 group"
                   onClick={() => {
                     navigate(service.link);
-                    window.scrollTo(0, 0);
+
                   }}
                 >
                   Learn More

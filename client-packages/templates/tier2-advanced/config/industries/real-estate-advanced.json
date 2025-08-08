@@ -1,0 +1,207 @@
+{
+  "client_id": "real-estate-advanced",
+  "business_name": "Your Real Estate Company",
+  "industry": "real_estate",
+  "business_type": "real_estate",
+  "contact": {
+    "phone": "(555) REAL-ESTATE",
+    "email": "info@yourrealestate.com",
+    "website": "www.yourrealestate.com",
+    "address": "123 Real Estate Ave, Downtown"
+  },
+  "ai_features": {
+    "lead_scoring": true,
+    "case_assessment": true,
+    "dynamic_responses": true,
+    "intent_detection": true,
+    "followup_generation": true,
+    "appointment_scheduling": true,
+    "file_upload": true,
+    "crm_integration": true
+  },
+  "lead_capture": {
+    "enabled": true,
+    "required_fields": ["name", "email", "phone", "property_type", "budget_range"],
+    "optional_fields": ["timeline", "location_preference", "property_features", "financing_status", "current_home_status"],
+    "case_types": [
+      "Buying",
+      "Selling",
+      "Renting",
+      "Investment",
+      "Commercial",
+      "Land Purchase",
+      "Property Management"
+    ],
+    "budget_ranges": [
+      "Under $200K",
+      "$200K - $400K",
+      "$400K - $600K",
+      "$600K - $800K",
+      "$800K - $1M",
+      "$1M - $2M",
+      "$2M+"
+    ],
+    "qualification_thresholds": {
+      "hot_lead": 80,
+      "warm_lead": 60,
+      "cold_lead": 40
+    }
+  },
+  "lead_routing": {
+    "high_value_threshold": 85,
+    "senior_agent_threshold": 90,
+    "urgent_escalation_threshold": 95,
+    "auto_assignment": true,
+    "agent_specializations": {
+      "luxury": ["$1M+", "luxury", "premium", "high-end"],
+      "first_time_buyers": ["first time", "new buyer", "starter home"],
+      "investors": ["investment", "rental", "income property"],
+      "commercial": ["commercial", "office", "retail", "industrial"]
+    },
+    "escalation_rules": [
+      {
+        "condition": "budget_over_1m",
+        "threshold": 85,
+        "action": "notify_manager"
+      },
+      {
+        "condition": "urgent_timeline",
+        "threshold": 90,
+        "action": "assign_senior"
+      },
+      {
+        "condition": "multiple_properties",
+        "threshold": 80,
+        "action": "urgent_contact"
+      }
+    ]
+  },
+  "appointment_scheduling": {
+    "enabled": true,
+    "calendar_integration": "calendly",
+    "available_hours": {
+      "monday": { "start": "09:00", "end": "18:00" },
+      "tuesday": { "start": "09:00", "end": "18:00" },
+      "wednesday": { "start": "09:00", "end": "18:00" },
+      "thursday": { "start": "09:00", "end": "18:00" },
+      "friday": { "start": "09:00", "end": "18:00" },
+      "saturday": { "start": "10:00", "end": "16:00" },
+      "sunday": { "start": "12:00", "end": "16:00" }
+    },
+    "appointment_types": [
+      {
+        "name": "Property Consultation",
+        "duration": 30,
+        "price": 0,
+        "description": "Initial consultation to discuss your real estate needs",
+        "required_fields": ["name", "email", "phone", "property_type"],
+        "available_for": ["hot", "warm", "cold"]
+      },
+      {
+        "name": "Property Viewing",
+        "duration": 60,
+        "price": 0,
+        "description": "In-person property viewing with agent",
+        "required_fields": ["name", "email", "phone", "property_address"],
+        "available_for": ["hot", "warm"]
+      },
+      {
+        "name": "Market Analysis",
+        "duration": 45,
+        "price": 0,
+        "description": "Comprehensive market analysis for your property",
+        "required_fields": ["name", "email", "phone", "property_address"],
+        "available_for": ["hot", "warm"]
+      }
+    ],
+    "confirmation_workflow": true,
+    "reminder_system": true
+  },
+  "integrations": {
+    "crm": {
+      "enabled": true,
+      "provider": "hubspot",
+      "api_key": "YOUR_HUBSPOT_API_KEY",
+      "auto_create_leads": true,
+      "sync_activities": true
+    },
+    "payment": {
+      "enabled": false
+    },
+    "email": {
+      "enabled": true,
+      "provider": "sendgrid",
+      "api_key": "YOUR_SENDGRID_API_KEY",
+      "templates": [
+        {
+          "name": "welcome_email",
+          "subject": "Welcome to {business_name} - Let's Find Your Perfect Home",
+          "body": "Hi {name},\n\nThank you for reaching out to {business_name}! We're excited to help you find your perfect property.\n\nOur team will be in touch within 24 hours to discuss your needs.\n\nBest regards,\n{business_name} Team",
+          "triggers": ["new_lead"],
+          "variables": ["name", "business_name"]
+        },
+        {
+          "name": "appointment_confirmation",
+          "subject": "Appointment Confirmed - {appointment_type}",
+          "body": "Hi {name},\n\nYour {appointment_type} appointment has been confirmed for {appointment_date} at {appointment_time}.\n\nLocation: {appointment_location}\nAgent: {agent_name}\n\nWe look forward to meeting you!\n\n{business_name}",
+          "triggers": ["appointment_scheduled"],
+          "variables": ["name", "appointment_type", "appointment_date", "appointment_time", "appointment_location", "agent_name", "business_name"]
+        }
+      ]
+    }
+  },
+  "analytics": {
+    "enabled": true,
+    "tracking_events": [
+      "lead_created",
+      "appointment_scheduled",
+      "property_viewing",
+      "offer_made",
+      "deal_closed"
+    ],
+    "conversion_goals": [
+      {
+        "name": "appointment_booking",
+        "type": "appointment",
+        "value": 100
+      },
+      {
+        "name": "property_viewing",
+        "type": "appointment",
+        "value": 250
+      },
+      {
+        "name": "offer_submission",
+        "type": "contact_form",
+        "value": 500
+      }
+    ]
+  },
+  "fallback_response": "I don't have specific information about that property, but our experienced agents can help!\n\n📞 Call us: {phone}\n📧 Email: {email}\n🌐 Visit: {website}\n\nOur real estate experts are here to assist you with property searches, market information, or scheduling viewings!",
+  "responses": {
+    "hello|hi|hey|good morning|good afternoon|good evening": "Hello! Welcome to {business_name}! 🏠 I'm here to help you with all your real estate needs. How can I assist you today?",
+    "how are you|how's it going|how are things": "I'm doing great, thank you for asking! I'm here to help you find your perfect home. What brings you to {business_name} today?",
+    "thanks|thank you|appreciate it|thank you so much": "You're very welcome! I'm here to help. Is there anything else you'd like to know about our properties or services?",
+    "what can you help|what do you do|how can you help|what services|what can you do": "I'm your {business_name} assistant! I can help you with:\n\n🏠 Property searches and recommendations\n📊 Market information and trends\n📅 Scheduling viewings and appointments\n💰 Property valuations and pricing\n👨‍💼 Connecting with our agents\n📋 General real estate questions\n\nWhat would you like to know about?",
+    "property search|find home|buy house|looking for|available properties|show me properties": "🏠 Property Search:\n\n• What type of property are you looking for? (house, condo, townhouse)\n• What's your budget range?\n• Preferred neighborhoods or areas?\n• Timeline for purchase?\n\nI can help you find the perfect property!",
+    "market info|prices|trends|values": "📊 Market Information:\n\n• Average home price: $485,000\n• Market trend: Steady growth\n• Days on market: 28 days\n• Inventory level: Balanced\n\nWould you like specific neighborhood data?",
+    "schedule viewing|appointment|tour": "📅 Schedule a Viewing:\n\n• Available times: Weekdays 9AM-6PM, Saturdays 10AM-4PM\n• Virtual tours available\n• In-person showings with safety protocols\n\nCall us at {phone} to schedule!",
+    "selling|list property|market value": "💰 Selling Your Property:\n\n• Free market analysis\n• Professional photography included\n• Marketing on multiple platforms\n• Negotiation support\n\nLet's discuss your property details!",
+    "agent|realtor|broker": "👨‍💼 Our Agents:\n\n• Licensed professionals with 5+ years experience\n• Specialized in your area\n• Available 7 days a week\n• Personalized service\n\nWho would you like to work with?",
+    "hours|open|time|schedule": "🕒 Office Hours:\n\n• Monday-Friday: 9:00 AM - 6:00 PM\n• Saturday: 10:00 AM - 4:00 PM\n• Sunday: 12:00 PM - 4:00 PM\n\nEmergency appointments available for urgent matters.",
+    "contact|phone|call": "📞 Contact {business_name}:\n\nPhone: {phone}\nEmail: {email}\nWebsite: {website}\nAddress: {address}\n\nWe're here to help with all your real estate needs!"
+  },
+  "quick_replies": [
+    "What are your hours?",
+    "Show me available properties",
+    "Schedule a viewing",
+    "Get market analysis",
+    "Contact an agent"
+  ],
+  "theme": {
+    "primaryColor": "#2563eb",
+    "secondaryColor": "#1d4ed8",
+    "backgroundColor": "#ffffff",
+    "textColor": "#1f2937"
+  }
+}
