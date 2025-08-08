@@ -34,6 +34,7 @@ import EcommerceDemo from './pages/EcommerceDemo.tsx';
 import LawFirmDemo from './pages/LawFirmDemo.tsx';
 import DocumentAnalyzerDemo from './pages/DocumentAnalyzerDemo.tsx';
 import EnterpriseAIAssistantDemo from './pages/EnterpriseAIAssistantDemo.tsx';
+import TechnicalDocumentationRAG from './pages/TechnicalDocumentationRAG';
 import DeploymentDebug from '@/components/DeploymentDebug';
 
 const queryClient = new QueryClient();
@@ -67,6 +68,7 @@ const App = () => (
 
           <Route path="/portfolio/legal-document-analyzer" element={<LegalDocumentAnalyzer />} />
           <Route path="/portfolio/ecommerce-sales-intelligence" element={<EcommerceSalesIntelligence />} />
+          <Route path="/portfolio/technical-documentation-rag" element={<TechnicalDocumentationRAG />} />
           {/* Estate Assistant */}
           <Route path="/estate" element={<EstateAssistant />} />
           {/* Demo pages */}

@@ -2,7 +2,6 @@
 import Hero from '../components/Hero.tsx';
 // import Services from '../components/Services';
 // import Industries from '../components/Industries';
-import Process from '../components/Process.tsx';
 import Pricing from '../components/Pricing.tsx';
 import Contact from '../components/Contact.tsx';
 import Header from '../components/Header.tsx';
@@ -20,7 +19,6 @@ const Index = () => {
       <Portfolio />
       <Pricing />
       {/* <Industries /> */}
-      <Process />
       <Contact />
       <Footer />
     </div>
