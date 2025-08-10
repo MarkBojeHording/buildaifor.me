@@ -1,7 +1,6 @@
 import { Check, Star, Clock, Zap, Settings } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import CalendlyPopup from './CalendlyPopup';
 
 const Pricing = () => {
   const plans = [

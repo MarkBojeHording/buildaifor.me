@@ -8,7 +8,7 @@ const Footer = () => {
     { label: 'AI Solutions', href: '#ai-solutions', isRoute: false },
     { label: 'About', href: '/about', isRoute: true },
     { label: 'Blog', href: '/blog', isRoute: true },
-    { label: 'Pricing', href: '#pricing', isRoute: false }
+    { label: 'Pricing', href: '#pricing-contact', isRoute: false }
   ];
 
   const services = [

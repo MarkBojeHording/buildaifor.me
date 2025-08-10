@@ -10,6 +10,7 @@ const Portfolio = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [activeFilter, setActiveFilter] = useState('examples');
+  const [showCalendly, setShowCalendly] = useState(false);
 
   // Handle filter parameter from URL
   useEffect(() => {
@@ -431,11 +432,17 @@ const Portfolio = () => {
             <p className="mb-6 opacity-90 max-w-2xl mx-auto">
               Schedule a free consultation to discuss your AI automation needs and learn how we can transform your business processes.
             </p>
-            <CalendlyPopup>
-              <button className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold transition-colors cursor-pointer">
-                Book Free Consultation
-              </button>
-            </CalendlyPopup>
+            <button
+              onClick={() => setShowCalendly(true)}
+              className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold transition-colors cursor-pointer"
+            >
+              Book Free Consultation
+            </button>
+
+            <CalendlyPopup
+              isOpen={showCalendly}
+              onClose={() => setShowCalendly(false)}
+            />
           </div>
         </div>
       </div>

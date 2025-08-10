@@ -36,6 +36,7 @@ import DocumentAnalyzerDemo from './pages/DocumentAnalyzerDemo.tsx';
 import EnterpriseAIAssistantDemo from './pages/EnterpriseAIAssistantDemo.tsx';
 import TechnicalDocumentationRAG from './pages/TechnicalDocumentationRAG';
 import DeploymentDebug from '@/components/DeploymentDebug';
+import CookieBanner from '@/components/CookieBanner';
 // Blog article imports
 import FutureOfAIHealthcare from './pages/blog/future-of-ai-healthcare';
 import RAGvsTraditionalSearch from './pages/blog/rag-vs-traditional-search';
@@ -93,7 +94,7 @@ const App = () => (
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
-
+      <CookieBanner />
     </TooltipProvider>
   </QueryClientProvider>
 );

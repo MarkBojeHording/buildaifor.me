@@ -1,8 +1,10 @@
 
+import { useState } from 'react';
 import { MessageSquare, Code, Cog, Headphones } from 'lucide-react';
 import CalendlyPopup from './CalendlyPopup';
 
 const Process = () => {
+  const [showCalendly, setShowCalendly] = useState(false);
   const steps = [
     {
       icon: MessageSquare,
@@ -108,11 +110,17 @@ const Process = () => {
             <p className="mb-6 opacity-90 max-w-2xl mx-auto">
               Schedule a free consultation to discuss your AI automation needs and learn how we can transform your business processes.
             </p>
-            <CalendlyPopup>
-              <button className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold transition-colors cursor-pointer">
-                Book Free Consultation
-              </button>
-            </CalendlyPopup>
+            <button
+              onClick={() => setShowCalendly(true)}
+              className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold transition-colors cursor-pointer"
+            >
+              Book Free Consultation
+            </button>
+
+            <CalendlyPopup
+              isOpen={showCalendly}
+              onClose={() => setShowCalendly(false)}
+            />
           </div>
         </div>
       </div>

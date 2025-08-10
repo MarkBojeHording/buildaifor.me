@@ -83,13 +83,13 @@ const Header = () => {
               Tech
             </button>
             <button
-              onClick={() => scrollToSection('pricing')}
+              onClick={() => scrollToSection('pricing-contact')}
               className="text-gray-600 hover:text-gray-900 transition-colors bg-transparent border-none cursor-pointer"
             >
               Pricing
             </button>
             <button
-              onClick={() => scrollToSection('contact')}
+              onClick={() => scrollToSection('pricing-contact')}
               className="text-gray-600 hover:text-gray-900 transition-colors bg-transparent border-none cursor-pointer"
             >
               Contact
@@ -150,7 +150,7 @@ const Header = () => {
               </button>
               <button
                 onClick={() => {
-                  scrollToSection('pricing');
+                  scrollToSection('pricing-contact');
                   setIsMenuOpen(false);
                 }}
                 className="text-gray-600 hover:text-gray-900 transition-colors bg-transparent border-none cursor-pointer text-left"
@@ -159,7 +159,7 @@ const Header = () => {
               </button>
               <button
                 onClick={() => {
-                  scrollToSection('contact');
+                  scrollToSection('pricing-contact');
                   setIsMenuOpen(false);
                 }}
                 className="text-gray-600 hover:text-gray-900 transition-colors bg-transparent border-none cursor-pointer text-left"
