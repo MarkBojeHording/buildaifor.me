@@ -266,7 +266,7 @@ const PricingContact = () => {
                     className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 text-lg font-semibold"
                     disabled={isSubmitting}
                   >
-                    {isSubmitting ? 'Sending...' : 'Submit Inquiry'}
+                    {isSubmitting ? 'Sending...' : 'Send'}
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
 

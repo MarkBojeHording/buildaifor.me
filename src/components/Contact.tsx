@@ -195,7 +195,7 @@ const Contact = () => {
                   className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 text-lg font-semibold"
                   disabled={isSubmitting}
                 >
-                  {isSubmitting ? 'Sending...' : 'Submit Inquiry'}
+                  {isSubmitting ? 'Sending...' : 'Send'}
                 </Button>
 
                 {submitStatus === 'success' && (

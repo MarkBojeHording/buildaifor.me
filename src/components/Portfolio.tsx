@@ -426,7 +426,7 @@ const Portfolio = () => {
         {activeFilter === 'chatbots' ? renderChatbotTiers() : renderProjectCards()}
 
         {/* Ready to Get Started Section */}
-        <div className="mt-16 text-center">
+        <div id="get-started" className="mt-16 text-center">
           <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white">
             <h3 className="text-2xl font-bold mb-4">Ready to Get Started?</h3>
             <p className="mb-6 opacity-90 max-w-2xl mx-auto">
