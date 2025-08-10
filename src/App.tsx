@@ -36,6 +36,9 @@ import DocumentAnalyzerDemo from './pages/DocumentAnalyzerDemo.tsx';
 import EnterpriseAIAssistantDemo from './pages/EnterpriseAIAssistantDemo.tsx';
 import TechnicalDocumentationRAG from './pages/TechnicalDocumentationRAG';
 import DeploymentDebug from '@/components/DeploymentDebug';
+// Blog article imports
+import FutureOfAIHealthcare from './pages/blog/future-of-ai-healthcare';
+import RAGvsTraditionalSearch from './pages/blog/rag-vs-traditional-search';
 
 const queryClient = new QueryClient();
 
@@ -81,6 +84,10 @@ const App = () => (
           <Route path="/demo/law-firm" element={<LawFirmDemo />} />
           <Route path="/demo/document-analyzer" element={<DocumentAnalyzerDemo />} />
           <Route path="/demo/enterprise-ai-assistant" element={<EnterpriseAIAssistantDemo />} />
+
+          {/* Blog article routes */}
+          <Route path="/blog/future-of-ai-healthcare" element={<FutureOfAIHealthcare />} />
+          <Route path="/blog/rag-vs-traditional-search" element={<RAGvsTraditionalSearch />} />
 
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

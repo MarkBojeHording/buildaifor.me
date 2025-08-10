@@ -15,7 +15,19 @@ export const useNavigationWithScroll = () => {
     setTimeout(() => {
       const element = document.getElementById(sectionId);
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+        // Get the header height to account for fixed positioning
+        const header = document.querySelector('header');
+        const headerHeight = header ? header.offsetHeight : 64; // Default to 64px if header not found
+
+        // Calculate the exact position to scroll to
+        const elementTop = element.offsetTop;
+        const scrollPosition = elementTop - headerHeight;
+
+        // Scroll to the exact position
+        window.scrollTo({
+          top: scrollPosition,
+          behavior: 'smooth'
+        });
       }
     }, delay);
   };

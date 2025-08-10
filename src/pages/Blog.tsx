@@ -15,12 +15,18 @@ import {
   Zap,
   Brain,
   Globe,
-  Target
+  Target,
+  ArrowLeft
 } from 'lucide-react';
 import Header from '../components/Header.tsx';
 import Footer from '../components/Footer.tsx';
+import { useScrollToTop } from '../hooks/useScrollToTop';
+import { useNavigate } from 'react-router-dom';
 
 const Blog = () => {
+  useScrollToTop(); // Scroll to top when component mounts
+  const navigate = useNavigate();
+
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
 
@@ -45,7 +51,8 @@ const Blog = () => {
       readTime: '8 min read',
       featured: true,
       tags: ['Healthcare', 'AI Diagnostics', 'Patient Care', 'Medical Technology'],
-      image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+      image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      slug: 'future-of-ai-healthcare'
     },
     {
       id: 2,
@@ -57,7 +64,8 @@ const Blog = () => {
       readTime: '12 min read',
       featured: true,
       tags: ['RAG', 'Search Technology', 'AI', 'Information Retrieval'],
-      image: 'https://images.unsplash.com/photo-1518186285589-2f7649de83e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+      image: 'https://images.unsplash.com/photo-1518186285589-2f7649de83e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      slug: 'rag-vs-traditional-search'
     },
     {
       id: 3,
@@ -69,7 +77,8 @@ const Blog = () => {
       readTime: '10 min read',
       featured: false,
       tags: ['Legal Tech', 'Document Analysis', 'Compliance', 'Automation'],
-      image: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+      image: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      slug: 'automating-legal-document-review'
     },
     {
       id: 4,
@@ -81,7 +90,8 @@ const Blog = () => {
       readTime: '15 min read',
       featured: false,
       tags: ['Architecture', 'Scalability', 'Best Practices', 'System Design'],
-      image: 'https://images.unsplash.com/photo-1518186285589-2f7649de83e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+      image: 'https://images.unsplash.com/photo-1518186285589-2f7649de83e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      slug: 'building-scalable-ai-solutions'
     },
     {
       id: 5,
@@ -93,7 +103,8 @@ const Blog = () => {
       readTime: '9 min read',
       featured: false,
       tags: ['E-commerce', 'Personalization', 'Customer Experience', 'Recommendations'],
-      image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+      image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      slug: 'ai-ecommerce-personalization'
     },
     {
       id: 6,
@@ -105,7 +116,8 @@ const Blog = () => {
       readTime: '11 min read',
       featured: false,
       tags: ['ROI', 'Analytics', 'Business Metrics', 'Success Measurement'],
-      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      slug: 'roi-ai-automation'
     },
     {
       id: 7,
@@ -117,7 +129,8 @@ const Blog = () => {
       readTime: '13 min read',
       featured: false,
       tags: ['AI Ethics', 'Responsible AI', 'Bias', 'Transparency'],
-      image: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+      image: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      slug: 'ethical-ai-systems'
     },
     {
       id: 8,
@@ -129,7 +142,8 @@ const Blog = () => {
       readTime: '7 min read',
       featured: false,
       tags: ['Small Business', 'Implementation', 'Getting Started', 'Automation'],
-      image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+      image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      slug: 'ai-small-business-guide'
     }
   ];
 
@@ -156,9 +170,32 @@ const Blog = () => {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
       <Header />
 
-      {/* Hero Section */}
+      {/* Back to Main Page Button */}
       <section className="pt-24 pb-16">
         <div className="container mx-auto px-4 lg:px-8">
+          <div className="mb-6">
+            <Button
+              variant="outline"
+              onClick={() => {
+                // Clear saved scroll position for home page before navigating
+                const savedPositions = sessionStorage.getItem('scrollPositions');
+                if (savedPositions) {
+                  try {
+                    const positions = JSON.parse(savedPositions);
+                    delete positions['/'];
+                    sessionStorage.setItem('scrollPositions', JSON.stringify(positions));
+                  } catch (error) {
+                    console.warn('Failed to clear scroll position:', error);
+                  }
+                }
+                navigate('/');
+              }}
+              className="group"
+            >
+              <ArrowLeft className="mr-2 h-4 w-4 group-hover:-translate-x-1 transition-transform" />
+              Back to Main Page
+            </Button>
+          </div>
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold text-gray-900 mb-4">
               AI Insights & Knowledge
@@ -243,7 +280,10 @@ const Blog = () => {
                           </Badge>
                         ))}
                       </div>
-                      <Button className="w-full">
+                      <Button
+                        className="w-full"
+                        onClick={() => navigate(`/blog/${article.slug}`)}
+                      >
                         Read Article
                         <ArrowRight className="ml-2 w-4 h-4" />
                       </Button>
@@ -290,7 +330,11 @@ const Blog = () => {
                           </Badge>
                         ))}
                       </div>
-                      <Button variant="outline" className="w-full">
+                      <Button
+                        variant="outline"
+                        className="w-full"
+                        onClick={() => navigate(`/blog/${article.slug}`)}
+                      >
                         Read More
                         <ArrowRight className="ml-2 w-4 h-4" />
                       </Button>

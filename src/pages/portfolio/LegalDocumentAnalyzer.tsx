@@ -73,7 +73,7 @@ const LegalDocumentAnalyzer = () => {
             className="mb-6 group"
           >
             <ArrowLeft className="mr-2 h-4 w-4 group-hover:-translate-x-1 transition-transform" />
-            Back to Portfolio
+            Back to AI Solutions
           </Button>
 
           <div className="grid lg:grid-cols-2 gap-12 items-center">

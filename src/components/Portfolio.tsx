@@ -1,14 +1,24 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { Badge } from '@/components/ui/badge.tsx';
 import { ExternalLink, Github, ArrowRight, MessageSquare, Clock, Users, Dumbbell, Calendar, Building, Car, Scissors, Stethoscope, Home, Scale, ShoppingCart, Monitor, Store, Heart, FileText, BarChart3, Workflow, Search } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import CalendlyPopup from './CalendlyPopup.tsx';
 
 const Portfolio = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [activeFilter, setActiveFilter] = useState('examples');
+
+  // Handle filter parameter from URL
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const filterParam = params.get('filter');
+    if (filterParam) {
+      setActiveFilter(filterParam);
+    }
+  }, [location.search]);
 
   const filters = [
     { id: 'examples', label: 'AI Project Examples' },
@@ -364,6 +374,8 @@ const Portfolio = () => {
                 onClick={() => {
                   if (project.title === 'Legal Document Analyzer') {
                     navigate('/demo/document-analyzer');
+                  } else if (project.title === 'Technical Documentation RAG') {
+                    navigate('/portfolio/technical-documentation-rag');
                   } else if (project.link) {
                     navigate(project.link);
                   }

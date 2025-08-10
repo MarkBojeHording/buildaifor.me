@@ -5,21 +5,18 @@ const Footer = () => {
   const navigate = useNavigate();
 
   const quickLinks = [
-    { label: 'Services', href: '#services', isRoute: false },
-    { label: 'Portfolio', href: '#portfolio', isRoute: false },
+    { label: 'AI Solutions', href: '#ai-solutions', isRoute: false },
     { label: 'About', href: '/about', isRoute: true },
     { label: 'Blog', href: '/blog', isRoute: true },
-    { label: 'Process', href: '#process', isRoute: false },
     { label: 'Pricing', href: '#pricing', isRoute: false }
   ];
 
   const services = [
     'AI Chatbots',
     'Document Processing',
-    'Data Automation',
-    'Workflow Optimization',
-    'RAG Systems',
-    'API Integrations'
+    'Data Analysis',
+    'Workflow Automation',
+    'RAG Systems'
   ];
 
   const industries = [
@@ -72,8 +69,20 @@ const Footer = () => {
                   {link.isRoute ? (
                     <button
                       onClick={() => {
-                        navigate(link.href);
+                        // Clear any saved scroll positions before navigating
+                        const savedPositions = sessionStorage.getItem('scrollPositions');
+                        if (savedPositions) {
+                          try {
+                            const positions = JSON.parse(savedPositions);
+                            delete positions[link.href];
+                            sessionStorage.setItem('scrollPositions', JSON.stringify(positions));
+                          } catch (error) {
+                            console.warn('Failed to clear scroll position:', error);
+                          }
+                        }
+                        sessionStorage.removeItem('lastScrollPosition');
 
+                        navigate(link.href);
                       }}
                       className="text-gray-400 hover:text-blue-400 transition-colors text-sm bg-transparent border-none cursor-pointer text-left"
                     >
@@ -93,13 +102,47 @@ const Footer = () => {
           </div>
 
           <div>
-            <h3 className="font-bold text-lg mb-4">Services</h3>
+            <h3 className="font-bold text-lg mb-4">AI Solutions</h3>
             <ul className="space-y-2">
-              {services.map((service) => (
-                <li key={service} className="text-gray-400 text-sm">
-                  {service}
-                </li>
-              ))}
+              {services.map((service) => {
+                // Map service names to filter IDs
+                const getFilterId = (serviceName: string) => {
+                  switch (serviceName) {
+                    case 'AI Chatbots': return 'chatbots';
+                    case 'Document Processing': return 'document';
+                    case 'Data Analysis': return 'data';
+                    case 'Workflow Automation': return 'workflow';
+                    case 'RAG Systems': return 'rag';
+                    case 'API Integrations': return 'examples';
+                    default: return 'examples';
+                  }
+                };
+
+                return (
+                  <li key={service}>
+                    <button
+                      onClick={() => {
+                        // Clear saved scroll position for home page before navigating
+                        const savedPositions = sessionStorage.getItem('scrollPositions');
+                        if (savedPositions) {
+                          try {
+                            const positions = JSON.parse(savedPositions);
+                            delete positions['/'];
+                            sessionStorage.setItem('scrollPositions', JSON.stringify(positions));
+                          } catch (error) {
+                            console.warn('Failed to clear scroll position:', error);
+                          }
+                        }
+                        // Navigate to AI Solutions section with filter parameter
+                        navigate(`/?section=ai-solutions&filter=${getFilterId(service)}`);
+                      }}
+                      className="text-gray-400 hover:text-blue-400 transition-colors text-sm bg-transparent border-none cursor-pointer text-left"
+                    >
+                      {service}
+                    </button>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 

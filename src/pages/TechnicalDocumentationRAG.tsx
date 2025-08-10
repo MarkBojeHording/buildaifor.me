@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useScrollToTop } from '../hooks/useScrollToTop';
 import {
   Search,
   FileText,
@@ -225,6 +226,8 @@ const sampleQueries = [
 
 const TechnicalDocumentationRAG: React.FC = () => {
   const navigate = useNavigate();
+  useScrollToTop(); // Scroll to top when component mounts
+
   const [activeTab, setActiveTab] = useState('search');
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearching, setIsSearching] = useState(false);
@@ -375,11 +378,24 @@ const TechnicalDocumentationRAG: React.FC = () => {
         <div className="container mx-auto px-4 lg:px-8">
           <Button
             variant="outline"
-            onClick={() => navigate('/')}
+            onClick={() => {
+              // Clear saved scroll position for home page before navigating
+              const savedPositions = sessionStorage.getItem('scrollPositions');
+              if (savedPositions) {
+                try {
+                  const positions = JSON.parse(savedPositions);
+                  delete positions['/'];
+                  sessionStorage.setItem('scrollPositions', JSON.stringify(positions));
+                } catch (error) {
+                  console.warn('Failed to clear scroll position:', error);
+                }
+              }
+              navigate('/');
+            }}
             className="mb-6 group"
           >
             <ArrowLeft className="mr-2 h-4 w-4 group-hover:-translate-x-1 transition-transform" />
-            Back to Portfolio
+            Back to AI Solutions
           </Button>
           <div className="text-center mb-8">
             <div className="inline-flex items-center bg-blue-100 text-blue-700 px-4 py-2 rounded-full text-sm font-medium mb-4">

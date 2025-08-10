@@ -10,7 +10,25 @@ const Header = () => {
   const { scrollToSection, navigateToPage } = useNavigationWithScroll();
 
   const handleLogoClick = () => {
-    navigateToPage('/', true);
+    // Clear saved scroll position for home page before navigating
+    const savedPositions = sessionStorage.getItem('scrollPositions');
+    if (savedPositions) {
+      try {
+        const positions = JSON.parse(savedPositions);
+        delete positions['/'];
+        sessionStorage.setItem('scrollPositions', JSON.stringify(positions));
+      } catch (error) {
+        console.warn('Failed to clear scroll position:', error);
+      }
+    }
+    // Also clear the lastScrollPosition
+    sessionStorage.removeItem('lastScrollPosition');
+
+    // Navigate to home page and scroll to top
+    navigate('/');
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 100);
   };
 
   const toggleMenu = () => {
@@ -53,10 +71,10 @@ const Header = () => {
               About
             </button>
             <button
-              onClick={() => scrollToSection('portfolio')}
+              onClick={() => scrollToSection('ai-solutions')}
               className="text-gray-600 hover:text-gray-900 transition-colors bg-transparent border-none cursor-pointer"
             >
-              Services
+              AI Solutions
             </button>
             <button
               onClick={() => navigateToPage('/tech')}
@@ -114,12 +132,12 @@ const Header = () => {
               </button>
               <button
                 onClick={() => {
-                  scrollToSection('portfolio');
+                  scrollToSection('ai-solutions');
                   setIsMenuOpen(false);
                 }}
                 className="text-gray-600 hover:text-gray-900 transition-colors bg-transparent border-none cursor-pointer text-left"
               >
-                Services
+                AI Solutions
               </button>
               <button
                 onClick={() => {

@@ -474,7 +474,7 @@ const DocumentAnalyzerDemo: React.FC = () => {
             className="mb-6 group"
           >
             <ArrowLeft className="mr-2 h-4 w-4 group-hover:-translate-x-1 transition-transform" />
-            Back to Portfolio
+            Back to AI Solutions
           </Button>
           <div className="text-center mb-8">
             <h1 className="text-4xl font-bold text-gray-900 mb-4">

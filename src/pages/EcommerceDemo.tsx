@@ -164,7 +164,7 @@ const EcommerceDemo = () => {
             className="mb-6 group"
           >
             <ArrowLeft className="mr-2 h-4 w-4 group-hover:-translate-x-1 transition-transform" />
-            Back to Portfolio
+            Back to AI Solutions
           </Button>
           <div className="text-center mb-8">
             <Badge className="bg-yellow-100 text-yellow-800 border-yellow-300 mb-4">Tier 2 Demo</Badge>

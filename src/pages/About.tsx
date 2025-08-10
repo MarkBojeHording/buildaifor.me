@@ -1,12 +1,14 @@
-import { Code, Brain, Zap, Award, Target, Users, Star, CheckCircle, ArrowRight } from 'lucide-react';
+import { Code, Brain, Zap, Award, Target, Users, Star, CheckCircle, ArrowRight, ArrowLeft } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { useScrollToTop } from '../hooks/useScrollToTop';
+import { useNavigate } from 'react-router-dom';
 
 const About = () => {
   useScrollToTop();
+  const navigate = useNavigate();
 
   const achievements = [
     {
@@ -72,6 +74,29 @@ const About = () => {
       {/* Hero Section */}
       <section className="pt-24 pb-16 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
         <div className="container mx-auto px-4 lg:px-8">
+          <div className="mb-6">
+            <Button
+              variant="outline"
+              onClick={() => {
+                // Clear saved scroll position for home page before navigating
+                const savedPositions = sessionStorage.getItem('scrollPositions');
+                if (savedPositions) {
+                  try {
+                    const positions = JSON.parse(savedPositions);
+                    delete positions['/'];
+                    sessionStorage.setItem('scrollPositions', JSON.stringify(positions));
+                  } catch (error) {
+                    console.warn('Failed to clear scroll position:', error);
+                  }
+                }
+                navigate('/');
+              }}
+              className="group"
+            >
+              <ArrowLeft className="mr-2 h-4 w-4 group-hover:-translate-x-1 transition-transform" />
+              Back to Main Page
+            </Button>
+          </div>
           <div className="text-center max-w-4xl mx-auto">
             <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
               About BuildAIFor.Me
