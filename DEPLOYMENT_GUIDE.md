@@ -174,4 +174,4 @@ curl https://your-tier3-project.up.railway.app/test
 4. Test all chatbots
 5. Deploy updated frontend
 
-This will make your chatbots fully production-ready! 🎉
+This will make your chatbots fully production-ready!
