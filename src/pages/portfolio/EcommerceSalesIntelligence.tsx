@@ -182,24 +182,17 @@ const EcommerceSalesIntelligence: React.FC = () => {
       // Generate initial insights on component mount
   useEffect(() => {
     const loadSampleData = async () => {
-      console.log('loadSampleData called');
       try {
-        console.log('Calling EcommerceSalesAPI.getSampleData...');
         const result = await EcommerceSalesAPI.getSampleData();
-        console.log('getSampleData result:', result);
 
         if (result.success) {
-          console.log('Setting data:', result.data);
           setData(result.data);
           // Store metrics from sample data
           if (result.metrics) {
-            console.log('Setting metrics from sample data:', result.metrics);
             setEdgeFunctionMetrics(result.metrics);
           }
-          console.log('Calling generateInsights with result.data...');
           await generateInsights(result.data);
         } else {
-          console.log('getSampleData failed, using fallback');
           // Fallback to local sample data
           generateInsights(sampleData);
         }
@@ -261,20 +254,16 @@ const EcommerceSalesIntelligence: React.FC = () => {
 
   // AI insight generation with Supabase Edge Functions
   const generateInsights = useCallback(async (dataRows: DataRow[]) => {
-    console.log('generateInsights called with data:', dataRows);
     setIsLoading(true);
     setError(null);
 
     try {
-      console.log('Calling EcommerceSalesAPI.generateInsights...');
       const result = await EcommerceSalesAPI.generateInsights(dataRows);
-      console.log('EcommerceSalesAPI.generateInsights result:', result);
 
       if (!result.success) {
         throw new Error(result.error || 'Failed to generate insights');
       }
 
-      console.log('Setting insights:', result.insights);
       setInsights(result.insights);
 
       // Store the metrics returned from the Edge Function for display

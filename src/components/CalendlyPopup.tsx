@@ -24,7 +24,7 @@ const CalendlyPopup: React.FC<CalendlyPopupProps> = ({ isOpen, onClose }) => {
         {/* Calendly widget container - NO SCROLLING */}
         <div className="w-full h-[650px]">
           <InlineWidget
-            url="https://calendly.com/markhording/ai-meeting"
+            url="https://calendly.com/your-username/ai-meeting"
             styles={{
               height: '100%',
               width: '100%',

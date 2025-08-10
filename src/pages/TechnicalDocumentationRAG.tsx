@@ -88,7 +88,7 @@ const response = await apiClient.get('/users', {
   }
 });
 
-console.log('User data:', response.data);`,
+        // User data received`,
       emoji: '🟨'
     },
     source: {
@@ -280,7 +280,7 @@ const TechnicalDocumentationRAG: React.FC = () => {
               }
             }
           } catch (e) {
-            console.log('Failed to parse JSON from AI response');
+            // Failed to parse JSON from AI response
           }
         }
 

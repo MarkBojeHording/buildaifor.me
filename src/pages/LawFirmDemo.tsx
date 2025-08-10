@@ -96,7 +96,7 @@ const LawFirmDemo: React.FC = () => {
   };
 
   const updateDashboard = (aiData: any, responseData: any) => {
-    console.log('🔄 Updating dashboard with AI data:', aiData, 'Response data:', responseData);
+    // Updating dashboard with AI data
 
     // Update Lead Score (check both aiData and top-level response)
     const leadScore = responseData?.lead_score || aiData?.lead_score;
@@ -202,7 +202,7 @@ const LawFirmDemo: React.FC = () => {
       const data = await response.json();
       setIsLoading(false);
 
-      console.log('📡 API Response received:', data);
+      // API Response received
 
       const botMessage: Message = {
         id: `bot-${Date.now()}`,
