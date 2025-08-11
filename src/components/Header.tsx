@@ -44,17 +44,13 @@ const Header = () => {
             className="flex items-center space-x-2 cursor-pointer hover:opacity-80 transition-opacity"
             onClick={handleLogoClick}
           >
-            <svg width="32" height="26" viewBox="0 0 50 40" xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0">
-              <defs>
-                <linearGradient id="stackGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" style={{stopColor:"#667eea"}}/>
-                  <stop offset="100%" style={{stopColor:"#764ba2"}}/>
-                </linearGradient>
-              </defs>
-              <rect x="5" y="25" width="35" height="8" rx="2" fill="url(#stackGrad)" opacity="0.6"/>
-              <rect x="8" y="15" width="29" height="8" rx="2" fill="url(#stackGrad)" opacity="0.8"/>
-              <rect x="11" y="5" width="23" height="8" rx="2" fill="url(#stackGrad)"/>
-            </svg>
+            <img
+              src="/logo.svg"
+              alt="BuildAIfor.me Logo"
+              width="32"
+              height="26"
+              className="flex-shrink-0"
+            />
             <span className="text-xl font-bold text-gray-900">
               <span className="text-gray-900">Build</span>
               <span className="text-blue-600">AI</span>
