@@ -35,6 +35,7 @@ import LawFirmDemo from './pages/LawFirmDemo.tsx';
 import DocumentAnalyzerDemo from './pages/DocumentAnalyzerDemo.tsx';
 import EnterpriseAIAssistantDemo from './pages/EnterpriseAIAssistantDemo.tsx';
 import TechnicalDocumentationRAG from './pages/TechnicalDocumentationRAG';
+import ShopSmartDemo from './pages/ShopSmartDemo.tsx';
 import DeploymentDebug from '@/components/DeploymentDebug';
 import CookieBanner from '@/components/CookieBanner';
 // Blog article imports
@@ -85,6 +86,7 @@ const App = () => (
           <Route path="/demo/law-firm" element={<LawFirmDemo />} />
           <Route path="/demo/document-analyzer" element={<DocumentAnalyzerDemo />} />
           <Route path="/demo/enterprise-ai-assistant" element={<EnterpriseAIAssistantDemo />} />
+          <Route path="/demo/shop-smart" element={<ShopSmartDemo />} />
 
           {/* Blog article routes */}
           <Route path="/blog/future-of-ai-healthcare" element={<FutureOfAIHealthcare />} />
