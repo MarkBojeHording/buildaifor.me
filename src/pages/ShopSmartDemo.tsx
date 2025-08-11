@@ -100,7 +100,7 @@ const ShopSmartDemo = () => {
       }
 
       const data = await response.json();
-      
+
       if (data.session_id) {
         setSessionId(data.session_id);
       }
@@ -172,7 +172,7 @@ const ShopSmartDemo = () => {
           </div>
         </div>
       </section>
-      
+
       <section className="pb-20">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="grid lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
@@ -271,7 +271,7 @@ const ShopSmartDemo = () => {
                 </CardContent>
               </Card>
             </div>
-            
+
             {/* Info Panel */}
             <div className="space-y-6">
               <Card>
@@ -314,7 +314,7 @@ const ShopSmartDemo = () => {
                   </div>
                 </CardContent>
               </Card>
-              
+
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
@@ -343,7 +343,7 @@ const ShopSmartDemo = () => {
                   </div>
                 </CardContent>
               </Card>
-              
+
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
@@ -370,4 +370,4 @@ const ShopSmartDemo = () => {
   );
 };
 
-export default ShopSmartDemo; 
+export default ShopSmartDemo;

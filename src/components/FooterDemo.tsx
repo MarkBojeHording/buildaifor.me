@@ -156,4 +156,4 @@ const FooterDemo = () => {
   );
 };
 
-export default FooterDemo; 
+export default FooterDemo;
