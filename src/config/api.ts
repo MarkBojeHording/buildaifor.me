@@ -10,13 +10,13 @@ const PRODUCTION_URLS = {
   documentAnalyzer: 'https://uqkzthavpupgpbusqhwy.supabase.co/functions/v1/legal-document-analyzer'
 };
 
-// Development URLs (using production Supabase for tier1, tier2, and tier3, localhost for others)
+// Development URLs (using production Supabase for all endpoints)
 const DEVELOPMENT_URLS = {
   tier1: 'https://uqkzthavpupgpbusqhwy.supabase.co/functions/v1/tier1-chatbots',
   tier2: 'https://uqkzthavpupgpbusqhwy.supabase.co/functions/v1/tier2-chatbots',
   tier3: 'https://uqkzthavpupgpbusqhwy.supabase.co/functions/v1/tier3-chatbot',
-  rag: 'http://localhost:3001',
-  documentAnalyzer: 'http://localhost:3002/api/chat' // Fallback to local development server
+  rag: 'https://rag-system-production.up.railway.app',
+  documentAnalyzer: 'https://uqkzthavpupgpbusqhwy.supabase.co/functions/v1/legal-document-analyzer'
 };
 
 // Export the appropriate URLs based on environment
