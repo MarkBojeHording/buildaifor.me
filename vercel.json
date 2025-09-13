@@ -1,8 +1,23 @@
 {
   "routes": [
     {
-      "src": "/[^.]+",
+      "src": "/((?!api|_next/static|_next/image|favicon.ico|site.webmanifest|web-app-manifest-.*\\.png|favicon-.*\\.png|apple-touch-icon\\.png|logo\\.svg|robots\\.txt).*)",
       "dest": "/"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/site.webmanifest",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/manifest+json"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
     }
   ]
 }
