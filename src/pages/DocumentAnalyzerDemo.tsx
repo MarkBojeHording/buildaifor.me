@@ -365,9 +365,10 @@ const DocumentAnalyzerDemo: React.FC = () => {
         'Content-Type': 'application/json'
       };
 
-      // Add authorization header if we have a valid anon key
+      // Add authorization headers for Supabase Edge Function
       if (import.meta.env.VITE_SUPABASE_ANON_KEY && import.meta.env.VITE_SUPABASE_ANON_KEY !== 'your-anon-key') {
         headers['Authorization'] = `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`;
+        headers['apikey'] = import.meta.env.VITE_SUPABASE_ANON_KEY;
       }
 
       const response = await fetch(apiUrl, {
@@ -375,8 +376,8 @@ const DocumentAnalyzerDemo: React.FC = () => {
         headers,
         body: JSON.stringify({
           message: message,
-          documentId: currentDocument,
-          conversationHistory: messages.map(msg => ({
+          document_id: currentDocument,
+          conversation_history: messages.map(msg => ({
             role: msg.type === 'user' ? 'user' : 'assistant',
             content: msg.content
           }))
